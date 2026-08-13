@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <packageId>dkdcakedangao.NivarianIcecreamTailQWQ</packageId>
+  <name>Nivarian Icecream Tail QWQ</name>
+  <author>dkdcakedangao</author>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>keeptpa.NivarianRace</packageId>
+      <displayName>Nivarian Race</displayName>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>keeptpa.NivarianRace</li>
+  </loadAfter>
+  <description>冰龙尾巴！就是！冰淇淋！</description>
+</ModMetaData>
