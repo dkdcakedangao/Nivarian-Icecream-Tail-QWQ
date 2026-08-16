@@ -1,0 +1,40 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>5</LangVersion>
+    <OutputType>Library</OutputType>
+    <AssemblyName>NivarianIcecreamTail</AssemblyName>
+    <OutputPath>$(MSBuildProjectDirectory)\..\1.6\Assemblies\</OutputPath>
+    <IntermediateAssembly>$(MSBuildProjectDirectory)\obj\$(Configuration)\$(AssemblyName).dll</IntermediateAssembly>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <Target Name="ValidateGameReferences" BeforeTargets="CoreCompile">
+    <Error Condition="'$(RimWorldManagedDir)' == ''" Text="Set RimWorldManagedDir to RimWorldWin64_Data\Managed." />
+    <Error Condition="'$(HarAssemblyPath)' == ''" Text="Set HarAssemblyPath to AlienRace.dll." />
+    <Error Condition="'$(NivarianRaceAssemblyPath)' == ''" Text="Set NivarianRaceAssemblyPath to Nivarian_Race.dll." />
+    <Error Condition="'$(HarmonyAssemblyPath)' == ''" Text="Set HarmonyAssemblyPath to 0Harmony.dll." />
+  </Target>
+
+  <ItemGroup>
+    <Compile Include="IcecreamTail.cs" />
+    <Compile Include="TailEating.cs" />
+    <Compile Include="TailCombat.cs" />
+    <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp-firstpass.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\UnityEngine.CoreModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\UnityEngine.IMGUIModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\UnityEngine.TextRenderingModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\netstandard.dll" />
+    <GameReference Include="$(HarAssemblyPath)" />
+    <GameReference Include="$(NivarianRaceAssemblyPath)" />
+    <GameReference Include="$(HarmonyAssemblyPath)" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="CoreCompile" DependsOnTargets="ValidateGameReferences">
+    <Csc Sources="@(Compile)" References="@(GameReference)" TargetType="library" OutputAssembly="$(IntermediateAssembly)" DebugType="$(DebugType)" />
+  </Target>
+</Project>

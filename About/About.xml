@@ -8,11 +8,16 @@
   </supportedVersions>
   <modDependencies>
     <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+    </li>
+    <li>
       <packageId>keeptpa.NivarianRace</packageId>
       <displayName>Nivarian Race</displayName>
     </li>
   </modDependencies>
   <loadAfter>
+    <li>brrainz.harmony</li>
     <li>keeptpa.NivarianRace</li>
   </loadAfter>
   <description>冰龙尾巴！就是！冰淇淋！</description>

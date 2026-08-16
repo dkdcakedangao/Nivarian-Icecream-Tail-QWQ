@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="MealCooked">
+    <defName>IcecreamTailFood</defName>
+    <label>尾巴冰冰</label>
+    <description>奇奇怪怪的冰淇淋。吃起来口感怪怪的，但是若是有贪吃的涅瓦莲吃了的话，则尾巴也会变成这种冰淇淋！</description>
+    <graphicData>
+      <texPath>Items/tail_ice</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.8,0.8)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>35</MarketValue>
+      <WorkToMake>800</WorkToMake>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealFine</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_TailIcecream" />
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Ingredients" />
+    </comps>
+  </ThingDef>
+</Defs>

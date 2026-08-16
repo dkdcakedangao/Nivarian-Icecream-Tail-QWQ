@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 舔尾巴的主要xml -->
+<Defs>
+  <HediffDef>
+    <defName>IcecreamTailPlaceholder</defName>
+    <label>冰淇淋尾巴</label>
+    <description>冰冰的尾巴，看起来非常好吃喵~</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailPlaceholder</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailPlaceholder" />
+    </comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailRecovery</defName>
+    <label>冰淇淋尾巴恢复中</label>
+    <description>尾巴正在努力凝结新的冰淇淋~</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailRecovery</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>0.001</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailRecovery" />
+    </comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailRecoveryHunger</defName>
+    <label>尾巴努力生长中</label>
+    <description>尾巴要长出香香甜甜的冰淇淋，多吃一点才有力气喵~</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailRecoveryHunger</hediffClass>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+        <hungerRateFactorOffset>0.1</hungerRateFactorOffset>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailEaterBuff</defName>
+    <label>原味冰淇淋尾巴</label>
+    <description>甜甜凉凉的力量涌上来了。</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>60000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>1.1</MoveSpeed>
+          <ShootingAccuracyPawn>1.1</ShootingAccuracyPawn>
+          <MeleeDamageFactor>1.1</MeleeDamageFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailSlow</defName>
+    <label>冰淇淋冻住啦！</label>
+    <description>被冰淇淋尾巴冻得慢吞吞，移动速度减慢了。</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailSlow</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>420</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailSlowVfx" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.5</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

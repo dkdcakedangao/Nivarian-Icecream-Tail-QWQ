@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 动作的xml -->
+<Defs>
+  <JobDef>
+    <defName>LickIcecreamTail</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_LickIcecreamTail</driverClass>
+    <reportString>正在舔舔 TargetA 的冰淇淋尾巴。</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>LickedIcecreamTail</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_LickedIcecreamTail</driverClass>
+    <reportString>正在被舔舔冰淇淋尾巴。</reportString>
+  </JobDef>
+</Defs>
+<!-- 会不会写的太色了？ -->
