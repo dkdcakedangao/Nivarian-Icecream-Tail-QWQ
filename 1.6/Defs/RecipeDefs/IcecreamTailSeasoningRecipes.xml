@@ -17,10 +17,17 @@
     <recipeUsers>
       <li>DrugLab</li>
     </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Milk</li>
+        <li>MedicineHerbal</li>
+        <li>RawRice</li>
+      </thingDefs>
+    </fixedIngredientFilter>
     <ingredients>
       <li><filter><thingDefs><li>Milk</li></thingDefs></filter><count>5</count></li>
-      <li><filter><thingDefs><li>HerbalMedicine</li></thingDefs></filter><count>2</count></li>
-      <li><filter><thingDefs><li>Rice</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MedicineHerbal</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>5</count></li>
     </ingredients>
     <products>
       <IcecreamTailMilkSeasoning>1</IcecreamTailMilkSeasoning>
@@ -41,10 +48,17 @@
     <recipeUsers>
       <li>DrugLab</li>
     </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>RawBerries</li>
+        <li>MedicineHerbal</li>
+        <li>RawRice</li>
+      </thingDefs>
+    </fixedIngredientFilter>
     <ingredients>
-      <li><filter><thingDefs><li>Berries</li></thingDefs></filter><count>5</count></li>
-      <li><filter><thingDefs><li>HerbalMedicine</li></thingDefs></filter><count>2</count></li>
-      <li><filter><thingDefs><li>Rice</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>RawBerries</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MedicineHerbal</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>5</count></li>
     </ingredients>
     <products>
       <IcecreamTailStrawberrySeasoning>1</IcecreamTailStrawberrySeasoning>
@@ -65,10 +79,17 @@
     <recipeUsers>
       <li>DrugLab</li>
     </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Hay</li>
+        <li>MedicineHerbal</li>
+        <li>RawRice</li>
+      </thingDefs>
+    </fixedIngredientFilter>
     <ingredients>
       <li><filter><thingDefs><li>Hay</li></thingDefs></filter><count>20</count></li>
-      <li><filter><thingDefs><li>HerbalMedicine</li></thingDefs></filter><count>2</count></li>
-      <li><filter><thingDefs><li>Rice</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MedicineHerbal</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>5</count></li>
     </ingredients>
     <products>
       <IcecreamTailVanillaSeasoning>1</IcecreamTailVanillaSeasoning>
@@ -89,10 +110,17 @@
     <recipeUsers>
       <li>DrugLab</li>
     </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Chocolate</li>
+        <li>MedicineHerbal</li>
+        <li>RawRice</li>
+      </thingDefs>
+    </fixedIngredientFilter>
     <ingredients>
       <li><filter><thingDefs><li>Chocolate</li></thingDefs></filter><count>5</count></li>
-      <li><filter><thingDefs><li>HerbalMedicine</li></thingDefs></filter><count>2</count></li>
-      <li><filter><thingDefs><li>Rice</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MedicineHerbal</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>5</count></li>
     </ingredients>
     <products>
       <IcecreamTailChocolateSeasoning>1</IcecreamTailChocolateSeasoning>

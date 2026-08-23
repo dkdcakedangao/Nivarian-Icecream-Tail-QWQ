@@ -494,7 +494,24 @@ namespace NivarianIcecreamTail
 
         public override string BillRequirementsDescription(RecipeDef recipe, IngredientCount ingredient)
         {
-            return ingredient.GetBaseCount() == 0.5f ? "0.5 营养" : ingredient.GetBaseCount().ToString();
+            if (ingredient.GetBaseCount() == 0.5f)
+            {
+                return "0.5 营养";
+            }
+
+            ThingDef herbalMedicine = DefDatabase<ThingDef>.GetNamedSilentFail("MedicineHerbal");
+            if (herbalMedicine != null && ingredient.filter.Allows(herbalMedicine))
+            {
+                return ingredient.GetBaseCount() + " × " + herbalMedicine.LabelCap;
+            }
+
+            ThingDef nivarianScale = DefDatabase<ThingDef>.GetNamedSilentFail("Nivarian_Scale");
+            if (nivarianScale != null && ingredient.filter.Allows(nivarianScale))
+            {
+                return ingredient.GetBaseCount() + " × " + nivarianScale.LabelCap;
+            }
+
+            return ingredient.GetBaseCount().ToString();
         }
     }
 
