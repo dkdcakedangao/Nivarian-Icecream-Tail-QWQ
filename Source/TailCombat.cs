@@ -4,6 +4,7 @@ using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace NivarianIcecreamTail
 // 这边是！冰淇淋尾巴用于战斗时，会用到的妙妙小代码！
@@ -111,6 +112,36 @@ namespace NivarianIcecreamTail
             if (mote != null)
             {
                 mote.SetVelocity(Rand.Range(55f, 125f), Rand.Range(0.01f, 0.025f));
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(JobGiver_GetFood), "TryGiveJob")]
+    internal static class Patch_JobGiver_GetFood_TryGiveJob
+    {
+        private static void Postfix(Pawn pawn, ref Job __result)
+        {
+            if (__result == null || __result.def != JobDefOf.Ingest)
+            {
+                return;
+            }
+
+            Job lickJob;
+            string reason;
+            if (TailEatingUtility.TryMakeAutomaticLickJob(pawn, out lickJob, out reason))
+            {
+                __result = lickJob;
+                if (IcecreamTailDebug.AutoLickEnabled)
+                {
+                    IcecreamTailDebug.AutoLick("原版进食已替换：" + IcecreamTailDebug.PawnInfo(pawn) + " → " + IcecreamTailDebug.PawnInfo(lickJob.targetA.Pawn) + "，饱食度=" + pawn.needs.food.CurLevelPercentage.ToStringPercent() + "。 ");
+                }
+
+                return;
+            }
+
+            if (IcecreamTailDebug.AutoLickEnabled && IcecreamTailMod.Enabled && IcecreamTailMod.Settings != null && IcecreamTailMod.Settings.EnableAutoLick && pawn != null && pawn.needs != null && pawn.needs.food != null && pawn.needs.food.CurLevelPercentage < IcecreamTailMod.Settings.AutoLickFoodThreshold)
+            {
+                IcecreamTailDebug.AutoLick("保留原版进食：" + IcecreamTailDebug.PawnInfo(pawn) + "，原因=" + reason + "。 ");
             }
         }
     }

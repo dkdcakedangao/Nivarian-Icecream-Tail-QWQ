@@ -4,11 +4,11 @@
   <HediffDef>
     <defName>IcecreamTailPlaceholder</defName>
     <label>冰淇淋尾巴</label>
-    <description>冰冰的尾巴，看起来非常好吃喵~</description>
     <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailPlaceholder</hediffClass>
     <isBad>false</isBad>
     <comps>
       <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailPlaceholder" />
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailFlavor" />
     </comps>
   </HediffDef>
   <HediffDef>
@@ -21,6 +21,7 @@
     <maxSeverity>1</maxSeverity>
     <comps>
       <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailRecovery" />
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailFlavor" />
     </comps>
   </HediffDef>
   <HediffDef>
@@ -37,15 +38,12 @@
   </HediffDef>
   <HediffDef>
     <defName>IcecreamTailEaterBuff</defName>
-    <label>原味冰淇淋尾巴</label>
+    <label>吃了原味冰淇淋尾巴</label>
     <description>甜甜凉凉的力量涌上来了。</description>
-    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailEaterBuff</hediffClass>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
     <isBad>false</isBad>
     <comps>
-      <li Class="HediffCompProperties_Disappears">
-        <disappearsAfterTicks>60000</disappearsAfterTicks>
-        <showRemainingTime>true</showRemainingTime>
-      </li>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
     </comps>
     <stages>
       <li>
@@ -54,6 +52,9 @@
           <ShootingAccuracyPawn>1.1</ShootingAccuracyPawn>
           <MeleeDamageFactor>1.1</MeleeDamageFactor>
         </statFactors>
+        <statOffsets>
+          <ComfyTemperatureMax>10</ComfyTemperatureMax>
+        </statOffsets>
       </li>
     </stages>
   </HediffDef>
@@ -75,6 +76,79 @@
         <statFactors>
           <MoveSpeed>0.5</MoveSpeed>
         </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailStrawberryEaterBuff</defName>
+    <label>吃了草莓味冰淇淋尾巴</label>
+    <description>草莓香气让身体轻飘飘，眼睛也亮晶晶；只是软软的力气不太适合近战。</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>1.1</MoveSpeed>
+          <ShootingAccuracyPawn>1.4</ShootingAccuracyPawn>
+          <AimingDelayFactor>0.8</AimingDelayFactor>
+          <MeleeDamageFactor>0.8</MeleeDamageFactor>
+        </statFactors>
+        <statOffsets>
+          <ComfyTemperatureMax>10</ComfyTemperatureMax>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailVanillaEaterBuff</defName>
+    <label>吃了香草味冰淇淋尾巴</label>
+    <description>香草奶香轻轻托着身体，跑起来像踩在云朵上！</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>2.0</MoveSpeed>
+          <WorkSpeedGlobal>1.5</WorkSpeedGlobal>
+          <ConstructSuccessChance>1.2</ConstructSuccessChance>
+        </statFactors>
+        <statOffsets>
+          <ComfyTemperatureMax>10</ComfyTemperatureMax>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailChocolateEaterBuff</defName>
+    <label>吃了巧克力味冰淇淋尾巴</label>
+    <description>浓厚巧克力甜甜暖暖，脑袋清醒，讲话也更有底气。</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>1.5</MoveSpeed>
+          <RestRateMultiplier>0.8</RestRateMultiplier>
+          <SocialImpact>1.2</SocialImpact>
+        </statFactors>
+        <statOffsets>
+          <ComfyTemperatureMax>10</ComfyTemperatureMax>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>1.5</postFactor>
+          </li>
+        </capMods>
       </li>
     </stages>
   </HediffDef>

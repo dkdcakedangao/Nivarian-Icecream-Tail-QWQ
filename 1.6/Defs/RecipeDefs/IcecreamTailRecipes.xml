@@ -59,4 +59,34 @@
       <IcecreamTailFood>1</IcecreamTailFood>
     </products>
   </RecipeDef>
+  <RecipeDef>
+    <defName>MakeIcecreamTailRestoreIce</defName>
+    <label>制作！冰！</label>
+    <description>将涅瓦莲掉落的鳞片凝结成不容易融化的冰。</description>
+    <jobString>正在制作！冰！。</jobString>
+    <workAmount>400</workAmount>
+    <workSkill>Cooking</workSkill>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <requiredGiverWorkType>Cooking</requiredGiverWorkType>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Nivarian_Scale</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <products>
+      <IcecreamTailRestoreIce>1</IcecreamTailRestoreIce>
+    </products>
+  </RecipeDef>
 </Defs>

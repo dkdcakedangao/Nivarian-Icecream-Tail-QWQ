@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/TraderKindDef[defName="Nivarian_Caravan_MilitarySupply"]/stockGenerators</xpath>
+    <value>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>IcecreamTailFood</thingDef>
+        <countRange>1~2</countRange>
+      </li>
+      <li Class="NivarianIcecreamTail.StockGenerator_IcecreamTailSeasoning" />
+    </value>
+  </Operation>
+</Patch>

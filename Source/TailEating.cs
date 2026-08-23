@@ -14,21 +14,26 @@ namespace NivarianIcecreamTail
     {
         public override string LabelBase
         {
-            get { return "冰淇淋尾巴恢复中（" + Severity.ToStringPercent() + "）"; }
+            get { return IcecreamTailFlavorUtility.TailLabel(this, "冰淇淋尾巴") + "恢复中（" + Severity.ToStringPercent() + "）"; }
         }
 
         public override string TipStringExtra
         {
             get
             {
-                string tip = "恢复进度：" + Severity.ToStringPercent();
+                string tip = "- 恢复进度：" + Severity.ToStringPercent();
                 if (IcecreamTailMod.Settings == null || IcecreamTailMod.Settings.EnableRecoveryHunger)
                 {
-                    tip += "\n饥饿速度：110%";
+                    tip += "\n- 饥饿速度：110%";
                 }
 
                 return tip;
             }
+        }
+
+        public override UnityEngine.Color LabelColor
+        {
+            get { return IcecreamTailFlavorUtility.LabelColor(this); }
         }
     }
 
@@ -67,7 +72,7 @@ namespace NivarianIcecreamTail
 
             TailEatingUtility.SyncRecoveryHunger(parent.pawn);
             float days = TailEatingUtility.RecoveryDays(parent.pawn) * IcecreamTailMod.Settings.RecoveryTimeMultiplier;
-            float increase = delta / (60000f * days) * TailEatingUtility.CoreRecoveryFactor(parent.pawn);
+            float increase = delta / (60000f * days) * TailEatingUtility.CoreRecoveryFactor(parent.pawn) * IcecreamTailFlavorUtility.RecoverySpeedFactor(parent);
             if (parent.Severity + increase >= 1f)
             {
                 TailEatingUtility.FinishRecovery(parent.pawn, parent);
@@ -82,14 +87,22 @@ namespace NivarianIcecreamTail
     {
         private const string RecoveryDefName = "IcecreamTailRecovery";
         private const string HungerDefName = "IcecreamTailRecoveryHunger";
-        private const string BuffDefName = "IcecreamTailEaterBuff";
         private const string IcyCoreDefName = "Nivarian_IcyCore";
         private const string EaterMoodThoughtDefName = "IcecreamTailMemoryEater";
         private const string OwnerMoodThoughtDefName = "IcecreamTailMemoryOwner";
         private const string EaterSocialThoughtDefName = "IcecreamTailSocialEater";
         private const string OwnerSocialThoughtDefName = "IcecreamTailSocialOwner";
+        private const string ChocolateFlavorDefName = "IcecreamTailFlavorChocolate";
+        private const string VanillaFlavorDefName = "IcecreamTailFlavorVanilla";
+        private const string WolfeinPawnDefName = "Wolfein_Race";
+        private const string FoodPoisoningDefName = "FoodPoisoning";
+        private const string WolfeinChocolateThoughtDefName = "IcecreamTailMemoryWolfeinChocolate";
+        private const float WolfeinChocolateFoodPoisoningSeverity = 0.6f;
         private const string LickJobDefName = "LickIcecreamTail";
+        private const string LickedJobDefName = "LickedIcecreamTail";
         private const int BaseLickDurationTicks = 600;
+        private const int BaseTailBuffDurationTicks = 60000;
+        private static readonly HashSet<Pawn> CancellingPawns = new HashSet<Pawn>();
 
         public static int LickDurationTicks
         {
@@ -169,7 +182,7 @@ namespace NivarianIcecreamTail
             return 0.5f;
         }
 
-        public static void StartRecovery(Pawn pawn)
+        public static void StartRecovery(Pawn pawn, IcecreamTailFlavorDef flavor)
         {
             BodyPartRecord tailPart;
             if (pawn == null || !IcecreamTailMod.Enabled || IcecreamTailUtility.GetTailKind(pawn, out tailPart) == TailKind.None || GetRecovery(pawn) != null)
@@ -186,13 +199,15 @@ namespace NivarianIcecreamTail
 
             Hediff recovery = HediffMaker.MakeHediff(recoveryDef, pawn, tailPart);
             recovery.Severity = 0.001f;
+            IcecreamTailFlavorUtility.SetFlavor(recovery, flavor);
             pawn.health.AddHediff(recovery, tailPart);
             if (IcecreamTailDebug.TailEnabled)
             {
                 float baseDays = RecoveryDays(pawn);
                 float coreFactor = CoreRecoveryFactor(pawn);
-                float finalDays = baseDays * IcecreamTailMod.Settings.RecoveryTimeMultiplier / coreFactor;
-                IcecreamTailDebug.Tail("恢复开始：" + IcecreamTailDebug.PawnInfo(pawn) + "，尾巴类型=" + IcecreamTailUtility.GetTailKind(pawn, out tailPart) + "，基础=" + baseDays.ToString("0.0") + " 天，时间倍率=" + IcecreamTailMod.Settings.RecoveryTimeMultiplier.ToString("0.0") + "，核心倍率=" + coreFactor.ToString("0.00") + "，预计=" + finalDays.ToString("0.00") + " 天。");
+                float flavorFactor = IcecreamTailFlavorUtility.RecoverySpeedFactor(recovery);
+                float finalDays = baseDays * IcecreamTailMod.Settings.RecoveryTimeMultiplier / coreFactor / flavorFactor;
+                IcecreamTailDebug.Tail("恢复开始：" + IcecreamTailDebug.PawnInfo(pawn) + "，尾巴类型=" + IcecreamTailUtility.GetTailKind(pawn, out tailPart) + "，口味=" + IcecreamTailFlavorUtility.GetFlavor(recovery).label + "，基础=" + baseDays.ToString("0.0") + " 天，时间倍率=" + IcecreamTailMod.Settings.RecoveryTimeMultiplier.ToString("0.0") + "，核心倍率=" + coreFactor.ToString("0.00") + "，口味倍率=" + flavorFactor.ToString("0.00") + "，预计=" + finalDays.ToString("0.00") + " 天。");
             }
 
             SyncRecoveryHunger(pawn);
@@ -205,6 +220,7 @@ namespace NivarianIcecreamTail
                 return;
             }
 
+            IcecreamTailFlavorDef flavor = IcecreamTailFlavorUtility.GetFlavor(recovery);
             if (recovery != null)
             {
                 pawn.health.RemoveHediff(recovery);
@@ -213,7 +229,7 @@ namespace NivarianIcecreamTail
             RemoveRecoveryHunger(pawn);
             if (IcecreamTailMod.Enabled)
             {
-                IcecreamTailUtility.TryAddPlaceholder(pawn);
+                IcecreamTailUtility.TryAddPlaceholder(pawn, flavor);
             }
             // 冰淇淋尾巴长好了，到底要叫什么？成熟？？结冰？反正debug，没人看的，就写成熟吧
             if (IcecreamTailDebug.TailEnabled)
@@ -281,8 +297,10 @@ namespace NivarianIcecreamTail
                 return;
             }
 
+            Hediff placeholder = IcecreamTailUtility.GetPlaceholder(target);
+            IcecreamTailFlavorDef flavor = IcecreamTailFlavorUtility.GetFlavor(placeholder);
             IcecreamTailUtility.RemovePlaceholder(target);
-            StartRecovery(target);
+            StartRecovery(target, flavor);
             if (IcecreamTailDebug.TailEnabled)
             {
                 IcecreamTailDebug.Tail("冰淇淋尾巴已被舔食：食用者=" + IcecreamTailDebug.PawnInfo(eater) + "，尾巴主人=" + IcecreamTailDebug.PawnInfo(target));
@@ -295,6 +313,7 @@ namespace NivarianIcecreamTail
             if (IcecreamTailMod.Settings.EnableMoodEffects)
             {
                 GainOrRefreshMood(eater, EaterMoodThoughtDefName);
+                IcecreamTailFlavorUtility.GainOrRefreshMemory(eater, flavor.extraEaterMoodThought);
                 GainOrRefreshMood(target, OwnerMoodThoughtDefName);
             }
 
@@ -306,7 +325,47 @@ namespace NivarianIcecreamTail
 
             if (IcecreamTailMod.Settings.EnableTailBuff)
             {
-                RefreshTailBuff(eater);
+                RefreshTailBuff(eater, flavor);
+            }
+
+            ApplyChocolateWolfeinEasterEgg(eater, flavor);
+        }
+
+        private static void ApplyChocolateWolfeinEasterEgg(Pawn eater, IcecreamTailFlavorDef flavor)
+        {
+            if (eater == null || flavor == null || flavor.defName != ChocolateFlavorDefName || IcecreamTailMod.Settings == null || !IcecreamTailMod.Settings.EnableChocolateWolfeinEasterEgg)
+            {
+                return;
+            }
+
+            if (eater.def == null || eater.def.defName != WolfeinPawnDefName)
+            {
+                return;
+            }
+
+            HediffDef foodPoisoningDef = DefDatabase<HediffDef>.GetNamedSilentFail(FoodPoisoningDefName);
+            if (foodPoisoningDef == null || eater.health == null || eater.health.hediffSet == null)
+            {
+                if (IcecreamTailDebug.EasterEggEnabled)
+                {
+                    IcecreamTailDebug.EasterEgg("彩蛋未触发：缺少 FoodPoisoning 或食用者健康状态无效，食用者=" + IcecreamTailDebug.PawnInfo(eater));
+                }
+
+                return;
+            }
+
+            Hediff foodPoisoning = eater.health.hediffSet.hediffs.FirstOrDefault(hediff => hediff.def == foodPoisoningDef);
+            if (foodPoisoning == null)
+            {
+                foodPoisoning = HediffMaker.MakeHediff(foodPoisoningDef, eater);
+                eater.health.AddHediff(foodPoisoning);
+            }
+
+            foodPoisoning.Severity = WolfeinChocolateFoodPoisoningSeverity;
+            IcecreamTailFlavorUtility.GainOrRefreshMemory(eater, DefDatabase<ThoughtDef>.GetNamedSilentFail(WolfeinChocolateThoughtDefName));
+            if (IcecreamTailDebug.EasterEggEnabled)
+            {
+                IcecreamTailDebug.EasterEgg("巧克力彩蛋触发：" + IcecreamTailDebug.PawnInfo(eater) + " 获得严重食物中毒 10 分钟与特殊心情。");
             }
         }
 
@@ -346,23 +405,75 @@ namespace NivarianIcecreamTail
             }
         }
 
-        private static void RefreshTailBuff(Pawn pawn)
+        private static void RefreshTailBuff(Pawn pawn, IcecreamTailFlavorDef flavor)
         {
-            if (pawn == null || pawn.health == null)
+            if (pawn == null || pawn.health == null || flavor == null || flavor.eaterBuff == null)
             {
                 return;
             }
 
-            Hediff existing = GetHediff(pawn, BuffDefName);
-            if (existing != null)
+            IcecreamTailFlavorUtility.RemoveTailBuff(pawn, flavor.eaterBuff);
+            Hediff buff = HediffMaker.MakeHediff(flavor.eaterBuff, pawn);
+            HediffComp_IcecreamTailBuffDuration duration = buff.TryGetComp<HediffComp_IcecreamTailBuffDuration>();
+            if (duration != null)
             {
-                pawn.health.RemoveHediff(existing);
+                duration.Initialize(TailBuffDurationTicks(flavor));
             }
 
-            HediffDef buffDef = DefDatabase<HediffDef>.GetNamedSilentFail(BuffDefName);
-            if (buffDef != null)
+            pawn.health.AddHediff(buff);
+        }
+
+        private static int TailBuffDurationTicks(IcecreamTailFlavorDef flavor)
+        {
+            IcecreamTailSettings settings = IcecreamTailMod.Settings;
+            float multiplier = settings == null ? 1f : Math.Max(0.1f, Math.Min(10f, settings.TailBuffDurationMultiplier));
+            if (settings != null && settings.HalveVanillaBuffDuration && flavor != null && flavor.defName == VanillaFlavorDefName)
             {
-                pawn.health.AddHediff(HediffMaker.MakeHediff(buffDef, pawn));
+                multiplier *= 0.5f;
+            }
+
+            return Math.Max(1, (int)Math.Round(BaseTailBuffDurationTicks * multiplier));
+        }
+
+        public sealed class HediffCompProperties_IcecreamTailBuffDuration : HediffCompProperties
+        {
+            public HediffCompProperties_IcecreamTailBuffDuration()
+            {
+                compClass = typeof(HediffComp_IcecreamTailBuffDuration);
+            }
+        }
+
+        public sealed class HediffComp_IcecreamTailBuffDuration : HediffComp
+        {
+            private int remainingTicks = -1;
+
+            public int RemainingTicks
+            {
+                get { return Math.Max(0, remainingTicks); }
+            }
+
+            public void Initialize(int ticks)
+            {
+                remainingTicks = Math.Max(1, ticks);
+            }
+
+            public override void CompExposeData()
+            {
+                Scribe_Values.Look(ref remainingTicks, "remainingTicks", -1);
+            }
+
+            public override void CompPostTickInterval(ref float severityAdjustment, int delta)
+            {
+                if (remainingTicks < 0)
+                {
+                    remainingTicks = BaseTailBuffDurationTicks;
+                }
+
+                remainingTicks -= delta;
+                if (remainingTicks <= 0 && parent.pawn != null && parent.pawn.health != null)
+                {
+                    parent.pawn.health.RemoveHediff(parent);
+                }
             }
         }
 
@@ -466,29 +577,56 @@ namespace NivarianIcecreamTail
             }
         }
 
-        public static void HoldTailOwner(Pawn pawn)
+        public static void HoldTailOwner(Pawn pawn, Pawn eater)
         {
-            if (pawn == null || pawn.jobs == null || pawn.Dead || pawn.Downed)
+            if (pawn == null || eater == null || pawn.jobs == null || pawn.Dead || pawn.Downed)
             {
                 return;
             }
 
-            JobDef waitJobDef = DefDatabase<JobDef>.GetNamedSilentFail("LickedIcecreamTail");
+            JobDef waitJobDef = DefDatabase<JobDef>.GetNamedSilentFail(LickedJobDefName);
             if (waitJobDef == null)
             {
                 Log.Error("Nivarian Icecream Tail: missing LickedIcecreamTail JobDef.");
                 return;
             }
 
-            Job waitJob = JobMaker.MakeJob(waitJobDef);
-            waitJob.expiryInterval = LickDurationTicks;
+            Job waitJob = JobMaker.MakeJob(waitJobDef, eater);
+            waitJob.expiryInterval = LickDurationTicks + 60;
             waitJob.playerForced = true;
             pawn.jobs.StartJob(waitJob, JobCondition.InterruptForced, null, false, false, null, null, false, false, null, false, false, false);
         }
 
+        public static void InterruptLickingPartner(Pawn endingPawn, Pawn counterpart, JobDef expectedJobDef, Pawn expectedTarget)
+        {
+            if (endingPawn == null || counterpart == null || expectedJobDef == null || counterpart.jobs == null || counterpart.Dead || CancellingPawns.Contains(endingPawn) || CancellingPawns.Contains(counterpart))
+            {
+                return;
+            }
+
+            Job currentJob = counterpart.CurJob;
+            if (currentJob == null || currentJob.def != expectedJobDef || (expectedTarget != null && currentJob.targetA.Pawn != expectedTarget))
+            {
+                return;
+            }
+
+            CancellingPawns.Add(endingPawn);
+            CancellingPawns.Add(counterpart);
+            try
+            {
+                counterpart.jobs.EndCurrentJob(JobCondition.InterruptForced);
+            }
+            finally
+            {
+                CancellingPawns.Remove(endingPawn);
+                CancellingPawns.Remove(counterpart);
+            }
+        }
+
         public static bool IsAutomaticEater(Pawn pawn)
         {
-            if (pawn == null || !pawn.Spawned || !pawn.RaceProps.Humanlike || pawn.Downed || pawn.InMentalState || pawn.Drafted || pawn.needs == null || pawn.needs.food == null || pawn.needs.food.CurCategory < HungerCategory.Hungry)
+            IcecreamTailSettings settings = IcecreamTailMod.Settings;
+            if (settings == null || !settings.EnableAutoLick || pawn == null || !pawn.Spawned || !pawn.RaceProps.Humanlike || pawn.Downed || pawn.InMentalState || pawn.Drafted || pawn.needs == null || pawn.needs.food == null || pawn.needs.food.CurLevelPercentage >= settings.AutoLickFoodThreshold)
             {
                 return false;
             }
@@ -506,12 +644,54 @@ namespace NivarianIcecreamTail
             }
 
             Job currentJob = pawn.CurJob;
-            if (currentJob != null && currentJob.playerForced)
+            return currentJob == null || !currentJob.playerForced;
+        }
+
+        public static bool TryMakeAutomaticLickJob(Pawn eater, out Job job, out string reason)
+        {
+            job = null;
+            if (!IsAutomaticEater(eater))
             {
+                reason = "当前不适合自动进食";
                 return false;
             }
 
-            return currentJob == null || currentJob.def == JobDefOf.Wait || currentJob.def == JobDefOf.Wait_Wander || currentJob.def == JobDefOf.GotoWander;
+            int radius = IcecreamTailMod.Settings.SearchRadius > 150 ? 0 : IcecreamTailMod.Settings.SearchRadius;
+            Pawn nearestTarget = null;
+            float nearestDistance = float.MaxValue;
+            foreach (Pawn target in eater.Map.mapPawns.AllPawns)
+            {
+                string targetReason;
+                if (!CanLickTail(eater, target, false, radius, out targetReason))
+                {
+                    continue;
+                }
+
+                float distance = eater.Position.DistanceToSquared(target.Position);
+                if (distance < nearestDistance)
+                {
+                    nearestTarget = target;
+                    nearestDistance = distance;
+                }
+            }
+
+            if (nearestTarget == null)
+            {
+                reason = "没有可达且未被占用的成熟冰淇淋尾巴";
+                return false;
+            }
+
+            JobDef lickJobDef = DefDatabase<JobDef>.GetNamedSilentFail(LickJobDefName);
+            if (lickJobDef == null)
+            {
+                reason = "缺少舔尾巴 Job";
+                Log.Error("Nivarian Icecream Tail: missing LickIcecreamTail JobDef.");
+                return false;
+            }
+
+            job = JobMaker.MakeJob(lickJobDef, nearestTarget);
+            reason = null;
+            return true;
         }
 
         internal static IEnumerable<Pawn> AllKnownPawns()
@@ -546,11 +726,7 @@ namespace NivarianIcecreamTail
             {
                 IcecreamTailUtility.RemovePlaceholder(pawn);
                 RemoveRecovery(pawn);
-                Hediff buff = GetHediff(pawn, BuffDefName);
-                if (buff != null && pawn.health != null)
-                {
-                    pawn.health.RemoveHediff(buff);
-                }
+                IcecreamTailFlavorUtility.RemoveTailBuffs(pawn);
             }
 
             TailCombatUtility.RemoveAllSlowEffects();
@@ -560,11 +736,7 @@ namespace NivarianIcecreamTail
         {
             foreach (Pawn pawn in AllKnownPawns())
             {
-                Hediff buff = GetHediff(pawn, BuffDefName);
-                if (buff != null && pawn.health != null)
-                {
-                    pawn.health.RemoveHediff(buff);
-                }
+                IcecreamTailFlavorUtility.RemoveTailBuffs(pawn);
             }
         }
 
@@ -925,48 +1097,6 @@ namespace NivarianIcecreamTail
         }
     }
 
-    public sealed class MapComponent_IcecreamTailAutoLick : MapComponent
-    {
-        public MapComponent_IcecreamTailAutoLick(Map map) : base(map)
-        {
-        }
-
-        public override void MapComponentTick()
-        {
-            base.MapComponentTick();
-            if (!IcecreamTailMod.Enabled || Find.TickManager.TicksGame % 5000 != 0)
-            {
-                return;
-            }
-
-            List<Pawn> tails = map.mapPawns.AllPawns.Where(TailEatingUtility.IsReadyTailPawn).ToList();
-            if (tails.Count == 0)
-            {
-                return;
-            }
-
-            List<Pawn> eaters = map.mapPawns.AllPawns.Where(TailEatingUtility.IsAutomaticEater).ToList();
-            if (eaters.Count == 0)
-            {
-                return;
-            }
-
-            int radius = IcecreamTailMod.Settings.SearchRadius > 150 ? 0 : IcecreamTailMod.Settings.SearchRadius;
-            Pawn eater = eaters.RandomElement();
-            Pawn target = tails.Where(tail => CanAutoLick(eater, tail, radius)).OrderBy(tail => eater.Position.DistanceToSquared(tail.Position)).FirstOrDefault();
-            if (target != null)
-            {
-                TailEatingUtility.StartLicking(eater, target, false);
-            }
-        }
-
-        private static bool CanAutoLick(Pawn eater, Pawn target, int radius)
-        {
-            string reason;
-            return TailEatingUtility.CanLickTail(eater, target, true, radius, out reason);
-        }
-    }
-
     public sealed class FloatMenuOptionProvider_IcecreamTail : FloatMenuOptionProvider
     {
         protected override bool Drafted { get { return true; } }
@@ -1045,11 +1175,13 @@ namespace NivarianIcecreamTail
                 {
                     FacialAnimationCompatibility.RemoveAnimations(pawn, animationDefNames);
                 }
+
+                TailEatingUtility.InterruptLickingPartner(pawn, TargetPawn, DefDatabase<JobDef>.GetNamedSilentFail("LickedIcecreamTail"), pawn);
             });
             this.FailOn(() => !TailEatingUtility.IsReadyTailPawn(TargetPawn));
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch, false);
             Toil holdOwner = new Toil();
-            holdOwner.initAction = delegate { TailEatingUtility.HoldTailOwner(TargetPawn); };
+            holdOwner.initAction = delegate { TailEatingUtility.HoldTailOwner(TargetPawn, pawn); };
             holdOwner.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return holdOwner;
             Toil lick = Toils_General.Wait(TailEatingUtility.LickDurationTicks, TargetIndex.A).WithProgressBarToilDelay(TargetIndex.A, false, -0.5f);
@@ -1079,6 +1211,11 @@ namespace NivarianIcecreamTail
         private List<int> animationFinishTicks = new List<int>();
         private bool startedAnimation;
 
+        private Pawn EaterPawn
+        {
+            get { return TargetA.Pawn; }
+        }
+
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return true;
@@ -1104,6 +1241,11 @@ namespace NivarianIcecreamTail
                 if (startedAnimation)
                 {
                     FacialAnimationCompatibility.RemoveAnimations(pawn, animationDefNames);
+                }
+
+                if (condition != JobCondition.Succeeded)
+                {
+                    TailEatingUtility.InterruptLickingPartner(pawn, EaterPawn, DefDatabase<JobDef>.GetNamedSilentFail("LickIcecreamTail"), pawn);
                 }
             });
             Toil wait = Toils_General.Wait(job.expiryInterval > 0 ? job.expiryInterval : 240);

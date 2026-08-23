@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 味道切换器！孩子们！分支来咯~~~~ -->
+<Defs>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorOriginal</defName>
+    <label>原味</label>
+    <recoverySpeedFactor>1.0</recoverySpeedFactor>
+    <labelColor>(143,240,255)</labelColor>
+    <tailDescription>冰冰的尾巴，看起来非常好吃喵~</tailDescription>
+    <eaterBuff>IcecreamTailEaterBuff</eaterBuff>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorStrawberry</defName>
+    <label>草莓味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(255,140,179)</labelColor>
+    <tailDescription>甜甜的尾巴，看起来非常好吃喵~</tailDescription>
+    <eaterBuff>IcecreamTailStrawberryEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryStrawberryEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorVanilla</defName>
+    <label>香草味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(255,224,139)</labelColor>
+    <tailDescription>香香软软的尾巴，摸起来像踩在云朵上一样喵~</tailDescription>
+    <eaterBuff>IcecreamTailVanillaEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryVanillaEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorChocolate</defName>
+    <label>巧克力味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(214,151,98)</labelColor>
+    <tailDescription>浓浓甜甜的尾巴，闻起来有种暧昧的感觉喵~</tailDescription>
+    <eaterBuff>IcecreamTailChocolateEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryChocolateEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+</Defs>

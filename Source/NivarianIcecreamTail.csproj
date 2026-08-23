@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <Compile Include="IcecreamTail.cs" />
+    <Compile Include="FlavorSystem.cs" />
+    <Compile Include="TraderStock.cs" />
     <Compile Include="TailEating.cs" />
     <Compile Include="TailCombat.cs" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />

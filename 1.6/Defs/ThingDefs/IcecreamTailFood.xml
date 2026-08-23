@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 灶台做的，食物类的xml -->
 <Defs>
   <ThingDef ParentName="MealCooked">
     <defName>IcecreamTailFood</defName>
@@ -24,5 +25,27 @@
     <comps>
       <li Class="CompProperties_Ingredients" />
     </comps>
+  </ThingDef>
+  <ThingDef ParentName="MealCooked">
+    <defName>IcecreamTailRestoreIce</defName>
+    <label>！冰！</label>
+    <description>用涅瓦莲身上掉落鳞片做成的，没那么容易融化的冰。非常适合加到冰淇淋中。若冰龙吃了，可以直接回复自己的冰淇淋尾巴。</description>
+    <graphicData>
+      <texPath>Items/tail_ice_restore</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>12</MarketValue>
+      <WorkToMake>400</WorkToMake>
+      <Nutrition>0.1</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_TailRestoreIce" />
+      </outcomeDoers>
+    </ingestible>
   </ThingDef>
 </Defs>
