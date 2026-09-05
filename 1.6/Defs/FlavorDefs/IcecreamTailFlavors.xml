@@ -36,4 +36,13 @@
     <eaterBuff>IcecreamTailChocolateEaterBuff</eaterBuff>
     <extraEaterMoodThought>IcecreamTailMemoryChocolateEater</extraEaterMoodThought>
   </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorBeer</defName>
+    <label>啤酒味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(255,196,45)</labelColor>
+    <tailDescription>带着麦芽香气的尾巴，冰凉中混着一点醉醺醺的甜味喵~</tailDescription>
+    <eaterBuff>IcecreamTailBeerEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryBeerEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
 </Defs>

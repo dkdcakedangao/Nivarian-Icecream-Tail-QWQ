@@ -13,7 +13,8 @@ namespace NivarianIcecreamTail
             "IcecreamTailMilkSeasoning",
             "IcecreamTailStrawberrySeasoning",
             "IcecreamTailVanillaSeasoning",
-            "IcecreamTailChocolateSeasoning"
+            "IcecreamTailChocolateSeasoning",
+            "IcecreamTailBeerSeasoning"
         };
 
         public override bool HandlesThingDef(ThingDef thingDef)

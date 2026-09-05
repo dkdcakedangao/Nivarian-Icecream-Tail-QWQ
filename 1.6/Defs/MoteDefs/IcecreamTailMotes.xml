@@ -13,4 +13,50 @@
       <fadeOutTime>0.6</fadeOutTime>
     </mote>
   </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailBeerWin</defName>
+    <thingClass>MoteAttached</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>UI/WIN!!!!/win</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.75,0.605)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.08</fadeInTime>
+      <solidTime>4.45</solidTime>
+      <fadeOutTime>0.47</fadeOutTime>
+    </mote>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailBeerStar04</defName>
+    <thingClass>NivarianIcecreamTail.Mote_IcecreamTailBeerStar</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Effects/star_04</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.12</fadeInTime>
+      <solidTime>1.50</solidTime>
+      <fadeOutTime>0.60</fadeOutTime>
+    </mote>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailBeerStar08</defName>
+    <thingClass>NivarianIcecreamTail.Mote_IcecreamTailBeerStar</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Effects/star_08</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.12</fadeInTime>
+      <solidTime>1.50</solidTime>
+      <fadeOutTime>0.60</fadeOutTime>
+    </mote>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
 </Defs>

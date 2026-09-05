@@ -25,11 +25,15 @@
     <Compile Include="TraderStock.cs" />
     <Compile Include="TailEating.cs" />
     <Compile Include="TailCombat.cs" />
+    <Compile Include="BeerFourVfx.cs" />
+    <Compile Include="TemporaryAbilities.cs" />
+    <Compile Include="IcecreamTailAbilityTargeting.cs" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp-firstpass.dll" />
     <GameReference Include="$(RimWorldManagedDir)\UnityEngine.CoreModule.dll" />
     <GameReference Include="$(RimWorldManagedDir)\UnityEngine.IMGUIModule.dll" />
     <GameReference Include="$(RimWorldManagedDir)\UnityEngine.TextRenderingModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\Unity.Mathematics.dll" />
     <GameReference Include="$(RimWorldManagedDir)\netstandard.dll" />
     <GameReference Include="$(HarAssemblyPath)" />
     <GameReference Include="$(NivarianRaceAssemblyPath)" />

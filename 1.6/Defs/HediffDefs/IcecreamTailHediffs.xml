@@ -150,6 +150,156 @@
           </li>
         </capMods>
       </li>
+      </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailBeerEaterBuff</defName>
+    <label>吃了啤酒味冰淇淋（一酒）</label>
+    <description>我喜欢喝啤酒！我也喜欢吃冰淇淋！双倍快乐喵！</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>4</maxSeverity>
+    <comps>
+      <!-- debug入口，预留的。但是大概率用不上 -->
+
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailBeerFourVfx" />
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailBeerFourAbilities" />
+
+    </comps>
+    <!-- 神秘小巧思~孩子们，我都不知道这能行~ -->
+    <!-- 大概是能行？ -->
+    <!-- 居然真的能用阶段啊？ -->
+    <stages>
+      <li>
+        <minSeverity>0</minSeverity>
+        <statFactors>
+          <MoveSpeed>0.9</MoveSpeed>
+          <ShootingAccuracyPawn>0.9</ShootingAccuracyPawn>
+          <AimingDelayFactor>1.1</AimingDelayFactor>
+          <MeleeDamageFactor>1.2</MeleeDamageFactor>
+          <MeleeCooldownFactor>1.1</MeleeCooldownFactor>
+          <MeleeHitChance>0.9</MeleeHitChance>
+          <MeleeDodgeChance>1.1</MeleeDodgeChance>
+          <WorkSpeedGlobal>0.9</WorkSpeedGlobal>
+          <IncomingDamageFactor>0.9</IncomingDamageFactor>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.9</postFactor>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <minSeverity>2</minSeverity>
+        <statFactors>
+          <MoveSpeed>0.8</MoveSpeed>
+          <ShootingAccuracyPawn>0.6</ShootingAccuracyPawn>
+          <AimingDelayFactor>1.5</AimingDelayFactor>
+          <MeleeDamageFactor>1.4</MeleeDamageFactor>
+          <MeleeCooldownFactor>1.2</MeleeCooldownFactor>
+          <MeleeHitChance>0.7</MeleeHitChance>
+          <MeleeDodgeChance>1.2</MeleeDodgeChance>
+          <WorkSpeedGlobal>0.7</WorkSpeedGlobal>
+          <IncomingDamageFactor>0.8</IncomingDamageFactor>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.8</postFactor>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <minSeverity>3</minSeverity>
+        <statFactors>
+          <MoveSpeed>0.4</MoveSpeed>
+          <ShootingAccuracyPawn>0.1</ShootingAccuracyPawn>
+          <AimingDelayFactor>2.0</AimingDelayFactor>
+          <MeleeDamageFactor>2.0</MeleeDamageFactor>
+          <MeleeCooldownFactor>2.0</MeleeCooldownFactor>
+          <MeleeHitChance>0.5</MeleeHitChance>
+          <MeleeDodgeChance>0.7</MeleeDodgeChance>
+          <WorkSpeedGlobal>0.5</WorkSpeedGlobal>
+          <IncomingDamageFactor>0.7</IncomingDamageFactor>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.7</postFactor>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <minSeverity>4</minSeverity>
+        <statFactors>
+          <MoveSpeed>0.8</MoveSpeed>
+          <ShootingAccuracyPawn>0.01</ShootingAccuracyPawn>
+          <AimingDelayFactor>2.0</AimingDelayFactor>
+          <MeleeDamageFactor>1.2</MeleeDamageFactor>
+          <MeleeCooldownFactor>0.4</MeleeCooldownFactor>
+          <MeleeHitChance>1.2</MeleeHitChance>
+          <MeleeDodgeChance>2.0</MeleeDodgeChance>
+          <WorkSpeedGlobal>0.1</WorkSpeedGlobal>
+          <IncomingDamageFactor>0.4</IncomingDamageFactor>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.6</postFactor>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailMagicBody</defName>
+    <label>魔身</label>
+    <description>！爆！</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailMagicBody</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>2500</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailMagicBodyValidator" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>2.0</MoveSpeed>
+          <MeleeCooldownFactor>0.5</MeleeCooldownFactor>
+          <MeleeHitChance>1.5</MeleeHitChance>
+          <MeleeDamageFactor>1.25</MeleeDamageFactor>
+          <MeleeDodgeChance>1.5</MeleeDodgeChance>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailBeerHangover</defName>
+    <label>啤酒冰淇淋宿醉</label>
+    <description>啤酒和冰淇淋的双倍快乐已经结束，只剩下晕乎乎的脑袋。</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailBeerHangover</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>60000</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <hungerRateFactor>0.9</hungerRateFactor>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.9</postFactor>
+          </li>
+        </capMods>
+      </li>
     </stages>
   </HediffDef>
 </Defs>

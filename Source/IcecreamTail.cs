@@ -25,6 +25,8 @@ namespace NivarianIcecreamTail
         public bool EnableMoodEffects = true;
         public bool EnableRelationshipEffects = true;
         public bool EnableTailBuff = true;
+        public bool EnableBeerHangover = true;
+        public bool EnableBeerWinEasterEgg = true;
         public bool EnableCoreRecoveryEffect = true;
         public bool EnableRecoveryHunger = true;
         public bool EnableMatureTailCombat = true;
@@ -34,9 +36,12 @@ namespace NivarianIcecreamTail
         public bool LogFacialAnimationDebug;
         public bool LogAutoLickDebug;
         public bool LogEasterEggDebug;
+        public bool ShowTemporaryAbilityCooldownDebug;
         public float RecoveryTimeMultiplier = 1f;
         public float LickTimeMultiplier = 1f;
         public float TailBuffDurationMultiplier = 1f;
+        public float BeerWinEasterEggChance = 0.1f;
+        public float BeerFourMeleeCooldownFactor = 0.4f;
         public float AutoLickFoodThreshold = 0.2f;
         public int SearchRadius = 60;
         public bool HalveVanillaBuffDuration = true;
@@ -48,6 +53,8 @@ namespace NivarianIcecreamTail
             EnableMoodEffects = true;
             EnableRelationshipEffects = true;
             EnableTailBuff = true;
+            EnableBeerHangover = true;
+            EnableBeerWinEasterEgg = true;
             EnableCoreRecoveryEffect = true;
             EnableRecoveryHunger = true;
             EnableMatureTailCombat = true;
@@ -57,9 +64,12 @@ namespace NivarianIcecreamTail
             LogFacialAnimationDebug = false;
             LogAutoLickDebug = false;
             LogEasterEggDebug = false;
+            ShowTemporaryAbilityCooldownDebug = false;
             RecoveryTimeMultiplier = 1f;
             LickTimeMultiplier = 1f;
             TailBuffDurationMultiplier = 1f;
+            BeerWinEasterEggChance = 0.1f;
+            BeerFourMeleeCooldownFactor = 0.4f;
             AutoLickFoodThreshold = 0.2f;
             SearchRadius = 60;
             HalveVanillaBuffDuration = true;
@@ -72,6 +82,8 @@ namespace NivarianIcecreamTail
             Scribe_Values.Look(ref EnableMoodEffects, "EnableMoodEffects", true);
             Scribe_Values.Look(ref EnableRelationshipEffects, "EnableRelationshipEffects", true);
             Scribe_Values.Look(ref EnableTailBuff, "EnableTailBuff", true);
+            Scribe_Values.Look(ref EnableBeerHangover, "EnableBeerHangover", true);
+            Scribe_Values.Look(ref EnableBeerWinEasterEgg, "EnableBeerWinEasterEgg", true);
             Scribe_Values.Look(ref EnableCoreRecoveryEffect, "EnableCoreRecoveryEffect", true);
             Scribe_Values.Look(ref EnableRecoveryHunger, "EnableRecoveryHunger", true);
             Scribe_Values.Look(ref EnableMatureTailCombat, "EnableMatureTailCombat", true);
@@ -81,9 +93,12 @@ namespace NivarianIcecreamTail
             Scribe_Values.Look(ref LogFacialAnimationDebug, "LogFacialAnimationDebug", false);
             Scribe_Values.Look(ref LogAutoLickDebug, "LogAutoLickDebug", false);
             Scribe_Values.Look(ref LogEasterEggDebug, "LogEasterEggDebug", false);
+            Scribe_Values.Look(ref ShowTemporaryAbilityCooldownDebug, "ShowTemporaryAbilityCooldownDebug", false);
             Scribe_Values.Look(ref RecoveryTimeMultiplier, "RecoveryTimeMultiplier", 1f);
             Scribe_Values.Look(ref LickTimeMultiplier, "LickTimeMultiplier", 1f);
             Scribe_Values.Look(ref TailBuffDurationMultiplier, "TailBuffDurationMultiplier", 1f);
+            Scribe_Values.Look(ref BeerWinEasterEggChance, "BeerWinEasterEggChance", 0.1f);
+            Scribe_Values.Look(ref BeerFourMeleeCooldownFactor, "BeerFourMeleeCooldownFactor", 0.4f);
             Scribe_Values.Look(ref AutoLickFoodThreshold, "AutoLickFoodThreshold", 0.2f);
             Scribe_Values.Look(ref SearchRadius, "SearchRadius", 60);
             Scribe_Values.Look(ref HalveVanillaBuffDuration, "HalveVanillaBuffDuration", true);
@@ -104,6 +119,7 @@ namespace NivarianIcecreamTail
         public IcecreamTailMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<IcecreamTailSettings>();
+            LongEventHandler.ExecuteWhenFinished(BeerFourCombatSettings.Apply);
         }
 
         public static bool Enabled
@@ -141,6 +157,7 @@ namespace NivarianIcecreamTail
             listing.Begin(contentRect);
             bool wasEnabled = Settings.Enabled;
             bool wasBuffEnabled = Settings.EnableTailBuff;
+            bool wasBeerHangoverEnabled = Settings.EnableBeerHangover;
             bool wasHungerEnabled = Settings.EnableRecoveryHunger;
             bool wasCombatEnabled = Settings.EnableMatureTailCombat;
 
@@ -162,6 +179,7 @@ namespace NivarianIcecreamTail
                 if (Widgets.ButtonText(listing.GetRect(32f), "恢复全部默认设置"))
                 {
                     Settings.ResetToDefaults();
+                    BeerFourCombatSettings.Apply();
                 }
             }
             else if (settingsPage == 1)
@@ -172,6 +190,7 @@ namespace NivarianIcecreamTail
                 listing.Label("增益 buff 持续时间倍率：" + Settings.TailBuffDurationMultiplier.ToString("0.0") + "×（" + (24f * Settings.TailBuffDurationMultiplier).ToString("0.0") + " 小时）");
                 Settings.TailBuffDurationMultiplier = listing.Slider(Settings.TailBuffDurationMultiplier, 0.1f, 10f);
                 listing.CheckboxLabeled("香草味增益时间减半", ref Settings.HalveVanillaBuffDuration, "开启后，香草味冰淇淋尾巴增益仅持续其他口味的一半；同样受上方倍率影响。 ");
+                listing.CheckboxLabeled("四酒结束后会宿醉", ref Settings.EnableBeerHangover, "开启后，四酒自然结束会产生一天宿醉；宿醉期间无法再次获得啤酒口味专属效果。 ");
             }
             else if (settingsPage == 2)
             {
@@ -183,17 +202,32 @@ namespace NivarianIcecreamTail
             else if (settingsPage == 3)
             {
                 listing.CheckboxLabeled("冰淇淋尾巴战斗效果", ref Settings.EnableMatureTailCombat, "若冰龙若有完整的冰淇淋尾巴，会对敌人造成额外伤害，并减速敌人。 ");
+                listing.Label("四酒 buff 近战冷却倍率：" + Settings.BeerFourMeleeCooldownFactor.ToString("0.00") + "×");
+                float beerFourMeleeCooldownFactor = listing.Slider(Settings.BeerFourMeleeCooldownFactor, 0.1f, 1f);
+                float roundedFactor = Mathf.Round(beerFourMeleeCooldownFactor / 0.05f) * 0.05f;
+                if (!Mathf.Approximately(Settings.BeerFourMeleeCooldownFactor, roundedFactor))
+                {
+                    Settings.BeerFourMeleeCooldownFactor = roundedFactor;
+                    BeerFourCombatSettings.Apply();
+                }
             }
             else if (settingsPage == 4)
             {
                 listing.CheckboxLabeled("记录尾巴状态与恢复日志", ref Settings.LogTailStateDebug, "在 Player.log 记录尾巴成熟、恢复、断尾和恢复期饥饿状态变化。 ");
                 listing.CheckboxLabeled("记录动画兼容日志", ref Settings.LogFacialAnimationDebug, "在 Player.log 记录 Facial Animation 控制器、动画映射和播放请求结果。 ");
                 listing.CheckboxLabeled("记录自动舔食检查日志", ref Settings.LogAutoLickDebug, "在 Player.log 记录原版找食物时，是否用尾巴替代这次进食。 ");
-                listing.CheckboxLabeled("记录彩蛋日志", ref Settings.LogEasterEggDebug, "在 Player.log 记录巧克力尾巴与沃芬的彩蛋触发情况。 ");
+                listing.CheckboxLabeled("记录彩蛋日志", ref Settings.LogEasterEggDebug, "在 Player.log 记录巧克力尾巴与啤酒四酒彩蛋触发情况。 ");
+                if (Prefs.DevMode)
+                {
+                    listing.CheckboxLabeled("显示临时技能冷却 Debug 按钮", ref Settings.ShowTemporaryAbilityCooldownDebug, "在已征召的四酒涅瓦莲 Gizmo 栏显示按钮；只清空本模组临时技能冷却。 ");
+                }
             }
             else
             {
                 listing.CheckboxLabeled("沃芬吃巧克力会中毒", ref Settings.EnableChocolateWolfeinEasterEgg, "沃芬舔食巧克力冰淇淋尾巴时，会获得约 10 分钟的严重食物中毒和特殊心情。 ");
+                listing.CheckboxLabeled("啤酒四酒 WIN 彩蛋", ref Settings.EnableBeerWinEasterEgg, "仅涅瓦莲从三酒升到四酒时判定；触发后显示 WIN 图片并播放音效。 ");
+                listing.Label("啤酒四酒 WIN 彩蛋概率：" + (Settings.BeerWinEasterEggChance * 100f).ToString("0") + "%");
+                Settings.BeerWinEasterEggChance = listing.Slider(Settings.BeerWinEasterEggChance, 0f, 1f);
             }
 
             listing.End();
@@ -207,6 +241,11 @@ namespace NivarianIcecreamTail
             if (wasBuffEnabled && !Settings.EnableTailBuff)
             {
                 TailEatingUtility.RemoveAllTailBuffs();
+            }
+
+            if (wasBeerHangoverEnabled && !Settings.EnableBeerHangover)
+            {
+                TailEatingUtility.RemoveAllBeerHangovers();
             }
 
             if (wasHungerEnabled != Settings.EnableRecoveryHunger)
@@ -254,10 +293,53 @@ namespace NivarianIcecreamTail
 
             if (settingsPage == 1)
             {
-                return 160f;
+                return 190f;
             }
 
-            return settingsPage == 2 || settingsPage == 4 ? 130f : 100f;
+            if (settingsPage == 4)
+            {
+                return Prefs.DevMode ? 190f : 130f;
+            }
+
+            return settingsPage == 2 ? 130f : (settingsPage == 5 ? 150f : 100f);
+        }
+    }
+
+    internal static class BeerFourCombatSettings
+    {
+        private const string BeerBuffDefName = "IcecreamTailBeerEaterBuff";
+
+        public static void Apply()
+        {
+            HediffDef beerBuffDef = DefDatabase<HediffDef>.GetNamedSilentFail(BeerBuffDefName);
+            HediffStage fourBeerStage = beerBuffDef == null || beerBuffDef.stages == null
+                ? null
+                : beerBuffDef.stages.FirstOrDefault(stage => stage != null && stage.minSeverity >= 4f);
+            if (fourBeerStage == null || fourBeerStage.statFactors == null)
+            {
+                return;
+            }
+
+            StatModifier cooldownModifier = fourBeerStage.statFactors.FirstOrDefault(modifier => modifier.stat == StatDefOf.MeleeCooldownFactor);
+            if (cooldownModifier == null)
+            {
+                return;
+            }
+
+            IcecreamTailSettings settings = IcecreamTailMod.Settings;
+            cooldownModifier.value = settings == null ? 0.4f : Mathf.Clamp(settings.BeerFourMeleeCooldownFactor, 0.1f, 1f);
+            RefreshPawnStatCaches();
+        }
+
+        private static void RefreshPawnStatCaches()
+        {
+            foreach (Pawn pawn in TailEatingUtility.AllKnownPawns())
+            {
+                if (pawn != null)
+                {
+                    StatDefOf.MeleeCooldownFactor.Worker.ClearCacheForThing(pawn);
+                }
+            }
         }
     }
 
@@ -585,9 +667,33 @@ namespace NivarianIcecreamTail
     // 待优化……
     public sealed class Hediff_IcecreamTailFlavorEaterBuff : HediffWithComps
     {
+        private const string BeerBuffDefName = "IcecreamTailBeerEaterBuff";
+
+        public override string LabelBase
+        {
+            get
+            {
+                if (def != null && def.defName == BeerBuffDefName)
+                {
+                    int level = Mathf.Clamp(Mathf.RoundToInt(Severity), 1, 4);
+                    return "吃了啤酒味冰淇淋（" + new[] { "一酒", "二酒", "三酒", "四酒" }[level - 1] + "）";
+                }
+
+                return base.LabelBase;
+            }
+        }
+
         public override Color LabelColor
         {
-            get { return IcecreamTailFlavorUtility.BuffLabelColor(def); }
+            get
+            {
+                if (def != null && def.defName == BeerBuffDefName && Severity >= 4f)
+                {
+                    return new Color(1f, 0.18f, 0.18f);
+                }
+
+                return IcecreamTailFlavorUtility.BuffLabelColor(def);
+            }
         }
 
         public override string TipStringExtra

@@ -1,0 +1,1083 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using HarmonyLib;
+using RimWorld;
+using UnityEngine;
+using Verse;
+using Verse.Sound;
+
+namespace NivarianIcecreamTail
+{
+    public abstract class IcecreamTailTemporaryAbility : Ability
+    {
+        protected IcecreamTailTemporaryAbility()
+        {
+        }
+
+        protected IcecreamTailTemporaryAbility(Pawn pawn) : base(pawn)
+        {
+        }
+
+        protected IcecreamTailTemporaryAbility(Pawn pawn, AbilityDef def) : base(pawn, def)
+        {
+        }
+    }
+
+    public sealed class IcecreamTailAbilityBurst : IcecreamTailTemporaryAbility
+    {
+        public IcecreamTailAbilityBurst()
+        {
+        }
+
+        public IcecreamTailAbilityBurst(Pawn pawn) : base(pawn)
+        {
+        }
+
+        public IcecreamTailAbilityBurst(Pawn pawn, AbilityDef def) : base(pawn, def)
+        {
+        }
+
+        public override bool Activate(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            string reason;
+            if (!IcecreamTailTemporaryAbilityUtility.CanCastTemporaryAbility(pawn, out reason))
+            {
+                Messages.Message(reason, pawn, MessageTypeDefOf.RejectInput, false);
+                return false;
+            }
+
+            bool activated = base.Activate(target, dest);
+            if (activated)
+            {
+                PlayCastSound();
+            }
+
+            return activated;
+        }
+
+        public override IEnumerable<Command> GetGizmos()
+        {
+            yield break;
+        }
+
+        private void PlayCastSound()
+        {
+            string defName = Rand.Bool ? "IcecreamTailSkillBurst1" : "IcecreamTailSkillBurst2";
+            SoundDef sound = DefDatabase<SoundDef>.GetNamedSilentFail(defName);
+            if (sound == null)
+            {
+                Log.Error("Nivarian Icecream Tail: missing " + defName + " SoundDef.");
+                return;
+            }
+
+            if (pawn.Spawned && pawn.Map != null)
+            {
+                sound.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
+            }
+        }
+    }
+
+    public sealed class IcecreamTailAbilityBurst2 : IcecreamTailTemporaryAbility
+    {
+        public IcecreamTailAbilityBurst2() { }
+        public IcecreamTailAbilityBurst2(Pawn pawn) : base(pawn) { }
+        public IcecreamTailAbilityBurst2(Pawn pawn, AbilityDef def) : base(pawn, def) { }
+
+        public override IEnumerable<Command> GetGizmos()
+        {
+            yield break;
+        }
+    }
+
+    public sealed class Verb_CastAbilityBurst2 : Verb_CastAbility
+    {
+        public override void DrawHighlight(LocalTargetInfo target)
+        {
+            base.DrawHighlight(target);
+
+            Pawn caster = CasterPawn;
+            if (caster == null || caster.Map == null || !target.IsValid || !CanHitTarget(target))
+            {
+                return;
+            }
+
+            IntVec3 targetCell = target.Pawn != null && target.Pawn.Spawned && target.Pawn.Map == caster.Map
+                ? target.Pawn.Position
+                : target.Cell;
+            if (!targetCell.InBounds(caster.Map))
+            {
+                return;
+            }
+
+            List<IntVec3> path = new List<IntVec3>();
+            List<IntVec3> line = GenSight.BresenhamCellsBetween(caster.Position, targetCell);
+            for (int i = 1; i < line.Count; i++)
+            {
+                IntVec3 cell = line[i];
+                if (!cell.InBounds(caster.Map) || IsWallBlocking(caster.Map, cell))
+                {
+                    break;
+                }
+
+                path.Add(cell);
+            }
+
+            if (path.Count > 0)
+            {
+                GenDraw.DrawFieldEdges(path, Color.green, 0.1f, null, 0);
+            }
+        }
+
+        private static bool IsWallBlocking(Map map, IntVec3 cell)
+        {
+            Building building = cell.GetEdifice(map);
+            return building != null && building.def != null && building.def.building != null &&
+                building.def.building.isWall;
+        }
+    }
+
+    public sealed class Command_IcecreamTailAbility : Command_Action
+    {
+        private const float ButtonSize = 75f;
+        private static readonly Texture2D Background = ContentFinder<Texture2D>.Get("UI/skills/gizmo_background");
+        private static readonly Texture2D Border = ContentFinder<Texture2D>.Get("Nivarian/Icon/iceflake_gizmo");
+        private readonly Ability ability;
+        private readonly Command_Ability abilityCommand;
+
+        public Command_IcecreamTailAbility(Ability ability, Pawn pawn)
+        {
+            this.ability = ability;
+            abilityCommand = new Command_Ability(ability, pawn);
+            defaultLabel = ability.def.LabelCap;
+            defaultDesc = ability.Tooltip;
+            icon = ability.def.uiIcon;
+            iconDrawScale = 0.98f;
+            shrinkable = false;
+            groupable = false;
+        }
+
+        public override void ProcessInput(Event ev)
+        {
+            abilityCommand.ProcessInput(ev);
+        }
+
+        public override Texture2D BGTexture
+        {
+            get { return Background; }
+        }
+
+        public override Texture2D BGTextureShrunk
+        {
+            get { return Background; }
+        }
+
+        public override bool Disabled
+        {
+            get
+            {
+                bool value = abilityCommand.Disabled;
+                base.Disabled = value;
+                disabledReason = abilityCommand.disabledReason;
+                return value;
+            }
+            set
+            {
+                base.Disabled = value;
+                abilityCommand.Disabled = value;
+                disabledReason = abilityCommand.disabledReason;
+            }
+        }
+
+        public override string TopRightLabel
+        {
+            get { return abilityCommand.TopRightLabel; }
+        }
+
+        public override float GetWidth(float maxWidth)
+        {
+            return ButtonSize;
+        }
+
+        protected override GizmoResult GizmoOnGUIInt(Rect butRect, GizmoRenderParms parms)
+        {
+            GizmoResult result = base.GizmoOnGUIInt(butRect, parms);
+            DrawCooldown(butRect);
+            DrawInteractionChrome(butRect);
+            GUI.DrawTexture(butRect, Border);
+            return result;
+        }
+
+        private void DrawInteractionChrome(Rect butRect)
+        {
+            if (Disabled)
+            {
+                Widgets.DrawBoxSolid(butRect, new Color(0f, 0f, 0f, 0.25f));
+            }
+
+            if (Mouse.IsOver(butRect))
+            {
+                Widgets.DrawHighlight(butRect);
+            }
+        }
+
+        private void DrawCooldown(Rect butRect)
+        {
+            int remaining = ability.CooldownTicksRemaining;
+            int total = ability.CooldownTicksTotal;
+            if (remaining <= 0 || total <= 0)
+            {
+                return;
+            }
+
+            float fraction = Mathf.Clamp01((float)remaining / total);
+            Rect fillRect = new Rect(butRect.x, butRect.y + butRect.height * (1f - fraction), butRect.width, butRect.height * fraction);
+            Color previousColor = GUI.color;
+            GUI.color = new Color(0f, 0f, 0f, 0.65f);
+            GUI.DrawTexture(fillRect, BaseContent.WhiteTex);
+            GUI.color = Color.white;
+            GameFont previousFont = Text.Font;
+            TextAnchor previousAnchor = Text.Anchor;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Tiny;
+            Widgets.Label(butRect, remaining.ToStringTicksToPeriod());
+            Text.Font = previousFont;
+            Text.Anchor = previousAnchor;
+            GUI.color = previousColor;
+        }
+    }
+
+    public sealed class CompProperties_IcecreamTailBurst : CompProperties_AbilityEffect
+    {
+        public CompProperties_IcecreamTailBurst()
+        {
+            compClass = typeof(CompAbilityEffect_IcecreamTailBurst);
+        }
+    }
+
+    public sealed class CompAbilityEffect_IcecreamTailBurst : CompAbilityEffect
+    {
+        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            base.Apply(target, dest);
+            Pawn pawn = parent == null ? null : parent.pawn;
+            if (pawn == null || pawn.health == null)
+            {
+                return;
+            }
+
+            string reason;
+            if (!IcecreamTailTemporaryAbilityUtility.CanCastTemporaryAbility(pawn, out reason))
+            {
+                return;
+            }
+
+            HediffDef magicBodyDef = DefDatabase<HediffDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.MagicBodyDefName);
+            if (magicBodyDef == null)
+            {
+                Log.Error("Nivarian Icecream Tail: missing IcecreamTailMagicBody HediffDef.");
+                return;
+            }
+
+            Hediff magicBody = pawn.health.hediffSet.GetFirstHediffOfDef(magicBodyDef);
+            if (magicBody == null)
+            {
+                magicBody = HediffMaker.MakeHediff(magicBodyDef, pawn);
+                pawn.health.AddHediff(magicBody);
+            }
+            else
+            {
+                HediffComp_Disappears disappears = magicBody.TryGetComp<HediffComp_Disappears>();
+                if (disappears != null)
+                {
+                    disappears.ResetElapsedTicks();
+                }
+            }
+
+        }
+    }
+
+    public sealed class CompProperties_IcecreamTailBurst2 : CompProperties_IcecreamTailTargeting
+    {
+        public CompProperties_IcecreamTailBurst2()
+        {
+            compClass = typeof(CompAbilityEffect_IcecreamTailBurst2);
+        }
+    }
+
+    public sealed class CompAbilityEffect_IcecreamTailBurst2 : CompAbilityEffect_IcecreamTailTargeting
+    {
+        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            base.Apply(target, dest);
+            Pawn caster = parent == null ? null : parent.pawn;
+            string reason;
+            bool started = caster != null && IcecreamTailTemporaryAbilityUtility.CanCastTemporaryAbility(caster, out reason) &&
+                IcecreamTailBurst2Runtime.Begin(caster, target);
+            if (!started)
+            {
+                if (parent != null)
+                {
+                    parent.ResetCooldown();
+                }
+                if (caster != null)
+                {
+                    IcecreamTailBurst2Runtime.Cancel(caster);
+                }
+            }
+        }
+    }
+
+    public sealed class Hediff_IcecreamTailMagicBody : HediffWithComps
+    {
+        public override Color LabelColor
+        {
+            get { return new Color(1f, 0.12f, 0.12f); }
+        }
+    }
+
+    public sealed class HediffCompProperties_IcecreamTailMagicBodyValidator : HediffCompProperties
+    {
+        public HediffCompProperties_IcecreamTailMagicBodyValidator()
+        {
+            compClass = typeof(HediffComp_IcecreamTailMagicBodyValidator);
+        }
+    }
+
+    public sealed class HediffComp_IcecreamTailMagicBodyValidator : HediffComp
+    {
+        public override void CompPostTickInterval(ref float severityAdjustment, int delta)
+        {
+            base.CompPostTickInterval(ref severityAdjustment, delta);
+            if (!IcecreamTailTemporaryAbilityUtility.IsFourBeerEligible(parent.pawn))
+            {
+                parent.pawn.health.RemoveHediff(parent);
+            }
+        }
+    }
+
+    public sealed class HediffCompProperties_IcecreamTailBeerFourAbilities : HediffCompProperties
+    {
+        public HediffCompProperties_IcecreamTailBeerFourAbilities()
+        {
+            compClass = typeof(HediffComp_IcecreamTailBeerFourAbilities);
+        }
+    }
+
+    public sealed class HediffComp_IcecreamTailBeerFourAbilities : HediffComp
+    {
+        public override void CompPostPostAdd(DamageInfo? dinfo)
+        {
+            base.CompPostPostAdd(dinfo);
+            IcecreamTailTemporaryAbilityUtility.SyncPawn(parent.pawn);
+        }
+
+        public override void CompPostTickInterval(ref float severityAdjustment, int delta)
+        {
+            base.CompPostTickInterval(ref severityAdjustment, delta);
+            IcecreamTailTemporaryAbilityUtility.SyncPawn(parent.pawn);
+        }
+
+        public override void CompPostPostRemoved()
+        {
+            Pawn pawn = parent.pawn;
+            base.CompPostPostRemoved();
+            IcecreamTailTemporaryAbilityUtility.RemoveTemporaryAbilitiesAndMagicBody(pawn);
+        }
+    }
+
+    public static class IcecreamTailTemporaryAbilityUtility
+    {
+        public const string BeerBuffDefName = "IcecreamTailBeerEaterBuff";
+        public const string BurstAbilityDefName = "IcecreamTailAbilityBurst";
+        public const string Burst2AbilityDefName = "IcecreamTailAbilityBurst2";
+        public const string MagicBodyDefName = "IcecreamTailMagicBody";
+
+        public static bool IsFourBeerEligible(Pawn pawn)
+        {
+            if (!IcecreamTailMod.Enabled || !IcecreamTailUtility.IsNivarian(pawn) || pawn.health == null)
+            {
+                return false;
+            }
+
+            Hediff beer = pawn.health.hediffSet.hediffs.FirstOrDefault(hediff => hediff.def != null && hediff.def.defName == BeerBuffDefName);
+            return beer != null && beer.Severity >= 4f;
+        }
+
+        public static bool HasMagicBody(Pawn pawn)
+        {
+            if (pawn == null || pawn.health == null)
+            {
+                return false;
+            }
+
+            HediffDef def = DefDatabase<HediffDef>.GetNamedSilentFail(MagicBodyDefName);
+            return def != null && pawn.health.hediffSet.GetFirstHediffOfDef(def) != null;
+        }
+
+        public static bool CanCastTemporaryAbility(Pawn pawn, out string reason)
+        {
+            if (!IsFourBeerEligible(pawn))
+            {
+                reason = "只有处于四酒状态的涅瓦莲才能使用该能力。";
+                return false;
+            }
+
+            if (!pawn.Drafted)
+            {
+                reason = "需要先征召该涅瓦莲。";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public static void SyncPawn(Pawn pawn)
+        {
+            if (pawn == null || pawn.abilities == null)
+            {
+                return;
+            }
+
+            AbilityDef burstDef = DefDatabase<AbilityDef>.GetNamedSilentFail(BurstAbilityDefName);
+            AbilityDef burst2Def = DefDatabase<AbilityDef>.GetNamedSilentFail(Burst2AbilityDefName);
+            bool eligible = IsFourBeerEligible(pawn);
+            SyncAbility(pawn, burstDef, eligible);
+            SyncAbility(pawn, burst2Def, eligible);
+            if (!eligible)
+            {
+                IcecreamTailBurst2Runtime.Cancel(pawn);
+                RemoveMagicBody(pawn);
+            }
+        }
+
+        private static void SyncAbility(Pawn pawn, AbilityDef def, bool eligible)
+        {
+            if (def == null) return;
+            Ability ability = pawn.abilities.GetAbility(def, false);
+            if (eligible && ability == null) pawn.abilities.GainAbility(def);
+            else if (!eligible && ability != null) pawn.abilities.RemoveAbility(def);
+        }
+
+        public static void RemoveTemporaryAbilitiesAndMagicBody(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            IcecreamTailBurst2Runtime.Cancel(pawn);
+
+            if (pawn.abilities != null)
+            {
+                List<AbilityDef> defs = pawn.abilities.AllAbilitiesForReading
+                    .Where(ability => ability is IcecreamTailTemporaryAbility)
+                    .Select(ability => ability.def)
+                    .Where(def => def != null)
+                    .Distinct()
+                    .ToList();
+                foreach (AbilityDef def in defs)
+                {
+                    pawn.abilities.RemoveAbility(def);
+                }
+            }
+
+            RemoveMagicBody(pawn);
+        }
+
+        public static int ResetTemporaryAbilityCooldowns(Pawn pawn)
+        {
+            if (pawn == null || pawn.abilities == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            foreach (Ability ability in pawn.abilities.AllAbilitiesForReading)
+            {
+                if (ability is IcecreamTailTemporaryAbility)
+                {
+                    ability.ResetCooldown();
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static void RemoveMagicBody(Pawn pawn)
+        {
+            if (pawn == null || pawn.health == null)
+            {
+                return;
+            }
+
+            HediffDef def = DefDatabase<HediffDef>.GetNamedSilentFail(MagicBodyDefName);
+            Hediff magicBody = def == null ? null : pawn.health.hediffSet.GetFirstHediffOfDef(def);
+            if (magicBody != null)
+            {
+                pawn.health.RemoveHediff(magicBody);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn), "GetGizmos")]
+    public static class Patch_Pawn_GetGizmos_IcecreamTailTemporaryAbilities
+    {
+        public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Pawn __instance)
+        {
+            foreach (Gizmo gizmo in __result)
+            {
+                yield return gizmo;
+            }
+
+            if (!__instance.Drafted || !IcecreamTailTemporaryAbilityUtility.IsFourBeerEligible(__instance) || __instance.abilities == null)
+            {
+                yield break;
+            }
+
+            IcecreamTailSettings settings = IcecreamTailMod.Settings;
+            if (Prefs.DevMode && settings != null && settings.ShowTemporaryAbilityCooldownDebug)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "清空临时技能冷却",
+                    defaultDesc = "仅清空当前小人的冰淇淋尾巴临时技能冷却。",
+                    icon = TexCommand.ClearPrioritizedWork,
+                    action = delegate
+                    {
+                        int count = IcecreamTailTemporaryAbilityUtility.ResetTemporaryAbilityCooldowns(__instance);
+                        Messages.Message("已清空 " + count + " 个临时技能冷却。", __instance, MessageTypeDefOf.NeutralEvent, false);
+                    }
+                };
+            }
+
+            AbilityDef burstDef = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.BurstAbilityDefName);
+            Ability burst = burstDef == null ? null : __instance.abilities.GetAbility(burstDef, false);
+            if (burst != null)
+            {
+                yield return new Command_IcecreamTailAbility(burst, __instance);
+            }
+
+            AbilityDef burst2Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Burst2AbilityDefName);
+            Ability burst2 = burst2Def == null ? null : __instance.abilities.GetAbility(burst2Def, false);
+            if (burst2 != null)
+            {
+                yield return new Command_IcecreamTailAbility(burst2, __instance);
+            }
+        }
+    }
+
+    internal enum IcecreamTailBurst2Phase
+    {
+        Moving,
+        AfterLanding
+    }
+
+    internal sealed class IcecreamTailBurst2State
+    {
+        public IntVec3 startCell;
+        public IntVec3 landingCell;
+        public IcecreamTailBurst2Phase phase;
+        public int ticksRemaining;
+        public int moveElapsedTicks;
+        public int moveTotalTicks;
+        public int pathIndex;
+        public bool empowered;
+        public List<IntVec3> pathCells = new List<IntVec3>();
+        public List<Pawn> stunnedPawns = new List<Pawn>();
+    }
+
+    public sealed class IcecreamTailBurst2GameComponent : GameComponent
+    {
+        public IcecreamTailBurst2GameComponent(Game game) { }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            IcecreamTailBurst2Runtime.ExposeData();
+        }
+
+        public override void GameComponentTick()
+        {
+            base.GameComponentTick();
+            IcecreamTailBurst2Runtime.TickAll();
+        }
+    }
+
+    internal sealed class IcecreamTailBurst2SavedState : IExposable
+    {
+        public Pawn pawn;
+        public IntVec3 startCell;
+        public IntVec3 landingCell;
+        public int phase;
+        public int ticksRemaining;
+        public int moveElapsedTicks;
+        public int moveTotalTicks;
+        public int pathIndex;
+        public bool empowered;
+        public List<IntVec3> pathCells;
+        public List<Pawn> stunnedPawns;
+
+        public void ExposeData()
+        {
+            Scribe_References.Look(ref pawn, "pawn");
+            Scribe_Values.Look(ref startCell, "startCell");
+            Scribe_Values.Look(ref landingCell, "landingCell");
+            Scribe_Values.Look(ref phase, "phase");
+            Scribe_Values.Look(ref ticksRemaining, "ticksRemaining");
+            Scribe_Values.Look(ref moveElapsedTicks, "moveElapsedTicks");
+            Scribe_Values.Look(ref moveTotalTicks, "moveTotalTicks");
+            Scribe_Values.Look(ref pathIndex, "pathIndex");
+            Scribe_Values.Look(ref empowered, "empowered");
+            Scribe_Collections.Look(ref pathCells, "pathCells", LookMode.Value);
+            Scribe_Collections.Look(ref stunnedPawns, "stunnedPawns", LookMode.Reference);
+        }
+    }
+
+    internal static class IcecreamTailBurst2Runtime
+    {
+        private static readonly Dictionary<Pawn, IcecreamTailBurst2State> Active = new Dictionary<Pawn, IcecreamTailBurst2State>();
+        private static readonly Dictionary<Pawn, Pawn> PendingLargeStuns = new Dictionary<Pawn, Pawn>();
+        private static readonly List<Pawn> TickBuffer = new List<Pawn>();
+
+        public static void ExposeData()
+        {
+            List<IcecreamTailBurst2SavedState> saved = new List<IcecreamTailBurst2SavedState>();
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                saved = Active.Select(pair => new IcecreamTailBurst2SavedState
+                {
+                    pawn = pair.Key,
+                    startCell = pair.Value.startCell,
+                    landingCell = pair.Value.landingCell,
+                    phase = (int)pair.Value.phase,
+                    ticksRemaining = pair.Value.ticksRemaining,
+                    moveElapsedTicks = pair.Value.moveElapsedTicks,
+                    moveTotalTicks = pair.Value.moveTotalTicks,
+                    pathIndex = pair.Value.pathIndex,
+                    empowered = pair.Value.empowered,
+                    pathCells = pair.Value.pathCells,
+                    stunnedPawns = pair.Value.stunnedPawns
+                }).ToList();
+            }
+
+            Scribe_Collections.Look(ref saved, "burst2States", LookMode.Deep);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                Active.Clear();
+                if (saved == null) return;
+                foreach (IcecreamTailBurst2SavedState item in saved)
+                {
+                    if (item.pawn == null) continue;
+                    AbilityDef def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Burst2AbilityDefName);
+                    Ability ability = item.pawn.abilities == null || def == null
+                        ? null
+                        : item.pawn.abilities.GetAbility(def, false);
+                    if (ability == null)
+                    {
+                        continue;
+                    }
+
+                    Active[item.pawn] = new IcecreamTailBurst2State
+                    {
+                        startCell = item.startCell,
+                        landingCell = item.landingCell,
+                        phase = (IcecreamTailBurst2Phase)item.phase,
+                        ticksRemaining = item.ticksRemaining,
+                        empowered = item.empowered,
+                        moveElapsedTicks = item.moveElapsedTicks,
+                        moveTotalTicks = item.moveTotalTicks,
+                        pathIndex = item.pathIndex,
+                        pathCells = item.pathCells ?? new List<IntVec3>(),
+                        stunnedPawns = item.stunnedPawns ?? new List<Pawn>()
+                    };
+                }
+            }
+        }
+
+        public static bool Begin(Pawn pawn, LocalTargetInfo target)
+        {
+            if (pawn == null || !pawn.Spawned || pawn.Map == null) return false;
+            List<IntVec3> path;
+            IntVec3 landingCell;
+            if (!TryBuildPath(pawn, target, out path, out landingCell)) return false;
+            Active[pawn] = new IcecreamTailBurst2State
+            {
+                startCell = pawn.Position,
+                landingCell = landingCell,
+                pathCells = path,
+                phase = IcecreamTailBurst2Phase.Moving,
+                ticksRemaining = 0,
+                moveElapsedTicks = 0,
+                moveTotalTicks = Mathf.Max(1, path.Count * 4),
+                pathIndex = 0,
+                empowered = false
+            };
+            pawn.pather.StopDead();
+            PlaySound("IcecreamTailSkillBurst21", new TargetInfo(pawn.Position, pawn.Map));
+            AdvanceMovement(pawn, Active[pawn], 0);
+            return true;
+        }
+
+        public static void OnDamage(Pawn pawn, float damage)
+        {
+            IcecreamTailBurst2State state;
+            if (damage > 0f && pawn != null && Active.TryGetValue(pawn, out state) &&
+                state.phase == IcecreamTailBurst2Phase.AfterLanding)
+            {
+                state.empowered = true;
+            }
+        }
+
+        public static void Tick(Pawn pawn, int delta)
+        {
+            IcecreamTailBurst2State state;
+            if (pawn == null || !Active.TryGetValue(pawn, out state)) return;
+            string reason;
+            if (!IcecreamTailTemporaryAbilityUtility.CanCastTemporaryAbility(pawn, out reason) || pawn.Dead ||
+                !pawn.Spawned || pawn.Map == null)
+            {
+                Cancel(pawn);
+                return;
+            }
+
+            state.ticksRemaining -= delta;
+            if (state.phase == IcecreamTailBurst2Phase.Moving)
+            {
+                AdvanceMovement(pawn, state, delta);
+                return;
+            }
+            if (state.phase == IcecreamTailBurst2Phase.AfterLanding && state.ticksRemaining <= 0)
+            {
+                if (state.empowered)
+                {
+                    ExecuteExplosion(pawn, pawn.Map, state.landingCell, 2.5f, MeleeDamage(pawn) * 2, 240, true);
+                }
+                Cancel(pawn);
+            }
+        }
+
+        public static void TickAll()
+        {
+            foreach (Pawn enemy in PendingLargeStuns.Keys.ToList())
+            {
+                Pawn caster = PendingLargeStuns[enemy];
+                if (enemy == null || enemy.DestroyedOrNull() || enemy.Spawned ||
+                    caster == null || caster.DestroyedOrNull() || caster.Dead)
+                {
+                    PendingLargeStuns.Remove(enemy);
+                }
+            }
+
+            TickBuffer.Clear();
+            TickBuffer.AddRange(Active.Keys);
+            foreach (Pawn pawn in TickBuffer)
+            {
+                Tick(pawn, 1);
+            }
+        }
+
+        public static void Cancel(Pawn pawn)
+        {
+            if (pawn != null) Active.Remove(pawn);
+        }
+
+        public static bool IsActive(Pawn pawn)
+        {
+            return pawn != null && Active.ContainsKey(pawn);
+        }
+
+        public static Vector3 GetVisualOffset(Pawn pawn)
+        {
+            IcecreamTailBurst2State state;
+            if (pawn == null || !Active.TryGetValue(pawn, out state) || state.phase != IcecreamTailBurst2Phase.Moving ||
+                state.moveTotalTicks <= 0)
+            {
+                return Vector3.zero;
+            }
+
+            float progress = Mathf.Clamp01((float)state.moveElapsedTicks / state.moveTotalTicks);
+            IntVec3 delta = state.landingCell - state.startCell;
+            return new Vector3(delta.x, 0f, delta.z) * progress;
+        }
+
+        private static int MeleeDamage(Pawn pawn)
+        {
+            return Mathf.Max(1, Mathf.RoundToInt(pawn.GetStatValue(StatDefOf.MeleeDPS)));
+        }
+
+        public static bool TryBuildPath(Pawn pawn, LocalTargetInfo target, out List<IntVec3> path, out IntVec3 landingCell)
+        {
+            path = new List<IntVec3>();
+            landingCell = IntVec3.Invalid;
+            if (pawn == null || pawn.Map == null || !target.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 targetCell = target.Cell;
+            Map map = pawn.Map;
+            if (!targetCell.InBounds(map) || !targetCell.Standable(map) || IsWallBlocking(map, targetCell))
+            {
+                return false;
+            }
+
+            List<IntVec3> line = GenSight.BresenhamCellsBetween(pawn.Position, targetCell);
+            if (line.Count < 2)
+            {
+                return false;
+            }
+
+            for (int i = 1; i < line.Count; i++)
+            {
+                IntVec3 cell = line[i];
+                if (!cell.InBounds(map) || IsWallBlocking(map, cell))
+                {
+                    return false;
+                }
+
+                path.Add(cell);
+            }
+
+            int landingIndex = path.Count - 1;
+            while (landingIndex >= 0 && !IsLegalLandingCell(pawn, path[landingIndex]))
+            {
+                landingIndex--;
+            }
+
+            if (landingIndex < 0)
+            {
+                path.Clear();
+                return false;
+            }
+
+            if (landingIndex < path.Count - 1)
+            {
+                path.RemoveRange(landingIndex + 1, path.Count - landingIndex - 1);
+            }
+
+            landingCell = path[landingIndex];
+            bool targetPawnOnMap = target.Pawn != null && target.Pawn.Spawned && target.Pawn.Map == map;
+            if (!targetPawnOnMap && landingCell != targetCell)
+            {
+                path.Clear();
+                landingCell = IntVec3.Invalid;
+                return false;
+            }
+
+            return path.Count > 0;
+        }
+
+        private static bool IsLegalLandingCell(Pawn pawn, IntVec3 cell)
+        {
+            if (pawn == null || pawn.Map == null || !cell.InBounds(pawn.Map) || !cell.Standable(pawn.Map))
+            {
+                return false;
+            }
+
+            Pawn occupant = cell.GetFirstPawn(pawn.Map);
+            return occupant == null || occupant == pawn;
+        }
+
+        private static void AdvanceMovement(Pawn pawn, IcecreamTailBurst2State state, int delta)
+        {
+            Map map = pawn.Map;
+            state.moveElapsedTicks = Mathf.Min(state.moveTotalTicks, state.moveElapsedTicks + delta);
+            int cellsToProcess = Mathf.Min(state.pathCells.Count,
+                Mathf.CeilToInt((float)state.moveElapsedTicks / Mathf.Max(1, state.moveTotalTicks) * state.pathCells.Count));
+            while (state.pathIndex < cellsToProcess)
+            {
+                IntVec3 cell = state.pathCells[state.pathIndex++];
+                if (!cell.InBounds(map) || IsWallBlocking(map, cell))
+                {
+                    break;
+                }
+
+                List<Thing> things = cell.GetThingList(map);
+                if (things != null)
+                {
+                    for (int i = 0; i < things.Count; i++)
+                    {
+                        Thing thing = things[i];
+                        Pawn other = thing as Pawn;
+                        if (other == null || other == pawn) continue;
+                        if (other.HostileTo(pawn) && !state.stunnedPawns.Contains(other))
+                        {
+                            other.stances.stunner.StunFor(60, pawn, true, true, true);
+                            state.stunnedPawns.Add(other);
+                        }
+                    }
+                }
+            }
+
+            if (state.moveElapsedTicks >= state.moveTotalTicks)
+            {
+                pawn.Rotation = Rot4.FromAngleFlat((state.landingCell - state.startCell).AngleFlat);
+                pawn.Position = state.landingCell;
+                pawn.Drawer.tweener.ResetTweenedPosToRoot();
+                pawn.Notify_Teleported(true, true);
+                ExecuteExplosion(pawn, map, state.landingCell, 1.5f, MeleeDamage(pawn), 120, false);
+                state.phase = IcecreamTailBurst2Phase.AfterLanding;
+                state.ticksRemaining = 120;
+            }
+        }
+
+        private static void ExecuteExplosion(Pawn pawn, Map map, IntVec3 center, float radius, int damage, int stunTicks, bool empowered)
+        {
+            if (pawn == null || map == null || !center.InBounds(map)) return;
+            List<Pawn> enemies = GenRadial.RadialDistinctThingsAround(center, map, radius, true)
+                .OfType<Pawn>()
+                .Where(other => other != pawn && other.HostileTo(pawn))
+                .Distinct()
+                .ToList();
+            List<Thing> ignored = GenRadial.RadialDistinctThingsAround(center, map, radius, true)
+                .Where(thing => !enemies.Contains(thing))
+                .ToList();
+            SoundDef attackSound = GetRandomAttackSound();
+            if (attackSound == null)
+            {
+                Log.Error("Nivarian Icecream Tail: missing attack SoundDef.");
+            }
+            GenExplosion.DoExplosion(center, map, radius, DamageDefOf.Blunt, pawn, damage, -1f, attackSound, null, null, null, null, ignoredThings: ignored);
+            foreach (Pawn enemy in enemies)
+            {
+                if (enemy.DestroyedOrNull() || enemy.Dead) continue;
+                if (empowered)
+                {
+                    if (Knockback(pawn, map, enemy, center))
+                    {
+                        PendingLargeStuns[enemy] = pawn;
+                    }
+                    else
+                    {
+                        enemy.stances.stunner.StunFor(stunTicks, pawn, true, true, true);
+                    }
+                }
+                else
+                {
+                    enemy.stances.stunner.StunFor(stunTicks, pawn, true, true, true);
+                }
+            }
+        }
+
+        public static void OnKnockbackLanded(Pawn enemy)
+        {
+            Pawn caster;
+            if (enemy == null || !PendingLargeStuns.TryGetValue(enemy, out caster))
+            {
+                return;
+            }
+
+            PendingLargeStuns.Remove(enemy);
+            if (!enemy.DestroyedOrNull() && !enemy.Dead && enemy.Spawned)
+            {
+                enemy.stances.stunner.StunFor(240, caster, true, true, true);
+            }
+        }
+
+        private static bool IsWallBlocking(Map map, IntVec3 cell)
+        {
+            Building edifice = cell.GetEdifice(map);
+            return edifice != null && edifice.def != null && edifice.def.building != null && edifice.def.building.isWall;
+        }
+
+        private static void PlaySound(string defName, TargetInfo target)
+        {
+            SoundDef sound = DefDatabase<SoundDef>.GetNamedSilentFail(defName);
+            if (sound == null)
+            {
+                Log.Error("Nivarian Icecream Tail: missing " + defName + " SoundDef.");
+                return;
+            }
+
+            if (target.Map != null)
+            {
+                sound.PlayOneShot(target);
+            }
+        }
+
+        private static SoundDef GetRandomAttackSound()
+        {
+            string defName = "IcecreamTailSkillAttack" + Rand.RangeInclusive(1, 3);
+            return DefDatabase<SoundDef>.GetNamedSilentFail(defName);
+        }
+
+        private static bool Knockback(Pawn pawn, Map map, Pawn enemy, IntVec3 center)
+        {
+            IntVec3 delta = enemy.Position - center;
+            if (delta.x == 0 && delta.z == 0) return false;
+            Vector3 direction = new Vector3(delta.x, 0f, delta.z).normalized;
+            IntVec3 desired = enemy.Position + new IntVec3(Mathf.RoundToInt(direction.x * 2f), 0, Mathf.RoundToInt(direction.z * 2f));
+            IntVec3 destination = IntVec3.Invalid;
+            for (int radius = 0; radius <= 2 && !destination.IsValid; radius++)
+            {
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(desired, radius, true))
+                {
+                    if (cell.InBounds(map) && cell.Standable(map) && cell.GetEdifice(map) == null &&
+                        cell.GetFirstPawn(map) == null)
+                    {
+                        destination = cell;
+                        break;
+                    }
+                }
+            }
+            if (!destination.IsValid) return false;
+            IntVec3 startCell = enemy.Position;
+            PawnFlyer flyer = PawnFlyer.MakeFlyer(
+                ThingDefOf.PawnFlyer_Stun,
+                enemy,
+                destination,
+                null,
+                null,
+                false,
+                null,
+                null,
+                new LocalTargetInfo(destination));
+            if (flyer != null)
+            {
+                GenSpawn.Spawn(flyer, startCell, map);
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn), "PostApplyDamage")]
+    public static class Patch_Pawn_PostApplyDamage_IcecreamTailBurst2
+    {
+        public static void Postfix(Pawn __instance, float totalDamageDealt)
+        {
+            IcecreamTailBurst2Runtime.OnDamage(__instance, totalDamageDealt);
+        }
+    }
+
+    [HarmonyPatch(typeof(PawnFlyer), "RespawnPawn")]
+    public static class Patch_PawnFlyer_RespawnPawn_IcecreamTailBurst2
+    {
+        public static void Prefix(PawnFlyer __instance, ref Pawn __state)
+        {
+            __state = __instance == null ? null : __instance.FlyingPawn;
+        }
+
+        public static void Postfix(Pawn __state)
+        {
+            IcecreamTailBurst2Runtime.OnKnockbackLanded(__state);
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn), "get_DrawPos")]
+    public static class Patch_Pawn_DrawPos_IcecreamTailBurst2
+    {
+        public static void Postfix(Pawn __instance, ref Vector3 __result)
+        {
+            if (__instance != null)
+            {
+                __result += IcecreamTailBurst2Runtime.GetVisualOffset(__instance);
+            }
+        }
+    }
+
+}

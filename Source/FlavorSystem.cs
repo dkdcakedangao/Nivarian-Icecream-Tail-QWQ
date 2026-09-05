@@ -8,6 +8,23 @@ using Verse;
 // 看到我，记得提醒我，下次记得分文件夹
 namespace NivarianIcecreamTail
 {
+    public sealed class ThoughtWorker_IcecreamTailBeerOwner : ThoughtWorker
+    {
+        private const string BeerFlavorDefName = "IcecreamTailFlavorBeer";
+
+        protected override ThoughtState CurrentStateInternal(Pawn pawn)
+        {
+            if (pawn == null || (IcecreamTailMod.Settings != null && !IcecreamTailMod.Settings.EnableMoodEffects))
+            {
+                return ThoughtState.Inactive;
+            }
+
+            Hediff tail = IcecreamTailUtility.GetPlaceholder(pawn);
+            IcecreamTailFlavorDef flavor = IcecreamTailFlavorUtility.GetFlavor(tail);
+            return tail != null && flavor != null && flavor.defName == BeerFlavorDefName;
+        }
+    }
+
     public sealed class IcecreamTailFlavorDef : Def
     {
         public float recoverySpeedFactor = 1f;
@@ -209,7 +226,11 @@ namespace NivarianIcecreamTail
             }
 
             IcecreamTailFlavorUtility.GainSeasoningMemory(pawn);
-            IcecreamTailFlavorUtility.TrySetTailFlavor(pawn, extension.flavor);
+            bool applied = IcecreamTailFlavorUtility.TrySetTailFlavor(pawn, extension.flavor);
+            if (IcecreamTailDebug.TailEnabled)
+            {
+                IcecreamTailDebug.Tail("调味料已食用：食用者=" + IcecreamTailDebug.PawnInfo(pawn) + "，物品=" + ingested.def.defName + "，口味=" + extension.flavor.label + "，切换结果=" + (applied ? "成功" : "失败：没有可切换的冰淇淋尾巴"));
+            }
         }
     }
 }

@@ -83,6 +83,14 @@ namespace NivarianIcecreamTail
         }
     }
 
+    public sealed class Hediff_IcecreamTailBeerHangover : HediffWithComps
+    {
+        public override UnityEngine.Color LabelColor
+        {
+            get { return new UnityEngine.Color(1f, 0.18f, 0.18f); }
+        }
+    }
+
     public static class TailEatingUtility
     {
         private const string RecoveryDefName = "IcecreamTailRecovery";
@@ -93,15 +101,21 @@ namespace NivarianIcecreamTail
         private const string EaterSocialThoughtDefName = "IcecreamTailSocialEater";
         private const string OwnerSocialThoughtDefName = "IcecreamTailSocialOwner";
         private const string ChocolateFlavorDefName = "IcecreamTailFlavorChocolate";
+        private const string BeerFlavorDefName = "IcecreamTailFlavorBeer";
         private const string VanillaFlavorDefName = "IcecreamTailFlavorVanilla";
         private const string WolfeinPawnDefName = "Wolfein_Race";
         private const string FoodPoisoningDefName = "FoodPoisoning";
         private const string WolfeinChocolateThoughtDefName = "IcecreamTailMemoryWolfeinChocolate";
         private const float WolfeinChocolateFoodPoisoningSeverity = 0.6f;
+        private const string BeerBuffDefName = "IcecreamTailBeerEaterBuff";
+        private const string BeerHangoverDefName = "IcecreamTailBeerHangover";
+        private const string AlcoholHighDefName = "AlcoholHigh";
+        private const float BeerAlcoholSeverity = 0.15f;
         private const string LickJobDefName = "LickIcecreamTail";
         private const string LickedJobDefName = "LickedIcecreamTail";
         private const int BaseLickDurationTicks = 600;
         private const int BaseTailBuffDurationTicks = 60000;
+        private const int BeerTailBuffDurationTicks = 15000;
         private static readonly HashSet<Pawn> CancellingPawns = new HashSet<Pawn>();
 
         public static int LickDurationTicks
@@ -299,6 +313,7 @@ namespace NivarianIcecreamTail
 
             Hediff placeholder = IcecreamTailUtility.GetPlaceholder(target);
             IcecreamTailFlavorDef flavor = IcecreamTailFlavorUtility.GetFlavor(placeholder);
+            bool beerEffectsBlocked = IsBeerFlavor(flavor) && HasBeerHangover(eater);
             IcecreamTailUtility.RemovePlaceholder(target);
             StartRecovery(target, flavor);
             if (IcecreamTailDebug.TailEnabled)
@@ -313,7 +328,10 @@ namespace NivarianIcecreamTail
             if (IcecreamTailMod.Settings.EnableMoodEffects)
             {
                 GainOrRefreshMood(eater, EaterMoodThoughtDefName);
-                IcecreamTailFlavorUtility.GainOrRefreshMemory(eater, flavor.extraEaterMoodThought);
+                if (!beerEffectsBlocked)
+                {
+                    IcecreamTailFlavorUtility.GainOrRefreshMemory(eater, flavor.extraEaterMoodThought);
+                }
                 GainOrRefreshMood(target, OwnerMoodThoughtDefName);
             }
 
@@ -323,12 +341,76 @@ namespace NivarianIcecreamTail
                 GainSocialMemory(target, OwnerSocialThoughtDefName, eater);
             }
 
-            if (IcecreamTailMod.Settings.EnableTailBuff)
+            if (IcecreamTailMod.Settings.EnableTailBuff && !beerEffectsBlocked)
             {
                 RefreshTailBuff(eater, flavor);
             }
 
+            if (!beerEffectsBlocked && (IcecreamTailMod.Settings == null || IcecreamTailMod.Settings.EnableTailBuff))
+            {
+                ApplyBeerAlcoholEffect(eater, flavor);
+            }
+
+            if (beerEffectsBlocked && IcecreamTailDebug.TailEnabled)
+            {
+                IcecreamTailDebug.Tail("啤酒口味专属效果被宿醉阻止：" + IcecreamTailDebug.PawnInfo(eater));
+            }
             ApplyChocolateWolfeinEasterEgg(eater, flavor);
+        }
+
+        private static bool IsBeerFlavor(IcecreamTailFlavorDef flavor)
+        {
+            return flavor != null && flavor.defName == BeerFlavorDefName;
+        }
+
+        private static bool HasBeerHangover(Pawn pawn)
+        {
+            return GetHediff(pawn, BeerHangoverDefName) != null;
+        }
+
+        private static void ApplyBeerHangover(Pawn pawn)
+        {
+            if (pawn == null || pawn.health == null || HasBeerHangover(pawn) || IcecreamTailMod.Settings == null || !IcecreamTailMod.Settings.EnableBeerHangover)
+            {
+                return;
+            }
+
+            HediffDef hangoverDef = DefDatabase<HediffDef>.GetNamedSilentFail(BeerHangoverDefName);
+            if (hangoverDef == null)
+            {
+                Log.Error("Nivarian Icecream Tail: missing IcecreamTailBeerHangover HediffDef.");
+                return;
+            }
+
+            pawn.health.AddHediff(HediffMaker.MakeHediff(hangoverDef, pawn));
+            if (IcecreamTailDebug.TailEnabled)
+            {
+                IcecreamTailDebug.Tail("四酒结束，已进入啤酒冰淇淋宿醉：" + IcecreamTailDebug.PawnInfo(pawn));
+            }
+        }
+
+        private static void ApplyBeerAlcoholEffect(Pawn eater, IcecreamTailFlavorDef flavor)
+        {
+            if (eater == null || eater.health == null || flavor == null || flavor.defName != BeerFlavorDefName)
+            {
+                return;
+            }
+
+            HediffDef alcoholDef = DefDatabase<HediffDef>.GetNamedSilentFail(AlcoholHighDefName);
+            if (alcoholDef == null)
+            {
+                Log.Error("Nivarian Icecream Tail: missing vanilla AlcoholHigh HediffDef.");
+                return;
+            }
+
+            Hediff alcohol = GetHediff(eater, AlcoholHighDefName);
+            float previousSeverity = alcohol == null ? 0f : alcohol.Severity;
+            HealthUtility.AdjustSeverity(eater, alcoholDef, BeerAlcoholSeverity);
+            alcohol = GetHediff(eater, AlcoholHighDefName);
+            if (IcecreamTailDebug.TailEnabled)
+            {
+                IcecreamTailDebug.Tail("啤酒尾巴醉酒效果已添加：" + IcecreamTailDebug.PawnInfo(eater) + "，AlcoholHigh=" + previousSeverity.ToString("0.00") + " → " + (alcohol == null ? "<missing>" : alcohol.Severity.ToString("0.00")) + "，不增加耐受与成瘾。");
+            }
         }
 
         private static void ApplyChocolateWolfeinEasterEgg(Pawn eater, IcecreamTailFlavorDef flavor)
@@ -412,15 +494,60 @@ namespace NivarianIcecreamTail
                 return;
             }
 
-            IcecreamTailFlavorUtility.RemoveTailBuff(pawn, flavor.eaterBuff);
-            Hediff buff = HediffMaker.MakeHediff(flavor.eaterBuff, pawn);
+            Hediff buff = pawn.health.hediffSet.hediffs.FirstOrDefault(hediff => hediff.def == flavor.eaterBuff);
+            bool beerBuff = flavor.eaterBuff.defName == BeerBuffDefName;
+            int previousLevel = buff == null || !beerBuff ? 0 : Math.Max(1, Math.Min(4, (int)Math.Round(buff.Severity)));
+            string refreshMode;
+            if (buff == null)
+            {
+                buff = HediffMaker.MakeHediff(flavor.eaterBuff, pawn);
+                if (beerBuff)
+                {
+                    buff.Severity = 1f;
+                }
+
+                refreshMode = "新建";
+            }
+            else if (beerBuff)
+            {
+                buff.Severity = Math.Min(4f, Math.Max(1f, buff.Severity + 1f));
+                refreshMode = previousLevel >= 4 ? "四酒刷新" : "叠层";
+            }
+            else
+            {
+                pawn.health.RemoveHediff(buff);
+                buff = HediffMaker.MakeHediff(flavor.eaterBuff, pawn);
+                refreshMode = "重置";
+            }
+
             HediffComp_IcecreamTailBuffDuration duration = buff.TryGetComp<HediffComp_IcecreamTailBuffDuration>();
             if (duration != null)
             {
                 duration.Initialize(TailBuffDurationTicks(flavor));
             }
 
-            pawn.health.AddHediff(buff);
+            if (!pawn.health.hediffSet.hediffs.Contains(buff))
+            {
+                pawn.health.AddHediff(buff);
+            }
+
+            int finalLevel = beerBuff ? Math.Max(1, Math.Min(4, (int)Math.Round(buff.Severity))) : 0;
+            if (beerBuff && previousLevel == 3 && finalLevel == 4)
+            {
+                BeerFourVfxUtility.TryTriggerFourBeerTransition(pawn);
+            }
+
+            if (beerBuff)
+            {
+                IcecreamTailTemporaryAbilityUtility.SyncPawn(pawn);
+            }
+
+            if (IcecreamTailDebug.TailEnabled)
+            {
+                string levelText = beerBuff ? "，层数=" + Math.Max(1, Math.Min(4, (int)Math.Round(buff.Severity))) : string.Empty;
+                string durationText = duration == null ? string.Empty : "，剩余=" + duration.RemainingTicks.ToStringTicksToPeriod();
+                IcecreamTailDebug.Tail("食用 Buff 已处理：" + IcecreamTailDebug.PawnInfo(pawn) + "，口味=" + flavor.label + "，方式=" + refreshMode + levelText + durationText);
+            }
         }
 
         private static int TailBuffDurationTicks(IcecreamTailFlavorDef flavor)
@@ -432,7 +559,21 @@ namespace NivarianIcecreamTail
                 multiplier *= 0.5f;
             }
 
-            return Math.Max(1, (int)Math.Round(BaseTailBuffDurationTicks * multiplier));
+            int baseDuration = flavor != null && flavor.eaterBuff != null && flavor.eaterBuff.defName == BeerBuffDefName
+                ? BeerTailBuffDurationTicks
+                : BaseTailBuffDurationTicks;
+            return Math.Max(1, (int)Math.Round(baseDuration * multiplier));
+        }
+
+        internal static int TailBuffDurationTicksForHediff(Hediff hediff)
+        {
+            if (hediff == null || hediff.def == null)
+            {
+                return BaseTailBuffDurationTicks;
+            }
+
+            IcecreamTailFlavorDef flavor = DefDatabase<IcecreamTailFlavorDef>.AllDefsListForReading.FirstOrDefault(def => def.eaterBuff == hediff.def);
+            return TailBuffDurationTicks(flavor);
         }
 
         public sealed class HediffCompProperties_IcecreamTailBuffDuration : HediffCompProperties
@@ -464,15 +605,27 @@ namespace NivarianIcecreamTail
 
             public override void CompPostTickInterval(ref float severityAdjustment, int delta)
             {
+                if (parent.def != null && parent.def.defName == BeerBuffDefName)
+                {
+                    parent.Severity = (float)Math.Round(parent.Severity);
+                    parent.Severity = Math.Max(1f, Math.Min(4f, parent.Severity));
+                }
+
                 if (remainingTicks < 0)
                 {
-                    remainingTicks = BaseTailBuffDurationTicks;
+                    remainingTicks = TailBuffDurationTicksForHediff(parent);
                 }
 
                 remainingTicks -= delta;
                 if (remainingTicks <= 0 && parent.pawn != null && parent.pawn.health != null)
                 {
+                    bool enterBeerHangover = parent.def != null && parent.def.defName == BeerBuffDefName && parent.Severity >= 4f;
+                    Pawn pawn = parent.pawn;
                     parent.pawn.health.RemoveHediff(parent);
+                    if (enterBeerHangover)
+                    {
+                        ApplyBeerHangover(pawn);
+                    }
                 }
             }
         }
@@ -727,6 +880,7 @@ namespace NivarianIcecreamTail
                 IcecreamTailUtility.RemovePlaceholder(pawn);
                 RemoveRecovery(pawn);
                 IcecreamTailFlavorUtility.RemoveTailBuffs(pawn);
+                RemoveBeerHangover(pawn);
             }
 
             TailCombatUtility.RemoveAllSlowEffects();
@@ -737,6 +891,23 @@ namespace NivarianIcecreamTail
             foreach (Pawn pawn in AllKnownPawns())
             {
                 IcecreamTailFlavorUtility.RemoveTailBuffs(pawn);
+            }
+        }
+
+        private static void RemoveBeerHangover(Pawn pawn)
+        {
+            Hediff hangover = GetHediff(pawn, BeerHangoverDefName);
+            if (hangover != null && pawn != null && pawn.health != null)
+            {
+                pawn.health.RemoveHediff(hangover);
+            }
+        }
+
+        public static void RemoveAllBeerHangovers()
+        {
+            foreach (Pawn pawn in AllKnownPawns())
+            {
+                RemoveBeerHangover(pawn);
             }
         }
 

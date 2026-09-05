@@ -133,4 +133,37 @@
       </li>
     </comps>
   </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailBeerSeasoning</defName>
+    <label>啤酒味冰淇淋调味料</label>
+    <description>用于制作啤酒味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“啤酒味”。</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_beer</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>22</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorBeer</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
 </Defs>

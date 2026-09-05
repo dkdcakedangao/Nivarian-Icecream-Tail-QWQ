@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <AbilityDef>
+    <defName>IcecreamTailAbilityBurst</defName>
+    <label>！爆！</label>
+    <description>释放四杯假酒的力量，进入魔身状态。攻击速度和伤害大幅提升。</description>
+    <abilityClass>NivarianIcecreamTail.IcecreamTailAbilityBurst</abilityClass>
+    <iconPath>UI/skills/skill_1</iconPath>
+    <cooldownTicksRange>5000</cooldownTicksRange>
+    <targetRequired>false</targetRequired>
+    <aiCanUse>false</aiCanUse>
+    <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>true</disableGizmoWhileUndrafted>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <warmupTime>1</warmupTime>
+      <range>0</range>
+      <requireLineOfSight>false</requireLineOfSight>
+      <targetable>false</targetable>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="NivarianIcecreamTail.CompProperties_IcecreamTailBurst" />
+    </comps>
+  </AbilityDef>
+  <AbilityDef>
+    <defName>IcecreamTailAbilityBurst2</defName>
+    <label>迸！</label>
+    <description>使用斗气（误），狠狠的迸！若期间受到伤害，则更狠的迸！</description>
+    <abilityClass>NivarianIcecreamTail.IcecreamTailAbilityBurst2</abilityClass>
+    <iconPath>UI/skills/skill_2</iconPath>
+    <cooldownTicksRange>500</cooldownTicksRange>
+    <hostile>false</hostile>
+    <targetRequired>true</targetRequired>
+    <aiCanUse>false</aiCanUse>
+    <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>true</disableGizmoWhileUndrafted>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+      <verbClass>NivarianIcecreamTail.Verb_CastAbilityBurst2</verbClass>
+      <warmupTime>0.2</warmupTime>
+      <range>14</range>
+      <requireLineOfSight>true</requireLineOfSight>
+      <drawHighlightWithLineOfSight>true</drawHighlightWithLineOfSight>
+      <targetable>true</targetable>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetBuildings>true</canTargetBuildings>
+        <canTargetItems>true</canTargetItems>
+        <canTargetPlants>true</canTargetPlants>
+        <canTargetFires>true</canTargetFires>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetHumans>true</canTargetHumans>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSubhumans>true</canTargetSubhumans>
+      <canTargetEntities>true</canTargetEntities>
+      <canTargetCorpses>true</canTargetCorpses>
+      <canTargetSelf>false</canTargetSelf>
+      <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="NivarianIcecreamTail.CompProperties_IcecreamTailBurst2" />
+    </comps>
+  </AbilityDef>
+</Defs>
+
