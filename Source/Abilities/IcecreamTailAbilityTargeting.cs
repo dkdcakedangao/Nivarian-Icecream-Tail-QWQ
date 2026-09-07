@@ -1,6 +1,8 @@
 using RimWorld;
 using Verse;
 
+// 抄的kp的
+// 技能的共用的范围选取
 namespace NivarianIcecreamTail
 {
     public class CompProperties_IcecreamTailTargeting : CompProperties_AbilityEffect

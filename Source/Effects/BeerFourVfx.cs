@@ -4,6 +4,7 @@ using UnityEngine;
 using Verse;
 using Verse.Sound;
 
+// 特效
 namespace NivarianIcecreamTail
 {
     public static class BeerFourVfxUtility
@@ -13,6 +14,7 @@ namespace NivarianIcecreamTail
         private const string Star04MoteDefName = "Mote_IcecreamTailBeerStar04";
         private const string Star08MoteDefName = "Mote_IcecreamTailBeerStar08";
 
+        // 四酒
         public static void TryTriggerFourBeerTransition(Pawn pawn)
         {
             if (pawn == null || !IcecreamTailUtility.IsNivarian(pawn) || !IcecreamTailMod.Enabled || !pawn.Spawned || pawn.Map == null)
@@ -26,6 +28,7 @@ namespace NivarianIcecreamTail
                 return;
             }
 
+            // 彩蛋WIN
             Texture2D winTexture = ContentFinder<Texture2D>.Get("UI/WIN!!!!/win", false);
             if (winTexture == null)
             {
@@ -60,6 +63,7 @@ namespace NivarianIcecreamTail
             }
         }
 
+        // 四酒特效
         public static void SpawnBeerStar(Pawn pawn)
         {
             if (pawn == null || !pawn.Spawned || pawn.Map == null || !IcecreamTailUtility.IsNivarian(pawn) || pawn.Map.moteCounter.SaturatedLowPriority)
@@ -95,6 +99,7 @@ namespace NivarianIcecreamTail
         }
     }
 
+    // 除错，gpt写的
     public sealed class HediffComp_IcecreamTailBeerFourVfx : HediffComp
     {
         private int ticksUntilNextSpawn;

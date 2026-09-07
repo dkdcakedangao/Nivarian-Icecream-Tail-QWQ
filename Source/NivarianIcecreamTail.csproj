@@ -20,14 +20,27 @@
   </Target>
 
   <ItemGroup>
-    <Compile Include="IcecreamTail.cs" />
-    <Compile Include="FlavorSystem.cs" />
-    <Compile Include="TraderStock.cs" />
-    <Compile Include="TailEating.cs" />
-    <Compile Include="TailCombat.cs" />
-    <Compile Include="BeerFourVfx.cs" />
-    <Compile Include="TemporaryAbilities.cs" />
-    <Compile Include="IcecreamTailAbilityTargeting.cs" />
+    <Compile Include="Core\IcecreamTailMod.cs" />
+    <Compile Include="Core\IcecreamTailDebug.cs" />
+    <Compile Include="Flavor\FlavorSystem.cs" />
+    <Compile Include="Flavor\TraderStock.cs" />
+    <Compile Include="Tail\TailState.cs" />
+    <Compile Include="Tail\TailFood.cs" />
+    <Compile Include="Tail\TailHediffs.cs" />
+    <Compile Include="Tail\TailRecovery.cs" />
+    <Compile Include="Tail\TailConsumption.cs" />
+    <Compile Include="Tail\TailLicking.cs" />
+    <Compile Include="Tail\TailLickingJobs.cs" />
+    <Compile Include="Tail\FacialAnimationCompatibility.cs" />
+    <Compile Include="Abilities\TemporaryAbilityCore.cs" />
+    <Compile Include="Abilities\TemporaryAbilityGizmos.cs" />
+    <Compile Include="Abilities\AbilityBurst.cs" />
+    <Compile Include="Abilities\AbilityBurst2.cs" />
+    <Compile Include="Abilities\AbilityBurst2Runtime.cs" />
+    <Compile Include="Abilities\IcecreamTailAbilityTargeting.cs" />
+    <Compile Include="Combat\TailCombat.cs" />
+    <Compile Include="Combat\BeerFourCombatSettings.cs" />
+    <Compile Include="Effects\BeerFourVfx.cs" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp-firstpass.dll" />
     <GameReference Include="$(RimWorldManagedDir)\UnityEngine.CoreModule.dll" />

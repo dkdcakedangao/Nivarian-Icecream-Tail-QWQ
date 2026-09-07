@@ -4,6 +4,7 @@ using RimWorld;
 using RimWorld.Planet;
 using Verse;
 
+// 商队
 namespace NivarianIcecreamTail
 {
     public sealed class StockGenerator_IcecreamTailSeasoning : StockGenerator

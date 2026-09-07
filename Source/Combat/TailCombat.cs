@@ -7,7 +7,7 @@ using Verse;
 using Verse.AI;
 
 namespace NivarianIcecreamTail
-// 这边是！冰淇淋尾巴用于战斗时，会用到的妙妙小代码！
+// 这边是！冰淇淋尾巴用于战斗时，会用到的妙妙小代码！自动舔舔的job也放在这里。别问为什么不放core里头，因为舔尾巴也是战斗（误）
 {
     [StaticConstructorOnStartup]
     internal static class TailCombatPatches
@@ -116,6 +116,7 @@ namespace NivarianIcecreamTail
         }
     }
 
+    //自动舔尾巴的job注入
     [HarmonyPatch(typeof(JobGiver_GetFood), "TryGiveJob")]
     internal static class Patch_JobGiver_GetFood_TryGiveJob
     {

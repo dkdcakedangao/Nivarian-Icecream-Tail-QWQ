@@ -6,6 +6,7 @@ using Verse;
 
 // 味道切换
 // 看到我，记得提醒我，下次记得分文件夹
+// 我看到了喵~
 namespace NivarianIcecreamTail
 {
     public sealed class ThoughtWorker_IcecreamTailBeerOwner : ThoughtWorker
