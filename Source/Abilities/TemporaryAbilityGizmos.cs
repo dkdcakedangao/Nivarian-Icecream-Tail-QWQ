@@ -15,14 +15,19 @@ namespace NivarianIcecreamTail
     {
         private const float ButtonSize = 75f;
         private static readonly Texture2D Background = ContentFinder<Texture2D>.Get("UI/skills/gizmo_background");
+        private static readonly Texture2D RedBackground = ContentFinder<Texture2D>.Get("UI/skills/gizmo_background_red");
         private static readonly Texture2D Border = ContentFinder<Texture2D>.Get("Nivarian/Icon/iceflake_gizmo");
         private readonly Ability ability;
         private readonly Command_Ability abilityCommand;
+        private readonly Texture2D background;
 
+        // 这个public是gpt老师优化的
+        // 虽然我感觉没啥区别
         public Command_IcecreamTailAbility(Ability ability, Pawn pawn)
         {
             this.ability = ability;
             abilityCommand = new Command_Ability(ability, pawn);
+            background = ability.def.defName == IcecreamTailTemporaryAbilityUtility.Skill3AbilityDefName ? RedBackground : Background;
             defaultLabel = ability.def.LabelCap;
             defaultDesc = ability.Tooltip;
             icon = ability.def.uiIcon;
@@ -38,12 +43,12 @@ namespace NivarianIcecreamTail
 
         public override Texture2D BGTexture
         {
-            get { return Background; }
+            get { return background; }
         }
 
         public override Texture2D BGTextureShrunk
         {
-            get { return Background; }
+            get { return background; }
         }
 
         public override bool Disabled
@@ -166,6 +171,27 @@ namespace NivarianIcecreamTail
             if (burst2 != null)
             {
                 yield return new Command_IcecreamTailAbility(burst2, __instance);
+            }
+
+            AbilityDef skill3Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Skill3AbilityDefName);
+            Ability skill3 = skill3Def == null ? null : __instance.abilities.GetAbility(skill3Def, false);
+            if (skill3 != null)
+            {
+                yield return new Command_IcecreamTailAbility(skill3, __instance);
+            }
+
+            AbilityDef skill4Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Skill4AbilityDefName);
+            Ability skill4 = skill4Def == null ? null : __instance.abilities.GetAbility(skill4Def, false);
+            if (skill4 != null)
+            {
+                yield return new Command_IcecreamTailAbility(skill4, __instance);
+            }
+
+            AbilityDef skill5Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Skill5AbilityDefName);
+            Ability skill5 = skill5Def == null ? null : __instance.abilities.GetAbility(skill5Def, false);
+            if (skill5 != null)
+            {
+                yield return new Command_IcecreamTailAbility(skill5, __instance);
             }
         }
     }

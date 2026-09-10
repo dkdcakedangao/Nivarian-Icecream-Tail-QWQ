@@ -73,6 +73,7 @@ namespace NivarianIcecreamTail
                 IcecreamTailDebug.Tail("啤酒口味专属效果被宿醉阻止：" + IcecreamTailDebug.PawnInfo(eater));
             }
             ApplyChocolateWolfeinEasterEgg(eater, flavor);
+            ApplyFrozenTongueEasterEgg(eater, target);
         }
 
         private static bool IsBeerFlavor(IcecreamTailFlavorDef flavor)
@@ -166,6 +167,64 @@ namespace NivarianIcecreamTail
             if (IcecreamTailDebug.EasterEggEnabled)
             {
                 IcecreamTailDebug.EasterEgg("巧克力彩蛋触发：" + IcecreamTailDebug.PawnInfo(eater) + " 获得严重食物中毒 10 分钟与特殊心情。");
+            }
+        }
+
+        // 粘舌头彩蛋
+        private static void ApplyFrozenTongueEasterEgg(Pawn eater, Pawn target)
+        {
+            IcecreamTailSettings settings = IcecreamTailMod.Settings;
+            if (eater == null || target == null || settings == null || !settings.EnableFrozenTongueEasterEgg ||
+                !Rand.Chance(UnityEngine.Mathf.Clamp01(settings.FrozenTongueEasterEggChance)))
+            {
+                return;
+            }
+
+            if (eater.health == null || eater.health.hediffSet == null)
+            {
+                Log.Error("Nivarian Icecream Tail: frozen tongue easter egg target has no valid health tracker.");
+                return;
+            }
+
+            HediffDef cryoSlowDef = DefDatabase<HediffDef>.GetNamedSilentFail(CryoSlowDefName);
+            if (cryoSlowDef == null)
+            {
+                Log.Error("Nivarian Icecream Tail: missing Nivarian_Hediff_CryoSlow HediffDef.");
+                return;
+            }
+
+            float rolledSeverity = Rand.Range(0.25f, 0.9f);
+            Hediff cryoSlow = eater.health.hediffSet.hediffs.FirstOrDefault(hediff => hediff.def == cryoSlowDef);
+            if (cryoSlow == null)
+            {
+                cryoSlow = HediffMaker.MakeHediff(cryoSlowDef, eater);
+                cryoSlow.Severity = rolledSeverity;
+                eater.health.AddHediff(cryoSlow);
+                cryoSlow = eater.health.hediffSet.hediffs.FirstOrDefault(hediff => hediff.def == cryoSlowDef);
+            }
+            else
+            {
+                cryoSlow.Severity = Math.Max(cryoSlow.Severity, rolledSeverity);
+            }
+
+            if (cryoSlow == null)
+            {
+                Log.Error("Nivarian Icecream Tail: failed to apply frozen tongue easter egg Hediff.");
+                return;
+            }
+
+            Messages.Message(
+                "“" + eater.LabelShortCap + "”在品尝“" + target.LabelShortCap + "”的冰淇淋尾巴时，舌头被冻住了了喵！",
+                eater,
+                MessageTypeDefOf.NegativeEvent,
+                false);
+
+            if (IcecreamTailDebug.EasterEggEnabled)
+            {
+                IcecreamTailDebug.EasterEgg("冻住舌头彩蛋触发：食用者=" + IcecreamTailDebug.PawnInfo(eater) +
+                    "，尾巴主人=" + IcecreamTailDebug.PawnInfo(target) +
+                    "，随机严重度=" + rolledSeverity.ToString("0.000") +
+                    "，最终严重度=" + cryoSlow.Severity.ToString("0.000"));
             }
         }
 

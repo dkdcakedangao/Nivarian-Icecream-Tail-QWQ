@@ -37,7 +37,14 @@
     <Compile Include="Abilities\AbilityBurst.cs" />
     <Compile Include="Abilities\AbilityBurst2.cs" />
     <Compile Include="Abilities\AbilityBurst2Runtime.cs" />
+    <Compile Include="Abilities\Skill3AnimationBridge.cs" />
+    <Compile Include="Abilities\AbilityGetsugaSaiho.cs" />
+    <Compile Include="Abilities\AbilityGetsugaSaihoRuntime.cs" />
     <Compile Include="Abilities\IcecreamTailAbilityTargeting.cs" />
+    <Compile Include="Abilities\AbilityTenshin.cs" />
+    <Compile Include="Abilities\BakkaiAnimationBridge.cs" />
+    <Compile Include="Abilities\AbilityBakkai.cs" />
+    <Compile Include="Abilities\AbilityBakkaiRuntime.cs" />
     <Compile Include="Combat\TailCombat.cs" />
     <Compile Include="Combat\BeerFourCombatSettings.cs" />
     <Compile Include="Effects\BeerFourVfx.cs" />

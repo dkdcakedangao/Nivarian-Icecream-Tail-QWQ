@@ -21,8 +21,10 @@ namespace NivarianIcecreamTail
         public bool EnableCoreRecoveryEffect = true;
         public bool EnableRecoveryHunger = true;
         public bool EnableMatureTailCombat = true;
+        public bool EnableSkill3MeleeAnimation = true;
         public bool EnableAutoLick = true;
         public bool EnableChocolateWolfeinEasterEgg = true;
+        public bool EnableFrozenTongueEasterEgg = true;
         public bool LogTailStateDebug;
         public bool LogFacialAnimationDebug;
         public bool LogAutoLickDebug;
@@ -32,6 +34,7 @@ namespace NivarianIcecreamTail
         public float LickTimeMultiplier = 1f;
         public float TailBuffDurationMultiplier = 1f;
         public float BeerWinEasterEggChance = 0.1f;
+        public float FrozenTongueEasterEggChance = 0.01f;
         public float BeerFourMeleeCooldownFactor = 0.4f;
         public float AutoLickFoodThreshold = 0.2f;
         public int SearchRadius = 60;
@@ -49,8 +52,10 @@ namespace NivarianIcecreamTail
             EnableCoreRecoveryEffect = true;
             EnableRecoveryHunger = true;
             EnableMatureTailCombat = true;
+            EnableSkill3MeleeAnimation = true;
             EnableAutoLick = true;
             EnableChocolateWolfeinEasterEgg = true;
+            EnableFrozenTongueEasterEgg = true;
             LogTailStateDebug = false;
             LogFacialAnimationDebug = false;
             LogAutoLickDebug = false;
@@ -60,6 +65,7 @@ namespace NivarianIcecreamTail
             LickTimeMultiplier = 1f;
             TailBuffDurationMultiplier = 1f;
             BeerWinEasterEggChance = 0.1f;
+            FrozenTongueEasterEggChance = 0.01f;
             BeerFourMeleeCooldownFactor = 0.4f;
             AutoLickFoodThreshold = 0.2f;
             SearchRadius = 60;
@@ -78,8 +84,10 @@ namespace NivarianIcecreamTail
             Scribe_Values.Look(ref EnableCoreRecoveryEffect, "EnableCoreRecoveryEffect", true);
             Scribe_Values.Look(ref EnableRecoveryHunger, "EnableRecoveryHunger", true);
             Scribe_Values.Look(ref EnableMatureTailCombat, "EnableMatureTailCombat", true);
+            Scribe_Values.Look(ref EnableSkill3MeleeAnimation, "EnableSkill3MeleeAnimation", true);
             Scribe_Values.Look(ref EnableAutoLick, "EnableAutoLick", true);
             Scribe_Values.Look(ref EnableChocolateWolfeinEasterEgg, "EnableChocolateWolfeinEasterEgg", true);
+            Scribe_Values.Look(ref EnableFrozenTongueEasterEgg, "EnableFrozenTongueEasterEgg", true);
             Scribe_Values.Look(ref LogTailStateDebug, "LogTailStateDebug", false);
             Scribe_Values.Look(ref LogFacialAnimationDebug, "LogFacialAnimationDebug", false);
             Scribe_Values.Look(ref LogAutoLickDebug, "LogAutoLickDebug", false);
@@ -89,6 +97,7 @@ namespace NivarianIcecreamTail
             Scribe_Values.Look(ref LickTimeMultiplier, "LickTimeMultiplier", 1f);
             Scribe_Values.Look(ref TailBuffDurationMultiplier, "TailBuffDurationMultiplier", 1f);
             Scribe_Values.Look(ref BeerWinEasterEggChance, "BeerWinEasterEggChance", 0.1f);
+            Scribe_Values.Look(ref FrozenTongueEasterEggChance, "FrozenTongueEasterEggChance", 0.01f);
             Scribe_Values.Look(ref BeerFourMeleeCooldownFactor, "BeerFourMeleeCooldownFactor", 0.4f);
             Scribe_Values.Look(ref AutoLickFoodThreshold, "AutoLickFoodThreshold", 0.2f);
             Scribe_Values.Look(ref SearchRadius, "SearchRadius", 60);
@@ -194,6 +203,7 @@ namespace NivarianIcecreamTail
             else if (settingsPage == 3)
             {
                 listing.CheckboxLabeled("冰淇淋尾巴战斗效果", ref Settings.EnableMatureTailCombat, "若冰龙若有完整的冰淇淋尾巴，会对敌人造成额外伤害，并减速敌人。 ");
+                listing.CheckboxLabeled("开关“月牙叉炮(CA)”的动画", ref Settings.EnableSkill3MeleeAnimation, "开关“月牙叉炮(CA)”的动画，该动画需要有MeleeAnimation作为前置。若关闭，或没有MeleeAnimation模组，则跳过动画，简单播放一个流程(?非常简易的流程)。若你不喜欢释放技能时，有10秒钟动画的话，或是占用过大之类的（大概是不会），可以关闭该选项");
                 listing.Label("四酒 buff 近战冷却倍率：" + Settings.BeerFourMeleeCooldownFactor.ToString("0.00") + "×");
                 float beerFourMeleeCooldownFactor = listing.Slider(Settings.BeerFourMeleeCooldownFactor, 0.1f, 1f);
                 float roundedFactor = Mathf.Round(beerFourMeleeCooldownFactor / 0.05f) * 0.05f;
@@ -208,7 +218,7 @@ namespace NivarianIcecreamTail
                 listing.CheckboxLabeled("记录尾巴状态与恢复日志", ref Settings.LogTailStateDebug, "在 Player.log 记录尾巴成熟、恢复、断尾和恢复期饥饿状态变化。 ");
                 listing.CheckboxLabeled("记录动画兼容日志", ref Settings.LogFacialAnimationDebug, "在 Player.log 记录 Facial Animation 控制器、动画映射和播放请求结果。 ");
                 listing.CheckboxLabeled("记录自动舔食检查日志", ref Settings.LogAutoLickDebug, "在 Player.log 记录原版找食物时，是否用尾巴替代这次进食。 ");
-                listing.CheckboxLabeled("记录彩蛋日志", ref Settings.LogEasterEggDebug, "在 Player.log 记录巧克力尾巴与啤酒四酒彩蛋触发情况。 ");
+                listing.CheckboxLabeled("记录彩蛋日志", ref Settings.LogEasterEggDebug, "在 Player.log 记录巧克力尾巴、啤酒四酒与冻住舌头彩蛋触发情况。 ");
                 if (Prefs.DevMode)
                 {
                     listing.CheckboxLabeled("显示临时技能冷却 Debug 按钮", ref Settings.ShowTemporaryAbilityCooldownDebug, "在已征召的四酒涅瓦莲 Gizmo 栏显示按钮；只清空本模组临时技能冷却。 ");
@@ -220,6 +230,9 @@ namespace NivarianIcecreamTail
                 listing.CheckboxLabeled("啤酒四酒 WIN 彩蛋", ref Settings.EnableBeerWinEasterEgg, "仅涅瓦莲从三酒升到四酒时判定；触发后显示 WIN 图片并播放音效。 ");
                 listing.Label("啤酒四酒 WIN 彩蛋概率：" + (Settings.BeerWinEasterEggChance * 100f).ToString("0") + "%");
                 Settings.BeerWinEasterEggChance = listing.Slider(Settings.BeerWinEasterEggChance, 0f, 1f);
+                listing.CheckboxLabeled("开关冻住舌头彩蛋", ref Settings.EnableFrozenTongueEasterEgg, "若关闭，则不会触发冻住舌头的彩蛋");
+                listing.Label("舔冰淇淋尾巴时，被冻住舌头的概率：" + (Settings.FrozenTongueEasterEggChance * 100f).ToString("0.0") + "%");
+                Settings.FrozenTongueEasterEggChance = Mathf.Clamp01(listing.Slider(Settings.FrozenTongueEasterEggChance, 0f, 1f));
             }
 
             listing.End();
@@ -293,7 +306,7 @@ namespace NivarianIcecreamTail
                 return Prefs.DevMode ? 190f : 130f;
             }
 
-            return settingsPage == 2 ? 130f : (settingsPage == 5 ? 150f : 100f);
+            return settingsPage == 2 ? 130f : (settingsPage == 5 ? 230f : 140f);
         }
     }
 

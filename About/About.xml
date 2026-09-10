@@ -19,6 +19,7 @@
   <loadAfter>
     <li>brrainz.harmony</li>
     <li>keeptpa.NivarianRace</li>
+    <li>co.uk.epicguru.meleeanimation</li>
   </loadAfter>
   <description>冰龙尾巴！就是！冰淇淋！</description>
 </ModMetaData>

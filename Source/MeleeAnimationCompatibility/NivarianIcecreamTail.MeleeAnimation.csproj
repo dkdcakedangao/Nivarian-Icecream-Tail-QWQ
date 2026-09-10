@@ -1,0 +1,34 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <MeleeAnimationAssemblyDir Condition="'$(MeleeAnimationAssemblyDir)' == ''">$([System.IO.Path]::GetDirectoryName('$(MeleeAnimationAssemblyPath)'))</MeleeAnimationAssemblyDir>
+    <OutputType>Library</OutputType>
+    <AssemblyName>NivarianIcecreamTail.MeleeAnimation</AssemblyName>
+    <OutputPath>$(MSBuildProjectDirectory)\..\..\1.6\Compatibility\MeleeAnimation\Assemblies\</OutputPath>
+    <IntermediateAssembly>$(MSBuildProjectDirectory)\obj\$(Configuration)\$(AssemblyName).dll</IntermediateAssembly>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <Target Name="ValidateReferences" BeforeTargets="CoreCompile">
+    <Error Condition="'$(RimWorldManagedDir)' == ''" Text="Set RimWorldManagedDir to RimWorldWin64_Data\Managed." />
+    <Error Condition="'$(MeleeAnimationAssemblyPath)' == ''" Text="Set MeleeAnimationAssemblyPath to zAnimationMod.dll." />
+    <Error Condition="'$(HarmonyAssemblyPath)' == ''" Text="Set HarmonyAssemblyPath to 0Harmony.dll." />
+  </Target>
+  <ItemGroup>
+    <Compile Include="MeleeAnimationCompatibility.cs" />
+    <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\UnityEngine.CoreModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\netstandard.dll" />
+    <GameReference Include="$(MSBuildProjectDirectory)\..\..\1.6\Assemblies\NivarianIcecreamTail.dll" />
+    <GameReference Include="$(MeleeAnimationAssemblyPath)" />
+    <GameReference Include="$(MeleeAnimationAssemblyDir)\AMRetextureSupport.dll" />
+    <GameReference Include="$(HarmonyAssemblyPath)" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="CoreCompile" DependsOnTargets="ValidateReferences">
+    <Csc Sources="@(Compile)" References="@(GameReference)" TargetType="library" OutputAssembly="$(IntermediateAssembly)" DebugType="$(DebugType)" />
+  </Target>
+</Project>

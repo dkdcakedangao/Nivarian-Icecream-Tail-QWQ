@@ -146,6 +146,11 @@ namespace NivarianIcecreamTail
             List<IntVec3> path;
             IntVec3 landingCell;
             if (!TryBuildPath(pawn, target, out path, out landingCell)) return false;
+            if (landingCell == pawn.Position && target.Cell != pawn.Position)
+            {
+                pawn.Rotation = Rot4.FromAngleFlat((target.Cell - pawn.Position).AngleFlat);
+            }
+
             Active[pawn] = new IcecreamTailBurst2State
             {
                 startCell = pawn.Position,
@@ -262,6 +267,7 @@ namespace NivarianIcecreamTail
 
             IntVec3 targetCell = target.Cell;
             Map map = pawn.Map;
+            bool targetPawnOnMap = target.Pawn != null && target.Pawn.Spawned && target.Pawn.Map == map;
             if (!targetCell.InBounds(map) || !targetCell.Standable(map) || IsWallBlocking(map, targetCell))
             {
                 return false;
@@ -292,6 +298,15 @@ namespace NivarianIcecreamTail
 
             if (landingIndex < 0)
             {
+                bool targetIsAdjacent = Math.Abs(targetCell.x - pawn.Position.x) <= 1 &&
+                    Math.Abs(targetCell.z - pawn.Position.z) <= 1;
+                if (targetPawnOnMap && targetIsAdjacent)
+                {
+                    path.Clear();
+                    landingCell = pawn.Position;
+                    return true;
+                }
+
                 path.Clear();
                 return false;
             }
@@ -302,7 +317,6 @@ namespace NivarianIcecreamTail
             }
 
             landingCell = path[landingIndex];
-            bool targetPawnOnMap = target.Pawn != null && target.Pawn.Spawned && target.Pawn.Map == map;
             if (!targetPawnOnMap && landingCell != targetCell)
             {
                 path.Clear();
@@ -357,7 +371,11 @@ namespace NivarianIcecreamTail
 
             if (state.moveElapsedTicks >= state.moveTotalTicks)
             {
-                pawn.Rotation = Rot4.FromAngleFlat((state.landingCell - state.startCell).AngleFlat);
+                if (state.landingCell != state.startCell)
+                {
+                    pawn.Rotation = Rot4.FromAngleFlat((state.landingCell - state.startCell).AngleFlat);
+                }
+
                 pawn.Position = state.landingCell;
                 pawn.Drawer.tweener.ResetTweenedPosToRoot();
                 pawn.Notify_Teleported(true, true);

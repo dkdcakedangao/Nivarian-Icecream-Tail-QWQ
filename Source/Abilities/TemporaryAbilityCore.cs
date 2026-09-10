@@ -60,6 +60,9 @@ namespace NivarianIcecreamTail
         public const string BeerBuffDefName = "IcecreamTailBeerEaterBuff";
         public const string BurstAbilityDefName = "IcecreamTailAbilityBurst";
         public const string Burst2AbilityDefName = "IcecreamTailAbilityBurst2";
+        public const string Skill3AbilityDefName = "IcecreamTailAbilityGetsugaSaiho";
+        public const string Skill4AbilityDefName = "IcecreamTailAbilityTenshin";
+        public const string Skill5AbilityDefName = "IcecreamTailAbilityBakkai";
         public const string MagicBodyDefName = "IcecreamTailMagicBody";
 
         public static bool IsFourBeerEligible(Pawn pawn)
@@ -111,12 +114,19 @@ namespace NivarianIcecreamTail
 
             AbilityDef burstDef = DefDatabase<AbilityDef>.GetNamedSilentFail(BurstAbilityDefName);
             AbilityDef burst2Def = DefDatabase<AbilityDef>.GetNamedSilentFail(Burst2AbilityDefName);
+            AbilityDef skill3Def = DefDatabase<AbilityDef>.GetNamedSilentFail(Skill3AbilityDefName);
+            AbilityDef skill4Def = DefDatabase<AbilityDef>.GetNamedSilentFail(Skill4AbilityDefName);
+            AbilityDef skill5Def = DefDatabase<AbilityDef>.GetNamedSilentFail(Skill5AbilityDefName);
             bool eligible = IsFourBeerEligible(pawn);
             SyncAbility(pawn, burstDef, eligible);
             SyncAbility(pawn, burst2Def, eligible);
+            SyncAbility(pawn, skill3Def, eligible);
+            SyncAbility(pawn, skill4Def, eligible);
+            SyncAbility(pawn, skill5Def, eligible);
             if (!eligible)
             {
                 IcecreamTailBurst2Runtime.Cancel(pawn);
+                IcecreamTailSkill3Runtime.Cancel(pawn);
                 RemoveMagicBody(pawn);
             }
         }
@@ -137,6 +147,7 @@ namespace NivarianIcecreamTail
             }
 
             IcecreamTailBurst2Runtime.Cancel(pawn);
+            IcecreamTailSkill3Runtime.Cancel(pawn);
 
             if (pawn.abilities != null)
             {

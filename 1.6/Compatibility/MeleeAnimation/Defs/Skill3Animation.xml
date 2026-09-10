@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>IcecreamTail_Skill3_MeleeAnimation</defName>
+    <label>月牙叉炮（CA）</label>
+    <data>skill3.json</data>
+    <weaponFilter Class="AM.Reqs.True" />
+    <relativeProbability>0</relativeProbability>
+    <canEditProbability>false</canEditProbability>
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+      <li>
+        <pawnIndex>1</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
+  </AM.AnimDef>
+</Defs>

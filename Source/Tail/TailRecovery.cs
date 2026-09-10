@@ -97,6 +97,7 @@ namespace NivarianIcecreamTail
         private const string VanillaFlavorDefName = "IcecreamTailFlavorVanilla";
         private const string WolfeinPawnDefName = "Wolfein_Race";
         private const string FoodPoisoningDefName = "FoodPoisoning";
+        private const string CryoSlowDefName = "Nivarian_Hediff_CryoSlow";
         private const string WolfeinChocolateThoughtDefName = "IcecreamTailMemoryWolfeinChocolate";
         private const float WolfeinChocolateFoodPoisoningSeverity = 0.6f;
         private const string BeerBuffDefName = "IcecreamTailBeerEaterBuff";

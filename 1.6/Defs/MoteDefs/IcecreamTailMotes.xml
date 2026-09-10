@@ -59,4 +59,20 @@
     </mote>
     <drawOffscreen>true</drawOffscreen>
   </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailBakkaiTwirl</defName>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Effects/twirl_02</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.5,1.5)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.10</fadeInTime>
+      <solidTime>0.15</solidTime>
+      <fadeOutTime>0.25</fadeOutTime>
+    </mote>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
 </Defs>

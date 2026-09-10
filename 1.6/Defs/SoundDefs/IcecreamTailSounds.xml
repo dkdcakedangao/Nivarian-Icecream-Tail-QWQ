@@ -171,4 +171,120 @@
       </li>
     </subSounds>
   </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill3Sound1</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>skill_3_1</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~18</volumeRange>
+        <pitchRange>1~1</pitchRange>
+        <distRange>0~50</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill3Sound2</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>skill_3_2</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~18</volumeRange>
+        <pitchRange>1~1</pitchRange>
+        <distRange>0~50</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill3Sound3</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>skill_3_3</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~18</volumeRange>
+        <pitchRange>1~1</pitchRange>
+        <distRange>0~50</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill3Sound4</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>skill_3_4</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~18</volumeRange>
+        <pitchRange>1~1</pitchRange>
+        <distRange>0~50</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill4Miss1</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_4_1</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill4Miss2</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_4_2</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill4Miss3</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_4_3</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill4Miss4</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_4_4</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill4Hit</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_4_5</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill5Sound1</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_5_1</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill5Sound2</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_5_2</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
+  <SoundDef>
+    <defName>IcecreamTailSkill5Sound3</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds><li><grains><li Class="AudioGrain_Clip"><clipPath>skill_5_3</clipPath></li></grains><volumeRange>18~18</volumeRange><pitchRange>1~1</pitchRange><distRange>0~50</distRange></li></subSounds>
+  </SoundDef>
 </Defs>

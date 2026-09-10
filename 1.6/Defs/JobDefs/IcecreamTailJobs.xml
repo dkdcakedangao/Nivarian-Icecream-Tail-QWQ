@@ -2,6 +2,30 @@
 <!-- 动作的xml -->
 <Defs>
   <JobDef>
+    <defName>IcecreamTailSkill3Locked</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_IcecreamTailSkill3Locked</driverClass>
+    <reportString>被月牙叉炮锁定</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+  <JobDef>
+    <defName>IcecreamTailBakkaiLocked</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_IcecreamTailBakkaiLocked</driverClass>
+    <reportString>正在使用超级爆！爆！回！</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+  <JobDef>
     <defName>LickIcecreamTail</defName>
     <driverClass>NivarianIcecreamTail.JobDriver_LickIcecreamTail</driverClass>
     <reportString>正在舔舔 TargetA 的冰淇淋尾巴。</reportString>
