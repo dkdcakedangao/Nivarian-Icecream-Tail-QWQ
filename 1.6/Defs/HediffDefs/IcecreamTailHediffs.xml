@@ -4,6 +4,7 @@
   <HediffDef>
     <defName>IcecreamTailPlaceholder</defName>
     <label>冰淇淋尾巴</label>
+    <description>冰冰的尾巴，看起来非常好吃喵~</description>
     <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailPlaceholder</hediffClass>
     <isBad>false</isBad>
     <comps>

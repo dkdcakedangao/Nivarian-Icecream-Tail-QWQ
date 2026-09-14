@@ -30,7 +30,7 @@
     <drawOffscreen>true</drawOffscreen>
   </ThingDef>
   <ThingDef ParentName="MoteBase">
-    <defName>Mote_IcecreamTailBeerStar04</defName>
+    <defName>Mote_IcecreamTailBeerStarFour</defName>
     <thingClass>NivarianIcecreamTail.Mote_IcecreamTailBeerStar</thingClass>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <graphicData>
@@ -45,7 +45,7 @@
     <drawOffscreen>true</drawOffscreen>
   </ThingDef>
   <ThingDef ParentName="MoteBase">
-    <defName>Mote_IcecreamTailBeerStar08</defName>
+    <defName>Mote_IcecreamTailBeerStarEight</defName>
     <thingClass>NivarianIcecreamTail.Mote_IcecreamTailBeerStar</thingClass>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <graphicData>

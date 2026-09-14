@@ -11,8 +11,8 @@ namespace NivarianIcecreamTail
     {
         private const string WinMoteDefName = "Mote_IcecreamTailBeerWin";
         private const string WinSoundDefName = "IcecreamTailBeerWin";
-        private const string Star04MoteDefName = "Mote_IcecreamTailBeerStar04";
-        private const string Star08MoteDefName = "Mote_IcecreamTailBeerStar08";
+        private const string StarFourMoteDefName = "Mote_IcecreamTailBeerStarFour";
+        private const string StarEightMoteDefName = "Mote_IcecreamTailBeerStarEight";
 
         // 四酒
         public static void TryTriggerFourBeerTransition(Pawn pawn)
@@ -71,7 +71,7 @@ namespace NivarianIcecreamTail
                 return;
             }
 
-            string defName = Rand.Bool ? Star04MoteDefName : Star08MoteDefName;
+            string defName = Rand.Bool ? StarFourMoteDefName : StarEightMoteDefName;
             ThingDef moteDef = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
             if (moteDef == null)
             {

@@ -11,6 +11,7 @@ using Verse.Sound;
 // 爽啦！
 namespace NivarianIcecreamTail
 {
+    [StaticConstructorOnStartup]
     public sealed class Command_IcecreamTailAbility : Command_Action
     {
         private const float ButtonSize = 75f;
