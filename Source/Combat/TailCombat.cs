@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -120,11 +121,37 @@ namespace NivarianIcecreamTail
     [HarmonyPatch(typeof(JobGiver_GetFood), "TryGiveJob")]
     internal static class Patch_JobGiver_GetFood_TryGiveJob
     {
+        private const int MissingFoodRetryTicks = 60;
+        private static readonly ConditionalWeakTable<Pawn, AutoLickRetryState> RetryStates = new ConditionalWeakTable<Pawn, AutoLickRetryState>();
+
+        private sealed class AutoLickRetryState
+        {
+            public int NextScanTick;
+        }
+
         private static void Postfix(Pawn pawn, ref Job __result)
         {
-            if (__result == null || __result.def != JobDefOf.Ingest)
+            if (!TailEatingUtility.IsEligibleAutomaticEater(pawn))
             {
                 return;
+            }
+
+            // 没有普通食物时原版会返回空 Job；合格的小人仍需尝试寻找冰淇淋尾巴。
+            if (__result != null && __result.def != JobDefOf.Ingest)
+            {
+                return;
+            }
+
+            bool missingVanillaFood = __result == null;
+            AutoLickRetryState retryState = null;
+            int currentTick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            if (missingVanillaFood)
+            {
+                retryState = RetryStates.GetValue(pawn, delegate { return new AutoLickRetryState(); });
+                if (currentTick < retryState.NextScanTick)
+                {
+                    return;
+                }
             }
 
             Job lickJob;
@@ -132,17 +159,29 @@ namespace NivarianIcecreamTail
             if (TailEatingUtility.TryMakeAutomaticLickJob(pawn, out lickJob, out reason))
             {
                 __result = lickJob;
+                if (retryState != null)
+                {
+                    retryState.NextScanTick = 0;
+                }
+
                 if (IcecreamTailDebug.AutoLickEnabled)
                 {
-                    IcecreamTailDebug.AutoLick("原版进食已替换：" + IcecreamTailDebug.PawnInfo(pawn) + " → " + IcecreamTailDebug.PawnInfo(lickJob.targetA.Pawn) + "，饱食度=" + pawn.needs.food.CurLevelPercentage.ToStringPercent() + "。 ");
+                    string result = missingVanillaFood ? "未找到普通食物，改为舔食" : "原版进食已替换";
+                    IcecreamTailDebug.AutoLick(result + "：" + IcecreamTailDebug.PawnInfo(pawn) + " → " + IcecreamTailDebug.PawnInfo(lickJob.targetA.Pawn) + "，饱食度=" + pawn.needs.food.CurLevelPercentage.ToStringPercent() + "。 ");
                 }
 
                 return;
             }
 
+            if (retryState != null)
+            {
+                retryState.NextScanTick = currentTick + MissingFoodRetryTicks;
+            }
+
             if (IcecreamTailDebug.AutoLickEnabled && IcecreamTailMod.Enabled && IcecreamTailMod.Settings != null && IcecreamTailMod.Settings.EnableAutoLick && pawn != null && pawn.needs != null && pawn.needs.food != null && pawn.needs.food.CurLevelPercentage < IcecreamTailMod.Settings.AutoLickFoodThreshold)
             {
-                IcecreamTailDebug.AutoLick("保留原版进食：" + IcecreamTailDebug.PawnInfo(pawn) + "，原因=" + reason + "。 ");
+                string result = missingVanillaFood ? "未找到自动舔食目标" : "保留原版进食";
+                IcecreamTailDebug.AutoLick(result + "：" + IcecreamTailDebug.PawnInfo(pawn) + "，原因=" + reason + "。 ");
             }
         }
     }

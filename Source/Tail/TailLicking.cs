@@ -6,6 +6,7 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
 
 namespace NivarianIcecreamTail
 {
@@ -161,25 +162,33 @@ namespace NivarianIcecreamTail
         public static bool IsAutomaticEater(Pawn pawn)
         {
             IcecreamTailSettings settings = IcecreamTailMod.Settings;
-            if (settings == null || !settings.EnableAutoLick || pawn == null || !pawn.Spawned || !pawn.RaceProps.Humanlike || pawn.Downed || pawn.InMentalState || pawn.Drafted || pawn.needs == null || pawn.needs.food == null || pawn.needs.food.CurLevelPercentage >= settings.AutoLickFoodThreshold)
-            {
-                return false;
-            }
-
-            if (IcecreamTailMod.Settings.SearchAllFriendly)
-            {
-                if (pawn.HostileTo(Faction.OfPlayer))
-                {
-                    return false;
-                }
-            }
-            else if (pawn.Faction != Faction.OfPlayer)
+            if (settings == null || !settings.EnableAutoLick || !IsEligibleAutomaticEater(pawn) || !pawn.Spawned || pawn.Downed || pawn.InMentalState || pawn.Drafted || pawn.needs == null || pawn.needs.food == null || pawn.needs.food.CurLevelPercentage >= settings.AutoLickFoodThreshold)
             {
                 return false;
             }
 
             Job currentJob = pawn.CurJob;
             return currentJob == null || !currentJob.playerForced;
+        }
+
+        public static bool IsEligibleAutomaticEater(Pawn pawn)
+        {
+            if (pawn == null || pawn.RaceProps == null || !pawn.RaceProps.Humanlike || pawn.IsPrisonerOfColony)
+            {
+                return false;
+            }
+
+            if (pawn.IsColonistPlayerControlled || pawn.IsSlaveOfColony)
+            {
+                return true;
+            }
+
+            IcecreamTailSettings settings = IcecreamTailMod.Settings;
+            Lord lord = pawn.GetLord();
+            return settings != null
+                && settings.SearchAllFriendly
+                && lord != null
+                && lord.LordJob is LordJob_VisitColony;
         }
 
         // 自动吃吃吃
@@ -195,7 +204,7 @@ namespace NivarianIcecreamTail
             int radius = IcecreamTailMod.Settings.SearchRadius > 150 ? 0 : IcecreamTailMod.Settings.SearchRadius;
             Pawn nearestTarget = null;
             float nearestDistance = float.MaxValue;
-            foreach (Pawn target in eater.Map.mapPawns.AllPawns)
+            foreach (Pawn target in eater.Map.mapPawns.AllHumanlikeSpawned)
             {
                 string targetReason;
                 if (!CanLickTail(eater, target, false, radius, out targetReason))
