@@ -267,17 +267,20 @@ namespace NivarianIcecreamTail
 
         public static void TickAll()
         {
-            foreach (Pawn enemy in PendingStuns.Keys.ToList())
+            if (PendingStuns.Count > 0)
             {
-                Pawn caster = PendingStuns[enemy];
-                if (enemy == null || enemy.DestroyedOrNull() || enemy.Dead)
+                foreach (Pawn enemy in PendingStuns.Keys.ToList())
                 {
-                    PendingStuns.Remove(enemy);
-                }
-                else if (enemy.Spawned)
-                {
-                    ApplyStun(enemy, caster);
-                    PendingStuns.Remove(enemy);
+                    Pawn caster = PendingStuns[enemy];
+                    if (enemy == null || enemy.DestroyedOrNull() || enemy.Dead)
+                    {
+                        PendingStuns.Remove(enemy);
+                    }
+                    else if (enemy.Spawned)
+                    {
+                        ApplyStun(enemy, caster);
+                        PendingStuns.Remove(enemy);
+                    }
                 }
             }
 
@@ -760,6 +763,11 @@ namespace NivarianIcecreamTail
 
         private static void PlayStartSound(Pawn pawn)
         {
+            if (!IcecreamTailSkillAudio.Enabled)
+            {
+                return;
+            }
+
             string defName = "IcecreamTailSkill5Sound" + Rand.RangeInclusive(1, 3);
             SoundDef sound = DefDatabase<SoundDef>.GetNamedSilentFail(defName);
             if (sound == null)

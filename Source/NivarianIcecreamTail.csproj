@@ -23,6 +23,8 @@
     <Compile Include="Core\IcecreamTailMod.cs" />
     <Compile Include="Core\IcecreamTailDebug.cs" />
     <Compile Include="Flavor\FlavorSystem.cs" />
+    <Compile Include="Flavor\RainbowFlavor.cs" />
+    <Compile Include="Flavor\NutmegHistory.cs" />
     <Compile Include="Flavor\TraderStock.cs" />
     <Compile Include="Tail\TailState.cs" />
     <Compile Include="Tail\TailFood.cs" />
@@ -45,9 +47,15 @@
     <Compile Include="Abilities\BakkaiAnimationBridge.cs" />
     <Compile Include="Abilities\AbilityBakkai.cs" />
     <Compile Include="Abilities\AbilityBakkaiRuntime.cs" />
+    <Compile Include="Abilities\AbilityMintBreath.cs" />
+    <Compile Include="Abilities\MintBreathPreview.cs" />
+    <Compile Include="Abilities\AbilityMatchaSterilizer.cs" />
+    <Compile Include="Abilities\AbilityMatchaSterilizerRuntime.cs" />
+    <Compile Include="Core\IcecreamTailSkillAudio.cs" />
     <Compile Include="Combat\TailCombat.cs" />
     <Compile Include="Combat\BeerFourCombatSettings.cs" />
     <Compile Include="Effects\BeerFourVfx.cs" />
+    <Compile Include="Effects\NutmegHistoryVfx.cs" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp-firstpass.dll" />
     <GameReference Include="$(RimWorldManagedDir)\UnityEngine.CoreModule.dll" />

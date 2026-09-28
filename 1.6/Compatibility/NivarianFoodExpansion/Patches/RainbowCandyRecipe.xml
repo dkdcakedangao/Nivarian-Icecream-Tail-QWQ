@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 彩虹糖口味配方的检测，毕竟不一定大家都安装了涅的食物扩展~ -->
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/RecipeDef[defName="MakeIcecreamTailRainbowCandySeasoning"]/fixedIngredientFilter/thingDefs</xpath>
+        <value>
+          <li>IcecreamTailFrostberryStompedSeasoning</li>
+          <li>IcecreamTailFrostberryImitationSeasoning</li>
+          <li>IcecreamTailFrostberryNiraSeasoning</li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/RecipeDef[defName="MakeIcecreamTailRainbowCandySeasoning"]/ingredients</xpath>
+        <value>
+          <li><filter><thingDefs><li>IcecreamTailFrostberryStompedSeasoning</li></thingDefs></filter><count>1</count></li>
+          <li><filter><thingDefs><li>IcecreamTailFrostberryImitationSeasoning</li></thingDefs></filter><count>1</count></li>
+          <li><filter><thingDefs><li>IcecreamTailFrostberryNiraSeasoning</li></thingDefs></filter><count>1</count></li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

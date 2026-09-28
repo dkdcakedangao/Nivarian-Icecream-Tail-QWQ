@@ -26,6 +26,18 @@
     <isIdle>false</isIdle>
   </JobDef>
   <JobDef>
+    <defName>IcecreamTailSterilizerLocked</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_IcecreamTailSterilizerLocked</driverClass>
+    <reportString>正在呼叫灭菌器大人</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+  <JobDef>
     <defName>LickIcecreamTail</defName>
     <driverClass>NivarianIcecreamTail.JobDriver_LickIcecreamTail</driverClass>
     <reportString>正在舔舔 TargetA 的冰淇淋尾巴。</reportString>

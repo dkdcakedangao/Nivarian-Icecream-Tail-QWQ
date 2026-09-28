@@ -547,7 +547,7 @@ namespace NivarianIcecreamTail
 
         private static void PlaySound(string defName, IntVec3 cell, Map map)
         {
-            if (map == null) return;
+            if (map == null || !IcecreamTailSkillAudio.Enabled) return;
             SoundDef sound = DefDatabase<SoundDef>.GetNamedSilentFail(defName);
             if (sound != null)
             {

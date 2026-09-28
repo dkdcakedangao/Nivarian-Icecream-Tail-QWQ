@@ -138,7 +138,10 @@ namespace NivarianIcecreamTail
                 yield return gizmo;
             }
 
-            if (!__instance.Drafted || !IcecreamTailTemporaryAbilityUtility.IsFourBeerEligible(__instance) || __instance.abilities == null)
+            bool beerEligible = IcecreamTailTemporaryAbilityUtility.IsFourBeerEligible(__instance);
+            bool mintEligible = IcecreamTailTemporaryAbilityUtility.IsMintEligible(__instance);
+            bool matchaEligible = IcecreamTailTemporaryAbilityUtility.IsMatchaEligible(__instance);
+            if (!__instance.Drafted || __instance.abilities == null || (!beerEligible && !mintEligible && !matchaEligible))
             {
                 yield break;
             }
@@ -162,37 +165,51 @@ namespace NivarianIcecreamTail
 
             AbilityDef burstDef = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.BurstAbilityDefName);
             Ability burst = burstDef == null ? null : __instance.abilities.GetAbility(burstDef, false);
-            if (burst != null)
+            if (beerEligible && burst != null)
             {
                 yield return new Command_IcecreamTailAbility(burst, __instance);
             }
 
             AbilityDef burst2Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Burst2AbilityDefName);
             Ability burst2 = burst2Def == null ? null : __instance.abilities.GetAbility(burst2Def, false);
-            if (burst2 != null)
+            if (beerEligible && burst2 != null)
             {
                 yield return new Command_IcecreamTailAbility(burst2, __instance);
             }
 
             AbilityDef skill3Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Skill3AbilityDefName);
             Ability skill3 = skill3Def == null ? null : __instance.abilities.GetAbility(skill3Def, false);
-            if (skill3 != null)
+            if (beerEligible && skill3 != null)
             {
                 yield return new Command_IcecreamTailAbility(skill3, __instance);
             }
 
             AbilityDef skill4Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Skill4AbilityDefName);
             Ability skill4 = skill4Def == null ? null : __instance.abilities.GetAbility(skill4Def, false);
-            if (skill4 != null)
+            if (beerEligible && skill4 != null)
             {
                 yield return new Command_IcecreamTailAbility(skill4, __instance);
             }
 
             AbilityDef skill5Def = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.Skill5AbilityDefName);
             Ability skill5 = skill5Def == null ? null : __instance.abilities.GetAbility(skill5Def, false);
-            if (skill5 != null)
+            if (beerEligible && skill5 != null)
             {
                 yield return new Command_IcecreamTailAbility(skill5, __instance);
+            }
+
+            AbilityDef mintDef = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.MintAbilityDefName);
+            Ability mintAbility = mintDef == null ? null : __instance.abilities.GetAbility(mintDef, false);
+            if (mintEligible && mintAbility != null)
+            {
+                yield return new Command_IcecreamTailAbility(mintAbility, __instance);
+            }
+
+            AbilityDef matchaDef = DefDatabase<AbilityDef>.GetNamedSilentFail(IcecreamTailTemporaryAbilityUtility.MatchaAbilityDefName);
+            Ability matchaAbility = matchaDef == null ? null : __instance.abilities.GetAbility(matchaDef, false);
+            if (matchaEligible && matchaAbility != null)
+            {
+                yield return new Command_IcecreamTailAbility(matchaAbility, __instance);
             }
         }
     }

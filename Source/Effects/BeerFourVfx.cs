@@ -47,14 +47,17 @@ namespace NivarianIcecreamTail
                 }
             }
 
-            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(WinSoundDefName);
-            if (soundDef == null)
+            if (IcecreamTailSkillAudio.Enabled)
             {
-                Log.Error("Nivarian Icecream Tail: missing WIN sound definition.");
-            }
-            else
-            {
-                soundDef.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
+                SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(WinSoundDefName);
+                if (soundDef == null)
+                {
+                    Log.Error("Nivarian Icecream Tail: missing WIN sound definition.");
+                }
+                else
+                {
+                    soundDef.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
+                }
             }
 
             if (IcecreamTailDebug.EasterEggEnabled)

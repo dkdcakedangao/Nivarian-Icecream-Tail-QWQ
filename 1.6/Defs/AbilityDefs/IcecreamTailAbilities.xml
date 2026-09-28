@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 临时技能相关 -->
 <Defs>
   <AbilityDef>
     <defName>IcecreamTailAbilityBurst</defName>
@@ -169,5 +170,89 @@
       <li Class="NivarianIcecreamTail.CompProperties_IcecreamTailBakkai" />
     </comps>
   </AbilityDef>
+  <AbilityDef>
+    <defName>IcecreamTailAbilityMintBreath</defName>
+    <label>大龙叫！叫！叫！</label>
+    <description>诶？大龙？</description>
+    <abilityClass>NivarianIcecreamTail.IcecreamTailAbilityMintBreath</abilityClass>
+    <iconPath>UI/skills/skill_6</iconPath>
+    <cooldownTicksRange>5000</cooldownTicksRange>
+    <hostile>true</hostile>
+    <targetRequired>true</targetRequired>
+    <aiCanUse>false</aiCanUse>
+    <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>true</disableGizmoWhileUndrafted>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties Class="Nivarian_Race.Code.Verbs.VerbProperties_CastAbilityMuzzle">
+      <verbClass>Nivarian_Race.Code.Verbs.Verb_CastAbilityMuzzle</verbClass>
+      <range>5</range>
+      <warmupTime>2</warmupTime>
+      <requireLineOfSight>true</requireLineOfSight>
+      <drawHighlightWithLineOfSight>true</drawHighlightWithLineOfSight>
+      <muzzleOffset>0.9</muzzleOffset>
+      <aimStance>Nivarian_Race.Code.Stance.Stance_DrakeFrostBreathWarmupFramework</aimStance>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+      </targetParams>
+      <shootParticle>
+        <prefabName>particle_dragonbreath</prefabName>
+      </shootParticle>
+      <aimStartSound>Nivarian_Dragonbreath_Prepare</aimStartSound>
+      <shootSound>Nivarian_Dragonbreath_Impact</shootSound>
+      <fromDrakeDragon>true</fromDrakeDragon>
+      <defaultCooldownTime>3</defaultCooldownTime>
+    </verbProperties>
+    <comps>
+      <li Class="NivarianIcecreamTail.CompProperties_IcecreamTailTargeting" />
+      <li Class="Nivarian_Race.Code.AbilityOverride.CompProperties_DrakeFrostBreath">
+        <controllerThingDef>Nivarian_DrakeFrostBreathController</controllerThingDef>
+        <spreadThingDef>Nivarian_FrostSpike_CoreStrong</spreadThingDef>
+        <targetDamageDef>Nivarian_Damage_CryoWeaponFrost</targetDamageDef>
+        <durationTicks>180</durationTicks>
+        <pulseIntervalTicks>15</pulseIntervalTicks>
+        <maxSpreadRadius>18</maxSpreadRadius>
+        <maxSpikesPerStep>24</maxSpikesPerStep>
+        <coneHalfAngle>33</coneHalfAngle>
+        <targetDamagePerSecond>25</targetDamagePerSecond>
+        <linePrefabName>line_psyBeam</linePrefabName>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef>
+    <defName>IcecreamTailAbilityMatchaSterilizer</defName>
+    <label>灭菌器大人！降临！</label>
+    <description>呼叫传说中的灭菌器大人的武魂真身，前来助阵！</description>
+    <abilityClass>NivarianIcecreamTail.IcecreamTailAbilityMatchaSterilizer</abilityClass>
+    <iconPath>UI/skills/skill_7</iconPath>
+    <cooldownTicksRange>2500</cooldownTicksRange>
+    <hostile>false</hostile>
+    <targetRequired>true</targetRequired>
+    <aiCanUse>false</aiCanUse>
+    <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>true</disableGizmoWhileUndrafted>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+      <verbClass>NivarianIcecreamTail.Verb_CastAbilityMatchaSterilizer</verbClass>
+      <warmupTime>0.1</warmupTime>
+      <range>10</range>
+      <requireLineOfSight>false</requireLineOfSight>
+      <drawHighlightWithLineOfSight>false</drawHighlightWithLineOfSight>
+      <targetable>true</targetable>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetHumans>true</canTargetHumans>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSubhumans>true</canTargetSubhumans>
+        <canTargetSelf>false</canTargetSelf>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="NivarianIcecreamTail.CompProperties_IcecreamTailMatchaSterilizer" />
+    </comps>
+  </AbilityDef>
 </Defs>
-

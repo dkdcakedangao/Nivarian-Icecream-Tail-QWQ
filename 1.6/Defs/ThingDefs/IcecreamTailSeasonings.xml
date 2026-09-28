@@ -101,6 +101,72 @@
     </comps>
   </ThingDef>
   <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailMintSeasoning</defName>
+    <label>薄荷味冰淇淋调味料</label>
+    <description>用于制作薄荷味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“薄荷味”。</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_mint</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>18</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorMint</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailMatchaSeasoning</defName>
+    <label>抹茶味冰淇淋调味料</label>
+    <description>用于制作抹茶味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“抹茶味”。</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_matcha</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>16</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorMatcha</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailChocolateSeasoning</defName>
     <label>巧克力味冰淇淋调味料</label>
     <description>用于制作巧克力味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“巧克力味”。</description>
@@ -158,6 +224,171 @@
     <modExtensions>
       <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
         <flavor>IcecreamTailFlavorBeer</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailFrostberryStompedSeasoning</defName>
+    <label>传统霜莓足酿酒味冰淇淋调味料</label>
+    <description>将霜莓足酿酒的风味融入冰淇淋的调味料。已经长有冰淇淋尾巴的涅瓦莲使用后，会将成熟或恢复中的尾巴切换为“传统霜莓足酿酒味”。</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_frostberry_stomped</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>22</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorFrostberryStomped</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailFrostberryImitationSeasoning</defName>
+    <label>仿制霜莓足酿酒味冰淇淋调味料</label>
+    <description>将霜莓足酿酒的风味融入冰淇淋的调味料。已经长有冰淇淋尾巴的涅瓦莲使用后，会将成熟或恢复中的尾巴切换为“仿制霜莓足酿酒味”。</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_frostberry_stomped</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>18</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorFrostberryImitation</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailFrostberryNiraSeasoning</defName>
+    <label>涅拉亲制霜莓足酿酒味冰淇淋调味料</label>
+    <description>将霜莓足酿酒的风味融入冰淇淋的调味料。已经长有冰淇淋尾巴的涅瓦莲使用后，会将成熟或恢复中的尾巴切换为“涅拉亲制霜莓足酿酒味”。</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_frostberry_nira</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>26</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorFrostberryNira</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailNutmegSeasoning</defName>
+    <label>肉豆蔻味冰淇淋调味料</label>
+    <description>用于制作肉豆蔻味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“肉豆蔻味”。石头磨出来的……真的算肉豆蔻喵？</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_nutmeg</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>16</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorNutmeg</flavor>
+      </li>
+    </modExtensions>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>200</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="DrugPillBase">
+    <defName>IcecreamTailRainbowCandySeasoning</defName>
+    <label>彩虹糖味冰淇淋调味料</label>
+    <description>把各种调味料调成一袋彩虹！已经长有冰淇淋尾巴的涅瓦莲使用后，会将尾巴切换为“彩虹糖味”。每次食用尾巴时随机获得一种其他口味的效果，还有彩虹糖的额外好心情喵~</description>
+    <graphicData>
+      <texPath>Items/seasoning/seasoning_rainbow_candy</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MarketValue>16</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>使用{0}进行调味</ingestCommandString>
+      <ingestReportString>正在使用{0}进行调味。</ingestReportString>
+      <outcomeDoers>
+        <li Class="NivarianIcecreamTail.IngestionOutcomeDoer_IcecreamTailSeasoning" />
+      </outcomeDoers>
+    </ingestible>
+    <modExtensions>
+      <li Class="NivarianIcecreamTail.IcecreamTailFlavorExtension">
+        <flavor>IcecreamTailFlavorRainbowCandy</flavor>
       </li>
     </modExtensions>
     <comps>

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using RimWorld;
@@ -8,6 +7,7 @@ using Verse;
 using Verse.Sound;
 
 // 四酒核心
+// 现在是所有临时技能的核心了
 namespace NivarianIcecreamTail
 {
     public abstract class IcecreamTailTemporaryAbility : Ability
@@ -51,7 +51,67 @@ namespace NivarianIcecreamTail
         {
             Pawn pawn = parent.pawn;
             base.CompPostPostRemoved();
-            IcecreamTailTemporaryAbilityUtility.RemoveTemporaryAbilitiesAndMagicBody(pawn);
+            IcecreamTailTemporaryAbilityUtility.RemoveBeerAbilitiesAndMagicBody(pawn);
+        }
+    }
+
+    public sealed class HediffCompProperties_IcecreamTailMintAbility : HediffCompProperties
+    {
+        public HediffCompProperties_IcecreamTailMintAbility()
+        {
+            compClass = typeof(HediffComp_IcecreamTailMintAbility);
+        }
+    }
+
+    public sealed class HediffComp_IcecreamTailMintAbility : HediffComp
+    {
+        public override void CompPostPostAdd(DamageInfo? dinfo)
+        {
+            base.CompPostPostAdd(dinfo);
+            IcecreamTailTemporaryAbilityUtility.SyncMintAbility(parent.pawn);
+        }
+
+        public override void CompPostTickInterval(ref float severityAdjustment, int delta)
+        {
+            base.CompPostTickInterval(ref severityAdjustment, delta);
+            IcecreamTailTemporaryAbilityUtility.SyncMintAbility(parent.pawn);
+        }
+
+        public override void CompPostPostRemoved()
+        {
+            Pawn pawn = parent.pawn;
+            base.CompPostPostRemoved();
+            IcecreamTailTemporaryAbilityUtility.RemoveMintAbility(pawn);
+        }
+    }
+
+    public sealed class HediffCompProperties_IcecreamTailMatchaAbility : HediffCompProperties
+    {
+        public HediffCompProperties_IcecreamTailMatchaAbility()
+        {
+            compClass = typeof(HediffComp_IcecreamTailMatchaAbility);
+        }
+    }
+
+    public sealed class HediffComp_IcecreamTailMatchaAbility : HediffComp
+    {
+        public override void CompPostPostAdd(DamageInfo? dinfo)
+        {
+            base.CompPostPostAdd(dinfo);
+            IcecreamTailTemporaryAbilityUtility.SyncMatchaAbility(parent.pawn);
+        }
+
+        public override void CompPostTickInterval(ref float severityAdjustment, int delta)
+        {
+            base.CompPostTickInterval(ref severityAdjustment, delta);
+            IcecreamTailTemporaryAbilityUtility.SyncMatchaAbility(parent.pawn);
+        }
+
+        public override void CompPostPostRemoved()
+        {
+            Pawn pawn = parent.pawn;
+            base.CompPostPostRemoved();
+            IcecreamTailTemporaryAbilityUtility.RemoveMatchaAbility(pawn);
         }
     }
 
@@ -63,6 +123,10 @@ namespace NivarianIcecreamTail
         public const string Skill3AbilityDefName = "IcecreamTailAbilityGetsugaSaiho";
         public const string Skill4AbilityDefName = "IcecreamTailAbilityTenshin";
         public const string Skill5AbilityDefName = "IcecreamTailAbilityBakkai";
+        public const string MintBuffDefName = "IcecreamTailMintEaterBuff";
+        public const string MintAbilityDefName = "IcecreamTailAbilityMintBreath";
+        public const string MatchaBuffDefName = "IcecreamTailMatchaEaterBuff";
+        public const string MatchaAbilityDefName = "IcecreamTailAbilityMatchaSterilizer";
         public const string MagicBodyDefName = "IcecreamTailMagicBody";
 
         public static bool IsFourBeerEligible(Pawn pawn)
@@ -87,11 +151,69 @@ namespace NivarianIcecreamTail
             return def != null && pawn.health.hediffSet.GetFirstHediffOfDef(def) != null;
         }
 
+        public static bool IsMintEligible(Pawn pawn)
+        {
+            if (!IcecreamTailMod.Enabled || !IcecreamTailUtility.IsNivarian(pawn) || pawn.health == null)
+            {
+                return false;
+            }
+
+            HediffDef mintBuff = DefDatabase<HediffDef>.GetNamedSilentFail(MintBuffDefName);
+            return mintBuff != null && pawn.health.hediffSet.GetFirstHediffOfDef(mintBuff) != null;
+        }
+
+        public static bool IsMatchaEligible(Pawn pawn)
+        {
+            if (!IcecreamTailMod.Enabled || !IcecreamTailUtility.IsNivarian(pawn) || pawn.health == null)
+            {
+                return false;
+            }
+
+            HediffDef matchaBuff = DefDatabase<HediffDef>.GetNamedSilentFail(MatchaBuffDefName);
+            return matchaBuff != null && pawn.health.hediffSet.GetFirstHediffOfDef(matchaBuff) != null;
+        }
+
         public static bool CanCastTemporaryAbility(Pawn pawn, out string reason)
         {
             if (!IsFourBeerEligible(pawn))
             {
                 reason = "只有处于四酒状态的涅瓦莲才能使用该能力。";
+                return false;
+            }
+
+            if (!pawn.Drafted)
+            {
+                reason = "需要先征召该涅瓦莲。";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public static bool CanCastMintAbility(Pawn pawn, out string reason)
+        {
+            if (!IsMintEligible(pawn))
+            {
+                reason = "只有吃过薄荷味冰淇淋尾巴的涅瓦莲才能使用该能力。";
+                return false;
+            }
+
+            if (!pawn.Drafted)
+            {
+                reason = "需要先征召该涅瓦莲。";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public static bool CanCastMatchaAbility(Pawn pawn, out string reason)
+        {
+            if (!IsMatchaEligible(pawn))
+            {
+                reason = "只有吃过抹茶味冰淇淋尾巴的涅瓦莲才能使用该能力。";
                 return false;
             }
 
@@ -131,6 +253,28 @@ namespace NivarianIcecreamTail
             }
         }
 
+        public static void SyncMintAbility(Pawn pawn)
+        {
+            if (pawn == null || pawn.abilities == null)
+            {
+                return;
+            }
+
+            AbilityDef mintAbility = DefDatabase<AbilityDef>.GetNamedSilentFail(MintAbilityDefName);
+            SyncAbility(pawn, mintAbility, IsMintEligible(pawn));
+        }
+
+        public static void SyncMatchaAbility(Pawn pawn)
+        {
+            if (pawn == null || pawn.abilities == null)
+            {
+                return;
+            }
+
+            AbilityDef matchaAbility = DefDatabase<AbilityDef>.GetNamedSilentFail(MatchaAbilityDefName);
+            SyncAbility(pawn, matchaAbility, IsMatchaEligible(pawn));
+        }
+
         private static void SyncAbility(Pawn pawn, AbilityDef def, bool eligible)
         {
             if (def == null) return;
@@ -139,7 +283,7 @@ namespace NivarianIcecreamTail
             else if (!eligible && ability != null) pawn.abilities.RemoveAbility(def);
         }
 
-        public static void RemoveTemporaryAbilitiesAndMagicBody(Pawn pawn)
+        public static void RemoveBeerAbilitiesAndMagicBody(Pawn pawn)
         {
             if (pawn == null)
             {
@@ -151,19 +295,59 @@ namespace NivarianIcecreamTail
 
             if (pawn.abilities != null)
             {
-                List<AbilityDef> defs = pawn.abilities.AllAbilitiesForReading
-                    .Where(ability => ability is IcecreamTailTemporaryAbility)
-                    .Select(ability => ability.def)
-                    .Where(def => def != null)
-                    .Distinct()
-                    .ToList();
-                foreach (AbilityDef def in defs)
+                string[] defNames =
                 {
-                    pawn.abilities.RemoveAbility(def);
+                    BurstAbilityDefName,
+                    Burst2AbilityDefName,
+                    Skill3AbilityDefName,
+                    Skill4AbilityDefName,
+                    Skill5AbilityDefName
+                };
+                foreach (string defName in defNames)
+                {
+                    AbilityDef def = DefDatabase<AbilityDef>.GetNamedSilentFail(defName);
+                    if (def != null)
+                    {
+                        pawn.abilities.RemoveAbility(def);
+                    }
                 }
             }
 
             RemoveMagicBody(pawn);
+        }
+
+        public static void RemoveMintAbility(Pawn pawn)
+        {
+            if (pawn == null || pawn.abilities == null)
+            {
+                return;
+            }
+
+            AbilityDef mintAbility = DefDatabase<AbilityDef>.GetNamedSilentFail(MintAbilityDefName);
+            if (mintAbility != null)
+            {
+                pawn.abilities.RemoveAbility(mintAbility);
+            }
+        }
+
+        public static void RemoveMatchaAbility(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            IcecreamTailSterilizerRuntime.Cancel(pawn);
+            if (pawn.abilities == null)
+            {
+                return;
+            }
+
+            AbilityDef matchaAbility = DefDatabase<AbilityDef>.GetNamedSilentFail(MatchaAbilityDefName);
+            if (matchaAbility != null)
+            {
+                pawn.abilities.RemoveAbility(matchaAbility);
+            }
         }
 
         // 开发者

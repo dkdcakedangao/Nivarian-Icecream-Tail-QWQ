@@ -60,6 +60,50 @@
     </stages>
   </HediffDef>
   <HediffDef>
+    <defName>IcecreamTailSterilizerToxicIrritation</defName>
+    <label>灭菌器毒雾轻微中毒</label>
+    <description>抹茶吹风机大人的毒雾钻进身体，令人有些发闷。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>120</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <painOffset>0.1</painOffset>
+        <capMods>
+          <li><capacity>Sight</capacity><postFactor>0.9</postFactor></li>
+          <li><capacity>Breathing</capacity><postFactor>0.85</postFactor></li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailSterilizerFoodPoisoning</defName>
+    <label>灭菌器毒雾轻微食物中毒</label>
+    <description>抹茶吹风机大人的毒雾令人肚子不太舒服。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>60</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <painOffset>0.05</painOffset>
+        <capMods>
+          <li><capacity>Consciousness</capacity><postFactor>0.95</postFactor></li>
+          <li><capacity>Moving</capacity><postFactor>0.97</postFactor></li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
     <defName>IcecreamTailSlow</defName>
     <label>冰淇淋冻住啦！</label>
     <description>被冰淇淋尾巴冻得慢吞吞，移动速度减慢了。</description>
@@ -122,6 +166,55 @@
         <statOffsets>
           <ComfyTemperatureMax>10</ComfyTemperatureMax>
         </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailMintEaterBuff</defName>
+    <label>吃了薄荷味冰淇淋尾巴</label>
+    <description>薄荷的清凉从舌尖一路冲进身体，脚步轻快了起来，也不再那么怕热。</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailMintAbility" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>1.5</MoveSpeed>
+          <MeleeCooldownFactor>0.9</MeleeCooldownFactor>
+        </statFactors>
+        <statOffsets>
+          <ComfyTemperatureMax>30</ComfyTemperatureMax>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailMatchaEaterBuff</defName>
+    <label>吃了抹茶味冰淇淋尾巴</label>
+    <description>抹茶的清香与微苦让身体慢慢放松，耐热了一点，但脚步和思绪也稍稍沉静下来。</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+      <li Class="NivarianIcecreamTail.HediffCompProperties_IcecreamTailMatchaAbility" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.95</MoveSpeed>
+        </statFactors>
+        <statOffsets>
+          <ComfyTemperatureMax>5</ComfyTemperatureMax>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.95</postFactor>
+          </li>
+        </capMods>
       </li>
     </stages>
   </HediffDef>
@@ -298,6 +391,102 @@
           <li>
             <capacity>Consciousness</capacity>
             <postFactor>0.9</postFactor>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailFrostberryStompedEaterBuff</defName>
+    <label>吃了传统霜莓足酿酒味冰淇淋尾巴</label>
+    <description>霜莓的甜香混着传统足酿酒的微醺，手脚都有些软绵绵的喵~</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.95</MoveSpeed>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.05</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailFrostberryImitationEaterBuff</defName>
+    <label>吃了仿制霜莓足酿酒味冰淇淋尾巴</label>
+    <description>有一点霜莓酒的香气，手脚微微发软，可惜总觉得少了些正宗的味道喵……</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.99</MoveSpeed>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.01</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailFrostberryNiraEaterBuff</defName>
+    <label>吃了涅拉亲制霜莓足酿酒味冰淇淋尾巴</label>
+    <description>涅拉妈妈亲制的霜莓酒香融进冰淇淋，脑袋清醒、双手灵巧，脚步也轻快起来了喵~</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>1.10</MoveSpeed>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>0.05</offset>
+          </li>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.05</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>IcecreamTailNutmegEaterBuff</defName>
+    <label>吃了肉豆蔻味冰淇淋尾巴</label>
+    <description>老大说，肉豆蔻可以做酒喵？！……！？</description>
+    <hediffClass>NivarianIcecreamTail.Hediff_IcecreamTailFlavorEaterBuff</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="NivarianIcecreamTail.TailEatingUtility+HediffCompProperties_IcecreamTailBuffDuration" />
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.95</MoveSpeed>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.95</postFactor>
           </li>
         </capMods>
       </li>

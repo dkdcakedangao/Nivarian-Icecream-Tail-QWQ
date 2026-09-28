@@ -29,7 +29,7 @@ namespace NivarianIcecreamTail.MeleeAnimationCompatibility
         internal static bool IsSkill3Renderer(AnimRenderer renderer)
         {
             return renderer != null && renderer.Def != null &&
-                   renderer.Def.defName == MeleeAnimationSkill3Provider.AnimationDefName;
+                   MeleeAnimationSkill3Provider.IsSkill3AnimationDef(renderer.Def);
         }
 
         internal static void ClearPawnAnimations(Pawn pawn)
@@ -86,7 +86,7 @@ namespace NivarianIcecreamTail.MeleeAnimationCompatibility
         private static bool Prefix(ref AnimationStartParameters __instance, ref AnimRenderer animation, ref bool __result)
         {
             bool isSkill3Animation = __instance.Animation != null &&
-                __instance.Animation.defName == MeleeAnimationSkill3Provider.AnimationDefName;
+                MeleeAnimationSkill3Provider.IsSkill3AnimationDef(__instance.Animation);
 
             foreach (Pawn pawn in __instance.EnumeratePawns())
             {
@@ -163,6 +163,7 @@ namespace NivarianIcecreamTail.MeleeAnimationCompatibility
     internal sealed class MeleeAnimationSkill3Provider : ISkill3AnimationProvider
     {
         internal const string AnimationDefName = "IcecreamTail_Skill3_MeleeAnimation";
+        internal const string SilentAnimationDefName = "IcecreamTail_Skill3_MeleeAnimationSilent";
         private readonly Dictionary<Pawn, AnimRenderer> running = new Dictionary<Pawn, AnimRenderer>();
         private readonly Dictionary<Pawn, Skill3AnimationStatus> finished = new Dictionary<Pawn, Skill3AnimationStatus>();
 
@@ -175,7 +176,8 @@ namespace NivarianIcecreamTail.MeleeAnimationCompatibility
 
         public bool TryStart(Pawn caster, Pawn target)
         {
-            AnimDef def = DefDatabase<AnimDef>.GetNamedSilentFail(AnimationDefName);
+            string defName = IcecreamTailSkillAudio.Enabled ? AnimationDefName : SilentAnimationDefName;
+            AnimDef def = DefDatabase<AnimDef>.GetNamedSilentFail(defName);
             string path = def == null ? null : def.FullDataPath;
             if (def == null || string.IsNullOrEmpty(path) || !File.Exists(path))
             {
@@ -214,7 +216,7 @@ namespace NivarianIcecreamTail.MeleeAnimationCompatibility
             }
 
             renderer = AnimRenderer.TryGetAnimator(caster);
-            if (renderer != null && renderer.Def != null && renderer.Def.defName == AnimationDefName)
+            if (renderer != null && renderer.Def != null && IsSkill3AnimationDef(renderer.Def))
             {
                 running[caster] = renderer;
                 renderer.OnEndAction += OnAnimationEnded;
@@ -222,6 +224,11 @@ namespace NivarianIcecreamTail.MeleeAnimationCompatibility
             }
 
             return Skill3AnimationStatus.Interrupted;
+        }
+
+        internal static bool IsSkill3AnimationDef(AnimDef def)
+        {
+            return def != null && (def.defName == AnimationDefName || def.defName == SilentAnimationDefName);
         }
 
         public void Cancel(Pawn caster, Pawn target)

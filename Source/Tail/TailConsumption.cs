@@ -28,13 +28,14 @@ namespace NivarianIcecreamTail
             }
 
             Hediff placeholder = IcecreamTailUtility.GetPlaceholder(target);
-            IcecreamTailFlavorDef flavor = IcecreamTailFlavorUtility.GetFlavor(placeholder);
+            IcecreamTailFlavorDef tailFlavor = IcecreamTailFlavorUtility.GetFlavor(placeholder);
+            IcecreamTailFlavorDef flavor = IcecreamTailFlavorUtility.ResolveEaterFlavor(tailFlavor);
             bool beerEffectsBlocked = IsBeerFlavor(flavor) && HasBeerHangover(eater);
             IcecreamTailUtility.RemovePlaceholder(target);
-            StartRecovery(target, flavor);
+            StartRecovery(target, tailFlavor);
             if (IcecreamTailDebug.TailEnabled)
             {
-                IcecreamTailDebug.Tail("冰淇淋尾巴已被舔食：食用者=" + IcecreamTailDebug.PawnInfo(eater) + "，尾巴主人=" + IcecreamTailDebug.PawnInfo(target));
+                IcecreamTailDebug.Tail("冰淇淋尾巴已被舔食：食用者=" + IcecreamTailDebug.PawnInfo(eater) + "，尾巴主人=" + IcecreamTailDebug.PawnInfo(target) + "，尾巴口味=" + tailFlavor.label + "，食用效果=" + flavor.label);
             }
             if (eater.needs != null && eater.needs.food != null)
             {
@@ -48,6 +49,10 @@ namespace NivarianIcecreamTail
                 if (!beerEffectsBlocked)
                 {
                     IcecreamTailFlavorUtility.GainOrRefreshMemory(eater, flavor.extraEaterMoodThought);
+                }
+                if (tailFlavor != flavor)
+                {
+                    IcecreamTailFlavorUtility.GainOrRefreshMemory(eater, tailFlavor.extraEaterMoodThought);
                 }
                 GainOrRefreshMood(target, OwnerMoodThoughtDefName);
             }
@@ -74,6 +79,7 @@ namespace NivarianIcecreamTail
             }
             ApplyChocolateWolfeinEasterEgg(eater, flavor);
             ApplyFrozenTongueEasterEgg(eater, target);
+            NutmegHistoryUtility.TryShow(eater, flavor);
         }
 
         private static bool IsBeerFlavor(IcecreamTailFlavorDef flavor)
@@ -291,6 +297,10 @@ namespace NivarianIcecreamTail
                 buff.Severity = Math.Min(4f, Math.Max(1f, buff.Severity + 1f));
                 refreshMode = previousLevel >= 4 ? "四酒刷新" : "叠层";
             }
+            else if (flavor.defName == MintFlavorDefName || flavor.defName == MatchaFlavorDefName)
+            {
+                refreshMode = "刷新";
+            }
             else
             {
                 pawn.health.RemoveHediff(buff);
@@ -319,6 +329,14 @@ namespace NivarianIcecreamTail
             {
                 IcecreamTailTemporaryAbilityUtility.SyncPawn(pawn);
             }
+            else if (flavor.defName == MintFlavorDefName)
+            {
+                IcecreamTailTemporaryAbilityUtility.SyncMintAbility(pawn);
+            }
+            else if (flavor.defName == MatchaFlavorDefName)
+            {
+                IcecreamTailTemporaryAbilityUtility.SyncMatchaAbility(pawn);
+            }
 
             if (IcecreamTailDebug.TailEnabled)
             {
@@ -340,6 +358,10 @@ namespace NivarianIcecreamTail
             int baseDuration = flavor != null && flavor.eaterBuff != null && flavor.eaterBuff.defName == BeerBuffDefName
                 ? BeerTailBuffDurationTicks
                 : BaseTailBuffDurationTicks;
+            if (flavor != null && flavor.eaterBuffDurationTicks > 0)
+            {
+                baseDuration = flavor.eaterBuffDurationTicks;
+            }
             return Math.Max(1, (int)Math.Round(baseDuration * multiplier));
         }
 

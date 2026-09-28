@@ -5,7 +5,7 @@
   <RecipeDef>
     <defName>MakeIcecreamTailMilkSeasoning</defName>
     <label>制作牛奶味冰淇淋调味料</label>
-    <description>把香香的牛奶调成冰淇淋尾巴喜欢的味道。</description>
+    <description>把香香的牛奶调成冰牛奶味的冰淇淋调味料。</description>
     <jobString>正在制作牛奶味冰淇淋调味料。</jobString>
     <workAmount>1200</workAmount>
     <workSkill>Intellectual</workSkill>
@@ -36,7 +36,7 @@
   <RecipeDef>
     <defName>MakeIcecreamTailStrawberrySeasoning</defName>
     <label>制作草莓味冰淇淋调味料</label>
-    <description>把甜甜的莓果调成冰淇淋尾巴喜欢的味道。</description>
+    <description>把甜甜的莓果调成草莓味的冰淇淋调味料。</description>
     <jobString>正在制作草莓味冰淇淋调味料。</jobString>
     <workAmount>1200</workAmount>
     <workSkill>Intellectual</workSkill>
@@ -65,9 +65,40 @@
     </products>
   </RecipeDef>
   <RecipeDef>
+    <defName>MakeIcecreamTailMatchaSeasoning</defName>
+    <label>制作抹茶味冰淇淋调味料</label>
+    <description>把清香微苦的精神叶调成抹茶味的冰淇淋调味料。</description>
+    <jobString>正在制作抹茶味冰淇淋调味料。</jobString>
+    <workAmount>1200</workAmount>
+    <workSkill>Intellectual</workSkill>
+    <workSpeedStat>DrugSynthesisSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <researchPrerequisite>DrugProduction</researchPrerequisite>
+    <recipeUsers>
+      <li>DrugLab</li>
+    </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>PsychoidLeaves</li>
+        <li>MedicineHerbal</li>
+        <li>RawRice</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <ingredients>
+      <li><filter><thingDefs><li>PsychoidLeaves</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MedicineHerbal</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>5</count></li>
+    </ingredients>
+    <products>
+      <IcecreamTailMatchaSeasoning>1</IcecreamTailMatchaSeasoning>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
     <defName>MakeIcecreamTailVanillaSeasoning</defName>
     <label>制作香草味冰淇淋调味料</label>
-    <description>把软软的干草调成冰淇淋尾巴喜欢的香草味。</description>
+    <description>把软软的干草调成香草味的冰淇淋调味料。</description>
     <jobString>正在制作香草味冰淇淋调味料。</jobString>
     <workAmount>1200</workAmount>
     <workSkill>Intellectual</workSkill>
@@ -96,9 +127,42 @@
     </products>
   </RecipeDef>
   <RecipeDef>
+    <defName>MakeIcecreamTailMintSeasoning</defName>
+    <label>制作薄荷味冰淇淋调味料</label>
+    <description>把！冰！调成清凉薄荷味的冰淇淋调味料。</description>
+    <jobString>正在制作薄荷味冰淇淋调味料。</jobString>
+    <workAmount>1200</workAmount>
+    <workSkill>Intellectual</workSkill>
+    <workSpeedStat>DrugSynthesisSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <researchPrerequisite>DrugProduction</researchPrerequisite>
+    <recipeUsers>
+      <li>DrugLab</li>
+    </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Hay</li>
+        <li>MedicineHerbal</li>
+        <li>RawRice</li>
+        <li>IcecreamTailRestoreIce</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <ingredients>
+      <li><filter><thingDefs><li>Hay</li></thingDefs></filter><count>20</count></li>
+      <li><filter><thingDefs><li>MedicineHerbal</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>IcecreamTailRestoreIce</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <products>
+      <IcecreamTailMintSeasoning>1</IcecreamTailMintSeasoning>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
     <defName>MakeIcecreamTailChocolateSeasoning</defName>
     <label>制作巧克力味冰淇淋调味料</label>
-    <description>把浓浓的巧克力调成冰淇淋尾巴喜欢的味道。</description>
+    <description>把浓浓的巧克力调成巧克力的冰淇淋调味料。</description>
     <jobString>正在制作巧克力味冰淇淋调味料。</jobString>
     <workAmount>1200</workAmount>
     <workSkill>Intellectual</workSkill>
@@ -129,7 +193,7 @@
   <RecipeDef>
     <defName>MakeIcecreamTailBeerSeasoning</defName>
     <label>制作啤酒味冰淇淋调味料</label>
-    <description>把麦芽和啤酒的香气调成冰淇淋尾巴喜欢的味道。</description>
+    <description>把麦芽和啤酒的香气调成啤酒味的冰淇淋调味料。</description>
     <jobString>正在制作啤酒味冰淇淋调味料。</jobString>
     <workAmount>1200</workAmount>
     <workSkill>Intellectual</workSkill>
@@ -157,6 +221,81 @@
     </ingredients>
     <products>
       <IcecreamTailBeerSeasoning>1</IcecreamTailBeerSeasoning>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>MakeIcecreamTailNutmegSeasoning</defName>
+    <label>制作肉豆蔻味冰淇淋调味料</label>
+    <description>把任意石头堆块磨成肉豆蔻味冰淇淋调味料。老大说这是肉豆蔻，那一定就是肉豆蔻喵……？</description>
+    <jobString>正在制作肉豆蔻味冰淇淋调味料。</jobString>
+    <workAmount>1200</workAmount>
+    <workSkill>Intellectual</workSkill>
+    <workSpeedStat>DrugSynthesisSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <researchPrerequisite>DrugProduction</researchPrerequisite>
+    <recipeUsers>
+      <li>DrugLab</li>
+    </recipeUsers>
+    <fixedIngredientFilter>
+      <categories>
+        <li>StoneChunks</li>
+      </categories>
+    </fixedIngredientFilter>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>StoneChunks</li>
+          </categories>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <products>
+      <IcecreamTailNutmegSeasoning>1</IcecreamTailNutmegSeasoning>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>MakeIcecreamTailRainbowCandySeasoning</defName>
+    <label>制作彩虹糖味冰淇淋调味料</label>
+    <description>将各种其他口味的调味料各取一份，混合成一份彩虹糖味调味料。每一口冰淇淋尾巴都会带来随机的滋味喵~</description>
+    <jobString>正在制作彩虹糖味冰淇淋调味料。</jobString>
+    <workAmount>1200</workAmount>
+    <workSkill>Intellectual</workSkill>
+    <workSpeedStat>DrugSynthesisSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <researchPrerequisite>DrugProduction</researchPrerequisite>
+    <recipeUsers>
+      <li>DrugLab</li>
+    </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>IcecreamTailMilkSeasoning</li>
+        <li>IcecreamTailStrawberrySeasoning</li>
+        <li>IcecreamTailVanillaSeasoning</li>
+        <li>IcecreamTailMintSeasoning</li>
+        <li>IcecreamTailMatchaSeasoning</li>
+        <li>IcecreamTailChocolateSeasoning</li>
+        <li>IcecreamTailBeerSeasoning</li>
+        <li>IcecreamTailNutmegSeasoning</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <ingredients>
+      <li><filter><thingDefs><li>IcecreamTailMilkSeasoning</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>IcecreamTailStrawberrySeasoning</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>IcecreamTailVanillaSeasoning</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>IcecreamTailMintSeasoning</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>IcecreamTailMatchaSeasoning</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>IcecreamTailChocolateSeasoning</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>IcecreamTailBeerSeasoning</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>IcecreamTailNutmegSeasoning</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <products>
+      <IcecreamTailRainbowCandySeasoning>1</IcecreamTailRainbowCandySeasoning>
     </products>
   </RecipeDef>
 </Defs>

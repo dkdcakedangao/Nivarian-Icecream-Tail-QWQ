@@ -89,6 +89,11 @@ namespace NivarianIcecreamTail
 
         private static void PlayResultSound(Pawn caster, bool hit)
         {
+            if (!IcecreamTailSkillAudio.Enabled)
+            {
+                return;
+            }
+
             string defName = hit ? "IcecreamTailSkill4Hit" : "IcecreamTailSkill4Miss" + Rand.RangeInclusive(1, 4);
             SoundDef sound = DefDatabase<SoundDef>.GetNamedSilentFail(defName);
             if (sound == null)

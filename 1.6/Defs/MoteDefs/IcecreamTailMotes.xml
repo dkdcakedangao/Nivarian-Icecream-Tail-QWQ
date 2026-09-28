@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 特效的资源及寿命配置 -->
 <Defs>
   <ThingDef ParentName="MoteBase">
     <defName>Mote_IcecreamTailSlowSnow</defName>
@@ -74,5 +75,71 @@
       <fadeOutTime>0.25</fadeOutTime>
     </mote>
     <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailSterilizerGlow</defName>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Effects/star_04</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.55,0.55)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.03</fadeInTime>
+      <solidTime>0.10</solidTime>
+      <fadeOutTime>0.28</fadeOutTime>
+    </mote>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailSterilizerHalo</defName>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/Mote/BrightFlash</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.8,1.8)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.08</fadeInTime>
+      <solidTime>0.08</solidTime>
+      <fadeOutTime>0.30</fadeOutTime>
+    </mote>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailSterilizerGas</defName>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/Mote/Smoke</texPath>
+      <shaderType>Mote</shaderType>
+      <drawSize>(1.35,1.35)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.20</fadeInTime>
+      <solidTime>9.00</solidTime>
+      <fadeOutTime>0.80</fadeOutTime>
+      <growthRate>0.08</growthRate>
+    </mote>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_IcecreamTailNutmegHistory</defName>
+    <thingClass>NivarianIcecreamTail.Mote_IcecreamTailNutmegHistory</thingClass>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <drawOffscreen>true</drawOffscreen>
+    <isSaveable>false</isSaveable>
+    <graphicData>
+      <texPath>Things/Mote/Transparent</texPath>
+    </graphicData>
+    <mote>
+      <realTime>true</realTime>
+      <fadeInTime>0.5</fadeInTime>
+      <solidTime>1</solidTime>
+      <fadeOutTime>0.5</fadeOutTime>
+    </mote>
   </ThingDef>
 </Defs>

@@ -120,6 +120,32 @@
     </stages>
   </ThoughtDef>
   <ThoughtDef>
+    <defName>IcecreamTailMemoryMintEater</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>薄荷味的！冰淇淋！</label>
+        <description>凉凉的薄荷香冲上脑袋，整个人都精神起来啦~</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemoryMatchaEater</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>抹茶味的！冰淇淋！</label>
+        <description>清香微苦，冰冰凉凉，回味还有一点甜喵~</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
     <defName>IcecreamTailMemoryChocolateEater</defName>
     <thoughtClass>Thought_Memory</thoughtClass>
     <durationDays>2</durationDays>
@@ -167,6 +193,97 @@
         <label>兄弟别吃了！这是“巧克力”啊！</label>
         <description>这味儿不对！有诈口牙！！！！</description>
         <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemoryFrostberryStompedEater</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>霜莓足酿酒~香香的喵~</label>
+        <description>传统的，才是好的~</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemoryFrostberryImitationEater</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.04166667</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>味道不正宗的霜莓足酿酒喵</label>
+        <description>味道不够正宗……度数也不够喵……</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemoryFrostberryNiraEater</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.375</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>涅拉妈妈的霜莓足酿酒喵~</label>
+        <description>妈妈的味道~~~~</description>
+        <baseMoodEffect>10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemorySterilizerEnemy</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>伤害不高，侮辱性极强</label>
+        <description>抹茶吹风机大人神力</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemorySterilizerFriendly</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>被友军击中了，但还好是灭菌器大人</label>
+        <description>抹茶吹风机大人神力</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemoryNutmegEater</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>石书有云……</label>
+        <description>吃了肉豆蔻味的冰淇淋尾巴……似乎看到了些不该看到的东西喵……说到底，肉豆蔻到底是什么？？？</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>IcecreamTailMemoryRainbowCandyEater</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>彩虹糖？？</label>
+        <description>碰上彩虹，吃定彩虹（误）</description>
+        <baseMoodEffect>5</baseMoodEffect>
       </li>
     </stages>
   </ThoughtDef>

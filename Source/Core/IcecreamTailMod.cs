@@ -25,6 +25,8 @@ namespace NivarianIcecreamTail
         public bool EnableAutoLick = true;
         public bool EnableChocolateWolfeinEasterEgg = true;
         public bool EnableFrozenTongueEasterEgg = true;
+        public bool EnableNutmegHistoryEasterEgg = true;
+        public bool EnableEasterEggSkillSounds = true;
         public bool LogTailStateDebug;
         public bool LogFacialAnimationDebug;
         public bool LogAutoLickDebug;
@@ -56,6 +58,8 @@ namespace NivarianIcecreamTail
             EnableAutoLick = true;
             EnableChocolateWolfeinEasterEgg = true;
             EnableFrozenTongueEasterEgg = true;
+            EnableNutmegHistoryEasterEgg = true;
+            EnableEasterEggSkillSounds = true;
             LogTailStateDebug = false;
             LogFacialAnimationDebug = false;
             LogAutoLickDebug = false;
@@ -88,6 +92,8 @@ namespace NivarianIcecreamTail
             Scribe_Values.Look(ref EnableAutoLick, "EnableAutoLick", true);
             Scribe_Values.Look(ref EnableChocolateWolfeinEasterEgg, "EnableChocolateWolfeinEasterEgg", true);
             Scribe_Values.Look(ref EnableFrozenTongueEasterEgg, "EnableFrozenTongueEasterEgg", true);
+            Scribe_Values.Look(ref EnableNutmegHistoryEasterEgg, "EnableNutmegHistoryEasterEgg", true);
+            Scribe_Values.Look(ref EnableEasterEggSkillSounds, "EnableEasterEggSkillSounds", true);
             Scribe_Values.Look(ref LogTailStateDebug, "LogTailStateDebug", false);
             Scribe_Values.Look(ref LogFacialAnimationDebug, "LogFacialAnimationDebug", false);
             Scribe_Values.Look(ref LogAutoLickDebug, "LogAutoLickDebug", false);
@@ -227,6 +233,8 @@ namespace NivarianIcecreamTail
             else
             {
                 listing.CheckboxLabeled("沃芬吃巧克力会中毒", ref Settings.EnableChocolateWolfeinEasterEgg, "沃芬舔食巧克力冰淇淋尾巴时，会获得约 10 分钟的严重食物中毒和特殊心情。 ");
+                listing.CheckboxLabeled("肉豆蔻岁月石书文字彩蛋", ref Settings.EnableNutmegHistoryEasterEgg, "涅瓦莲在吃了肉豆蔻味的冰淇淋尾巴后，会意外找到写了岁月石书的小纸条，关闭此选项，就不会在显示那些小纸条了~“这些纸条到底是谁塞进去的？”。");
+                listing.CheckboxLabeled("开关彩蛋技能额外音效", ref Settings.EnableEasterEggSkillSounds, "若关闭，则四酒、薄荷龙息等彩蛋技能不会播放本模组额外音效。 ");
                 listing.CheckboxLabeled("啤酒四酒 WIN 彩蛋", ref Settings.EnableBeerWinEasterEgg, "仅涅瓦莲从三酒升到四酒时判定；触发后显示 WIN 图片并播放音效。 ");
                 listing.Label("啤酒四酒 WIN 彩蛋概率：" + (Settings.BeerWinEasterEggChance * 100f).ToString("0") + "%");
                 Settings.BeerWinEasterEggChance = listing.Slider(Settings.BeerWinEasterEggChance, 0f, 1f);
@@ -306,7 +314,7 @@ namespace NivarianIcecreamTail
                 return Prefs.DevMode ? 190f : 130f;
             }
 
-            return settingsPage == 2 ? 130f : (settingsPage == 5 ? 230f : 140f);
+            return settingsPage == 2 ? 130f : (settingsPage == 5 ? 290f : 140f);
         }
     }
 

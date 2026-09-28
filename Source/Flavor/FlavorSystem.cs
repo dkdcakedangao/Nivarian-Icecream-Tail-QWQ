@@ -32,6 +32,8 @@ namespace NivarianIcecreamTail
         public Color labelColor = IcecreamTailColors.LabelBlue;
         public string tailDescription;
         public HediffDef eaterBuff;
+        // Zero uses the existing ordinary/beer duration rules.
+        public int eaterBuffDurationTicks;
         public ThoughtDef extraEaterMoodThought;
     }
 
@@ -68,7 +70,7 @@ namespace NivarianIcecreamTail
         }
     }
 
-    public static class IcecreamTailFlavorUtility
+    public static partial class IcecreamTailFlavorUtility
     {
         private const string OriginalDefName = "IcecreamTailFlavorOriginal";
         private const string SeasoningThoughtDefName = "IcecreamTailMemorySeasoning";

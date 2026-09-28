@@ -4,5 +4,8 @@
 Source/bin/
 Source/obj/
 Source/.vs/
+# Local-only isolated tests; keep out of GitHub and release packages.
+/Source/Tests/
 *.user
 *.suo
+log.txt

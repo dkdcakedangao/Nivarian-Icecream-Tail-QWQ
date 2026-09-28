@@ -209,13 +209,16 @@ namespace NivarianIcecreamTail
 
         public static void TickAll()
         {
-            foreach (Pawn enemy in PendingLargeStuns.Keys.ToList())
+            if (PendingLargeStuns.Count > 0)
             {
-                Pawn caster = PendingLargeStuns[enemy];
-                if (enemy == null || enemy.DestroyedOrNull() || enemy.Spawned ||
-                    caster == null || caster.DestroyedOrNull() || caster.Dead)
+                foreach (Pawn enemy in PendingLargeStuns.Keys.ToList())
                 {
-                    PendingLargeStuns.Remove(enemy);
+                    Pawn caster = PendingLargeStuns[enemy];
+                    if (enemy == null || enemy.DestroyedOrNull() || enemy.Spawned ||
+                        caster == null || caster.DestroyedOrNull() || caster.Dead)
+                    {
+                        PendingLargeStuns.Remove(enemy);
+                    }
                 }
             }
 
@@ -396,12 +399,14 @@ namespace NivarianIcecreamTail
             List<Thing> ignored = GenRadial.RadialDistinctThingsAround(center, map, radius, true)
                 .Where(thing => !enemies.Contains(thing))
                 .ToList();
-            SoundDef attackSound = GetRandomAttackSound();
-            if (attackSound == null)
+            bool playAttackSound = IcecreamTailSkillAudio.Enabled;
+            SoundDef attackSound = playAttackSound ? GetRandomAttackSound() : null;
+            if (playAttackSound && attackSound == null)
             {
                 Log.Error("Nivarian Icecream Tail: missing attack SoundDef.");
             }
-            GenExplosion.DoExplosion(center, map, radius, DamageDefOf.Blunt, pawn, damage, -1f, attackSound, null, null, null, null, ignoredThings: ignored);
+            GenExplosion.DoExplosion(center, map, radius, DamageDefOf.Blunt, pawn, damage, -1f, attackSound, null, null, null, null,
+                ignoredThings: ignored, doSoundEffects: playAttackSound && attackSound != null);
             foreach (Pawn enemy in enemies)
             {
                 if (enemy.DestroyedOrNull() || enemy.Dead) continue;
@@ -446,6 +451,11 @@ namespace NivarianIcecreamTail
 
         private static void PlaySound(string defName, TargetInfo target)
         {
+            if (!IcecreamTailSkillAudio.Enabled)
+            {
+                return;
+            }
+
             SoundDef sound = DefDatabase<SoundDef>.GetNamedSilentFail(defName);
             if (sound == null)
             {

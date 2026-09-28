@@ -28,6 +28,24 @@
     <extraEaterMoodThought>IcecreamTailMemoryVanillaEater</extraEaterMoodThought>
   </NivarianIcecreamTail.IcecreamTailFlavorDef>
   <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorMint</defName>
+    <label>薄荷味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(159,255,190)</labelColor>
+    <tailDescription>清清凉凉的薄荷尾巴，闻一下就觉得脑袋醒过来了喵~</tailDescription>
+    <eaterBuff>IcecreamTailMintEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryMintEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorMatcha</defName>
+    <label>抹茶味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(190,235,165)</labelColor>
+    <tailDescription>清香微苦的抹茶尾巴，冰凉奶香里带着一丝回甘喵~</tailDescription>
+    <eaterBuff>IcecreamTailMatchaEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryMatchaEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
     <defName>IcecreamTailFlavorChocolate</defName>
     <label>巧克力味</label>
     <recoverySpeedFactor>0.9</recoverySpeedFactor>
@@ -44,5 +62,50 @@
     <tailDescription>带着麦芽香气的尾巴，冰凉中混着一点醉醺醺的甜味喵~</tailDescription>
     <eaterBuff>IcecreamTailBeerEaterBuff</eaterBuff>
     <extraEaterMoodThought>IcecreamTailMemoryBeerEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorFrostberryStomped</defName>
+    <label>传统霜莓足酿酒味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(190,130,225)</labelColor>
+    <tailDescription>霜莓的甜香混着传统足酿酒香，冰冰软软的尾巴闻起来香香的喵~</tailDescription>
+    <eaterBuff>IcecreamTailFrostberryStompedEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryFrostberryStompedEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorFrostberryImitation</defName>
+    <label>仿制霜莓足酿酒味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(175,155,205)</labelColor>
+    <tailDescription>尾巴带着淡淡的霜莓酒香，尝起来有那个味儿，却总觉得不够正宗喵……</tailDescription>
+    <eaterBuff>IcecreamTailFrostberryImitationEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryFrostberryImitationEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorFrostberryNira</defName>
+    <label>涅拉亲制霜莓足酿酒味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(180,155,255)</labelColor>
+    <tailDescription>涅拉妈妈亲制的霜莓酒香融进冰淇淋尾巴，清甜又柔和，满满都是妈妈的味道喵~</tailDescription>
+    <eaterBuff>IcecreamTailFrostberryNiraEaterBuff</eaterBuff>
+    <extraEaterMoodThought>IcecreamTailMemoryFrostberryNiraEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorNutmeg</defName>
+    <label>肉豆蔻味</label>
+    <recoverySpeedFactor>0.9</recoverySpeedFactor>
+    <labelColor>(205,170,125)</labelColor>
+    <tailDescription>淡棕色的肉豆蔻冰淇淋尾巴，带着说不清的奇妙滋味。里面似乎还藏着一张小便签喵……</tailDescription>
+    <eaterBuff>IcecreamTailNutmegEaterBuff</eaterBuff>
+    <eaterBuffDurationTicks>2500</eaterBuffDurationTicks>
+    <extraEaterMoodThought>IcecreamTailMemoryNutmegEater</extraEaterMoodThought>
+  </NivarianIcecreamTail.IcecreamTailFlavorDef>
+  <NivarianIcecreamTail.IcecreamTailFlavorDef>
+    <defName>IcecreamTailFlavorRainbowCandy</defName>
+    <label>彩虹糖味</label>
+    <recoverySpeedFactor>1.10</recoverySpeedFactor>
+    <labelColor>(255,170,225)</labelColor>
+    <tailDescription>把各种滋味揉进同一条彩虹里，每一口都有新的惊喜喵~</tailDescription>
+    <extraEaterMoodThought>IcecreamTailMemoryRainbowCandyEater</extraEaterMoodThought>
   </NivarianIcecreamTail.IcecreamTailFlavorDef>
 </Defs>
