@@ -131,7 +131,8 @@ namespace NivarianIcecreamTail
 
         private static void Postfix(Pawn pawn, ref Job __result)
         {
-            if (!TailEatingUtility.IsEligibleAutomaticEater(pawn))
+            // 外部调度可能再次请求进食任务；正在舔食的双方不重复选食。
+            if (TailEatingUtility.IsLickingOrBeingLicked(pawn) || !TailEatingUtility.IsEligibleAutomaticEater(pawn))
             {
                 return;
             }

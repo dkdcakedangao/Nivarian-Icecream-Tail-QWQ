@@ -159,8 +159,20 @@ namespace NivarianIcecreamTail
             }
         }
 
+        internal static bool IsLickingOrBeingLicked(Pawn pawn)
+        {
+            Job currentJob = pawn == null ? null : pawn.CurJob;
+            return currentJob != null && currentJob.def != null &&
+                (currentJob.def.defName == LickJobDefName || currentJob.def.defName == LickedJobDefName);
+        }
+
         public static bool IsAutomaticEater(Pawn pawn)
         {
+            if (IsLickingOrBeingLicked(pawn))
+            {
+                return false;
+            }
+
             IcecreamTailSettings settings = IcecreamTailMod.Settings;
             if (settings == null || !settings.EnableAutoLick || !IsEligibleAutomaticEater(pawn) || !pawn.Spawned || pawn.Downed || pawn.InMentalState || pawn.Drafted || pawn.needs == null || pawn.needs.food == null || pawn.needs.food.CurLevelPercentage >= settings.AutoLickFoodThreshold)
             {
