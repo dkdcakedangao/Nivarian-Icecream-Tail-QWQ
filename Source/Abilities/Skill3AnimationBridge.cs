@@ -2,6 +2,7 @@ using Verse;
 
 // 动画桥
 // gpt老师做的
+// 现在只有1.6要用了，1.7会跳过。毕竟1.7已经不用MA了
 namespace NivarianIcecreamTail
 {
     public enum Skill3AnimationStatus

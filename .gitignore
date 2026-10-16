@@ -1,8 +1,6 @@
 /.idea/
-/bin/
-/obj/
-Source/bin/
-Source/obj/
+**/bin/
+**/obj/
 Source/.vs/
 # Local-only isolated tests; keep out of GitHub and release packages.
 /Source/Tests/

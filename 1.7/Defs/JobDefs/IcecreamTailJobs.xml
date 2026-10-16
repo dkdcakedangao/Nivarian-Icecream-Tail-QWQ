@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 动作的xml -->
+<Defs>
+  <JobDef>
+    <defName>IcecreamTailSkill3Locked</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_IcecreamTailSkill3Locked</driverClass>
+    <reportString>被月牙叉炮锁定</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+  <JobDef>
+    <defName>IcecreamTailBakkaiLocked</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_IcecreamTailBakkaiLocked</driverClass>
+    <reportString>正在使用超级爆！爆！回！</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+  <JobDef>
+    <defName>IcecreamTailSterilizerLocked</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_IcecreamTailSterilizerLocked</driverClass>
+    <reportString>正在呼叫灭菌器大人</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+  <JobDef>
+    <defName>LickIcecreamTail</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_LickIcecreamTail</driverClass>
+    <reportString>正在舔舔 TargetA 的冰淇淋尾巴。</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>LickedIcecreamTail</defName>
+    <driverClass>NivarianIcecreamTail.JobDriver_LickedIcecreamTail</driverClass>
+    <reportString>正在被舔舔冰淇淋尾巴。</reportString>
+  </JobDef>
+</Defs>
+<!-- 会不会写的太色了？ -->
+<!-- 我觉得，还好 -->
+<!-- 不行！太色了喵！ -->
+<!-- 瑟瑟是对的！ -->

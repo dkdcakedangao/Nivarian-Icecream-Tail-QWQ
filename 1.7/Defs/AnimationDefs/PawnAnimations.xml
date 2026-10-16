@@ -1,0 +1,25 @@
+<!-- 动画相关的路径配置 -->
+<Defs>
+  <NivarianIcecreamTail.PawnAnimationDef>
+    <defName>IcecreamTailAnimationSkill3</defName>
+    <jsonPath>Animations/skill3.json</jsonPath>
+    <roles>
+      <li>
+        <body>BodyA</body>
+        <head>BodyA/HeadA</head>
+        <handsRoot>PawnAHolding</handsRoot>
+      </li>
+      <li>
+        <body>BodyB</body>
+        <head>BodyB/HeadContainer/HeadB</head>
+        <handsRoot>PawnBHolding</handsRoot>
+      </li>
+    </roles>
+    <ignoredRoots>
+      <li>Juzhong</li>
+      <li>HandGrabSparks</li>
+      <li>WeaponACutoff</li>
+      <li>QuestionMark</li>
+    </ignoredRoots>
+  </NivarianIcecreamTail.PawnAnimationDef>
+</Defs>

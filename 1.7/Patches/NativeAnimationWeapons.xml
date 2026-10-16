@@ -1,0 +1,7 @@
+<!-- 需要隐藏原版武器的动画 -->
+<Patch>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/JobDef[defName="IcecreamTailSkill3Locked"]/neverShowWeapon</xpath>
+    <value><neverShowWeapon>true</neverShowWeapon></value>
+  </Operation>
+</Patch>

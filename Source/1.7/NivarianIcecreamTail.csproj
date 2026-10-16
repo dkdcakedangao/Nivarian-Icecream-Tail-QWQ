@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>NivarianIcecreamTail</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DefineConstants>$(DefineConstants);RIMWORLD_17</DefineConstants>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>../../1.7/Assemblies/</OutputPath>
+    <RimWorldDir Condition="'$(RimWorldDir)' == ''">E:/steam/steamapps/common/RimWorld</RimWorldDir>
+    <NivarianDir Condition="'$(NivarianDir)' == ''">$(RimWorldDir)/Mods/Nivarian</NivarianDir>
+    <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == ''">E:/steam/steamapps/workshop/content/294100/1127530465/1.7/Assemblies/0Harmony.dll</HarmonyAssemblyPath>
+    <HarAssemblyPath Condition="'$(HarAssemblyPath)' == ''">E:/steam/steamapps/workshop/content/294100/839005762/1.6/Assemblies/AlienRace.dll</HarAssemblyPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../**/*.cs" Exclude="../Tests/**;../obj/**;../bin/**;../1.7/obj/**;../1.7/bin/**;../MeleeAnimationCompatibility/**;../Abilities/MintBreathPreview.cs" />
+    <Reference Include="Assembly-CSharp" HintPath="$(RimWorldDir)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="UnityStubs" HintPath="$(RimWorldDir)/UnityStubs.dll" Private="false" />
+    <Reference Include="Waylith" HintPath="$(RimWorldDir)/Waylith.dll" Private="false" />
+    <Reference Include="Waylith.UnityCompat" HintPath="$(RimWorldDir)/Waylith.UnityCompat.dll" Private="false" />
+    <Reference Include="Nivarian_Race" HintPath="$(NivarianDir)/1.7/Core/Assemblies/Nivarian_Race.dll" Private="false" />
+    <Reference Include="RimUnity.Core" HintPath="$(NivarianDir)/1.7/RU/Assemblies/RimUnity.Core.dll" Private="false" />
+    <Reference Include="RimUnity" HintPath="$(NivarianDir)/1.7/RU/Assemblies/RimUnity.dll" Private="false" />
+    <Reference Include="LumiParticle" HintPath="$(NivarianDir)/1.7/LumiParticle/Assemblies/LumiParticle.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(HarmonyAssemblyPath)" Private="false" />
+    <Reference Include="AlienRace" HintPath="$(HarAssemblyPath)" Private="false" />
+  </ItemGroup>
+  <Target Name="CopyVersionDefinitions" AfterTargets="Build">
+    <ItemGroup>
+      <VersionDefs Include="../../1.6/Defs/**/*" />
+      <VersionPatches Include="../../1.6/Patches/**/*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(VersionDefs)" DestinationFiles="@(VersionDefs->'../../1.7/Defs/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(VersionPatches)" DestinationFiles="@(VersionPatches->'../../1.7/Patches/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

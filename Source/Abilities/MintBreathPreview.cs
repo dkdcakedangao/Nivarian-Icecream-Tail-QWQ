@@ -7,6 +7,8 @@ using UnityEngine;
 namespace NivarianIcecreamTail
 {
     // 预览扇形的入口~通过拦截，从而实现：薄荷吐息的范围颜色为蓝色~不可用目标时为红色~
+    // 由于kp改了一下霜龙吐息的预览，我觉得挺好！所以现在1.7的话，会跳过这个颜色修改，显示和kp一样的颜色~
+    // 我考虑一下要不要干脆直接1.6版本也跳过得了？
     // 这真的有用么？我不道啊？
     [HarmonyPatch(typeof(CompAbilityEffect_DrakeFrostBreath), "DrawEffectPreview")]
     internal static class Patch_DrakeFrostBreath_MintPreviewColor

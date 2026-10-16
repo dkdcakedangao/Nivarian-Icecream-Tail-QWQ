@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 除错，基本上就是禁止锁定因受伤重新选job -->
+<!-- 这个之后估计要做到框架内部 -->
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/JobDef[defName="IcecreamTailSkill3Locked"]</xpath>
+    <value>
+      <checkOverrideOnDamage>Never</checkOverrideOnDamage>
+    </value>
+  </Operation>
+</Patch>

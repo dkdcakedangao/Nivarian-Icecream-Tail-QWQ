@@ -111,8 +111,15 @@ namespace NivarianIcecreamTail
         }
     }
 
+    // 增加了一个判断，除错什么的，确定要不要走lumi
     public sealed class IcecreamTailMod : Mod
+#if RIMWORLD_17
+        , LumiParticle.Assets.IHasLumiAssets
+#endif
     {
+#if RIMWORLD_17
+        public string AssetBundleRoot { get { return Content.RootDir; } }
+#endif
         public static IcecreamTailSettings Settings;
         private const float SectionWidth = 160f;
         private const float SectionGap = 12f;
@@ -209,7 +216,11 @@ namespace NivarianIcecreamTail
             else if (settingsPage == 3)
             {
                 listing.CheckboxLabeled("冰淇淋尾巴战斗效果", ref Settings.EnableMatureTailCombat, "若冰龙若有完整的冰淇淋尾巴，会对敌人造成额外伤害，并减速敌人。 ");
+#if RIMWORLD_17
+                listing.CheckboxLabeled("开关“月牙叉炮(CA)”的动画", ref Settings.EnableSkill3MeleeAnimation, "开关“月牙叉炮(CA)”的动画，1.7已经无需MeleeAnimation作为前置，有我自己的内置动画框架。若关闭，则跳过动画，简单播放一个流程(?非常简易的流程)。若你不喜欢释放技能时，有10秒钟动画的话，或是占用过大之类的（大概是不会），可以关闭该选项");
+#else
                 listing.CheckboxLabeled("开关“月牙叉炮(CA)”的动画", ref Settings.EnableSkill3MeleeAnimation, "开关“月牙叉炮(CA)”的动画，该动画需要有MeleeAnimation作为前置。若关闭，或没有MeleeAnimation模组，则跳过动画，简单播放一个流程(?非常简易的流程)。若你不喜欢释放技能时，有10秒钟动画的话，或是占用过大之类的（大概是不会），可以关闭该选项");
+#endif
                 listing.Label("四酒 buff 近战冷却倍率：" + Settings.BeerFourMeleeCooldownFactor.ToString("0.00") + "×");
                 float beerFourMeleeCooldownFactor = listing.Slider(Settings.BeerFourMeleeCooldownFactor, 0.1f, 1f);
                 float roundedFactor = Mathf.Round(beerFourMeleeCooldownFactor / 0.05f) * 0.05f;

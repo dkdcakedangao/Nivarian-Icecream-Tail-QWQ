@@ -1,0 +1,13 @@
+{
+  "formatVersion": 2,
+  "owner": "dkdcakedangao.NivarianIcecreamTailQWQ",
+  "assets": [{
+    "id": "icecream_actor_rig",
+    "name": "IcecreamTailActorRig",
+    "path": "Bundles/icecream/ActorRig.prefab",
+    "file": "ActorRig.json",
+    "type": "Prefab",
+    "sourcePath": "ActorRig.prefab",
+    "dependencies": []
+  }]
+}

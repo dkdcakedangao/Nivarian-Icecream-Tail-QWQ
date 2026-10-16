@@ -13,6 +13,10 @@ using Verse.Sound;
 // 石山
 // 动画调用、还有简易版本动画部分的码是gpt老师写的，效果还不错
 // 待优化
+// 其实这部分是最让我头疼的部分……因为1.7改了框架，所以伤害需要自己结算。
+// 这部分里头1.7相关的很多if都是gpt老师帮忙写的。
+// 我删了很多注释
+// 基本上就是每个if在做什么，我都删了，反正我估计除了gpt老师，也没人看……说到底，gpt老师新增了好几个if和elif，她应该知道这些if都代表了什么？
 namespace NivarianIcecreamTail
 {
     internal enum IcecreamTailSkill3Phase
@@ -34,6 +38,13 @@ namespace NivarianIcecreamTail
         public int moveTotalTicks;
         public int ticksRemaining;
         public List<IntVec3> pathCells = new List<IntVec3>();
+#if RIMWORLD_17
+        internal PawnAnimationSession animation;
+        internal bool damageResolved;
+        internal bool resolvingDamage;
+        internal Skill3DeferredDeath deferredDeath;
+        internal Job casterLockJob, targetLockJob;
+#endif
     }
 
     internal sealed class IcecreamTailSkill3SavedState : IExposable
@@ -48,6 +59,14 @@ namespace NivarianIcecreamTail
         public int moveTotalTicks;
         public int ticksRemaining;
         public List<IntVec3> pathCells;
+#if RIMWORLD_17
+        public string animationDef;
+        public float animationTime;
+        public int soundCursor;
+        public bool mirror, damageResolved;
+        public Vector3 animationRoot;
+        public Skill3DeferredDeath deferredDeath;
+#endif
 
         public void ExposeData()
         {
@@ -61,24 +80,51 @@ namespace NivarianIcecreamTail
             Scribe_Values.Look(ref moveTotalTicks, "moveTotalTicks");
             Scribe_Values.Look(ref ticksRemaining, "ticksRemaining");
             Scribe_Collections.Look(ref pathCells, "pathCells", LookMode.Value);
+#if RIMWORLD_17
+            Scribe_Values.Look(ref animationDef, "animationDef");
+            Scribe_Values.Look(ref animationTime, "animationTime");
+            Scribe_Values.Look(ref soundCursor, "soundCursor");
+            Scribe_Values.Look(ref mirror, "mirror");
+            Scribe_Values.Look(ref animationRoot, "animationRoot");
+            Scribe_Values.Look(ref damageResolved, "damageResolved");
+            Scribe_Deep.Look(ref deferredDeath, "deferredDeath");
+#endif
         }
     }
 
     public sealed class IcecreamTailSkill3GameComponent : GameComponent
     {
+#if RIMWORLD_17
+        private List<IcecreamTailSkill3SavedState> pending;
+        public IcecreamTailSkill3GameComponent(Game game) { IcecreamTailSkill3Runtime.ClearNativeRuntime(); }
+#else
         public IcecreamTailSkill3GameComponent(Game game) { }
+#endif
 
         public override void ExposeData()
         {
             base.ExposeData();
+#if RIMWORLD_17
+            IcecreamTailSkill3Runtime.ExposeData(ref pending);
+#else
             IcecreamTailSkill3Runtime.ExposeData();
+#endif
         }
 
+#if RIMWORLD_17
+        public override void FinalizeInit()
+        {
+            base.FinalizeInit();
+            IcecreamTailSkill3Runtime.RestoreNativeStates(pending);
+            pending = null;
+        }
+#else
         public override void GameComponentTick()
         {
             base.GameComponentTick();
             IcecreamTailSkill3Runtime.TickAll();
         }
+#endif
     }
 
     public sealed class JobDriver_IcecreamTailSkill3Locked : JobDriver
@@ -90,11 +136,17 @@ namespace NivarianIcecreamTail
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
+#if RIMWORLD_17
+            this.AddFinishAction(delegate { IcecreamTailSkill3Runtime.OnNativeLockEnded(pawn, job); });
+#endif
             Toil toil = ToilMaker.MakeToil();
             toil.handlingFacing = true;
             toil.defaultCompleteMode = ToilCompleteMode.Never;
             toil.tickAction = delegate
             {
+#if RIMWORLD_17
+                IcecreamTailSkill3Runtime.TickFromNativeLock(pawn, job);
+#endif
                 Rot4 facing;
                 if (IcecreamTailSkill3Runtime.TryGetFacing(pawn, out facing))
                 {
@@ -109,7 +161,7 @@ namespace NivarianIcecreamTail
         }
     }
 
-    internal static class IcecreamTailSkill3Runtime
+    internal static partial class IcecreamTailSkill3Runtime
     {
         private const int AttackCount = 15;
         private const int WaitTicks = 120;
@@ -120,11 +172,14 @@ namespace NivarianIcecreamTail
 
         private static readonly Dictionary<Pawn, IcecreamTailSkill3State> Active = new Dictionary<Pawn, IcecreamTailSkill3State>();
         private static readonly Dictionary<Pawn, IcecreamTailSkill3State> Protected = new Dictionary<Pawn, IcecreamTailSkill3State>();
+#if !RIMWORLD_17
         private static readonly List<Pawn> TickBuffer = new List<Pawn>();
+#endif
         private static readonly HashSet<Pawn> InternalDamageAllowed = new HashSet<Pawn>();
         private static readonly HashSet<Pawn> DeathAllowed = new HashSet<Pawn>();
         private static readonly Dictionary<Type, MethodInfo> MeleeDamageMethods = new Dictionary<Type, MethodInfo>();
 
+#if !RIMWORLD_17
         public static void ExposeData()
         {
             List<IcecreamTailSkill3SavedState> saved = new List<IcecreamTailSkill3SavedState>();
@@ -177,6 +232,7 @@ namespace NivarianIcecreamTail
                 }
             }
         }
+#endif
 
         // 选择器
         public static bool CanTarget(Pawn caster, Pawn target, out string reason)
@@ -244,8 +300,12 @@ namespace NivarianIcecreamTail
                     Cancel(caster);
                     return false;
                 }
+#if RIMWORLD_17
+                DropNativeHostileJobs(caster, target);
+#else
                 DropHostileJobsTargeting(caster);
                 DropHostileJobsTargeting(target);
+#endif
                 GiveLockJob(caster, target);
                 GiveLockJob(target, caster);
                 caster.pather.StopDead();
@@ -260,6 +320,7 @@ namespace NivarianIcecreamTail
             }
         }
 
+#if !RIMWORLD_17
         public static void TickAll()
         {
             TickBuffer.Clear();
@@ -278,6 +339,7 @@ namespace NivarianIcecreamTail
                 }
             }
         }
+#endif
 
         // 动画器 锁
         private static void Tick(Pawn caster)
@@ -286,6 +348,9 @@ namespace NivarianIcecreamTail
             if (caster == null || !Active.TryGetValue(caster, out state)) return;
             string reason;
             if (caster.Dead || !caster.Spawned || caster.Map == null ||
+#if RIMWORLD_17
+                caster.Downed || state.target == null || state.target.Downed ||
+#endif
                 !IcecreamTailTemporaryAbilityUtility.CanCastTemporaryAbility(caster, out reason))
             {
                 Cancel(caster);
@@ -317,7 +382,11 @@ namespace NivarianIcecreamTail
                     try
                     {
                         PlaySound(NonAnimationFinishSoundDefName, state.impactCell, caster.Map);
+#if RIMWORLD_17
+                        ResolveNativeDamage(state, false, true);
+#else
                         ResolveExplosionAndFinisher(state);
+#endif
                     }
                     finally
                     {
@@ -332,13 +401,24 @@ namespace NivarianIcecreamTail
                 Cancel(caster);
                 return;
             }
+#if RIMWORLD_17
+            if (state.animation != null) state.animation.Advance();
+#endif
             Skill3AnimationStatus status = Skill3AnimationBridge.GetStatus(state.caster, state.target);
             if (status == Skill3AnimationStatus.Running) return;
             try
             {
                 if (status == Skill3AnimationStatus.Completed)
                 {
+#if RIMWORLD_17
+                    if (state.damageResolved) return;
+                    state.damageResolved = true;
+#endif
+#if RIMWORLD_17
+                    ResolveNativeDamage(state, true, true);
+#else
                     ResolveAllDamage(state);
+#endif
                 }
             }
             finally
@@ -361,25 +441,39 @@ namespace NivarianIcecreamTail
             }
             caster.Position = state.landingCell;
             caster.Drawer.tweener.ResetTweenedPosToRoot();
+#if RIMWORLD_17
+            caster.Notify_Teleported(endCurrentJob: false, resetTweenedPos: true);
+#else
             caster.Notify_Teleported(true, true);
+#endif
             FaceEachOther(caster, target);
 
             if ((IcecreamTailMod.Settings == null || IcecreamTailMod.Settings.EnableSkill3MeleeAnimation) &&
                 Skill3AnimationBridge.Provider != null)
             {
+#if !RIMWORLD_17
                 EndLockJob(caster);
                 EndLockJob(target);
+#else
+                state.phase = IcecreamTailSkill3Phase.Animating;
+#endif
                 if (Skill3AnimationBridge.TryStart(caster, target))
                 {
                     state.phase = IcecreamTailSkill3Phase.Animating;
                     return;
                 }
+#if !RIMWORLD_17
                 GiveLockJob(caster, target);
                 GiveLockJob(target, caster);
+#endif
             }
 
             PlaySound(NonAnimationStartSoundDefName, caster.Position, caster.Map);
+#if RIMWORLD_17
+            ResolveNativeDamage(state, true, false);
+#else
             ResolveMeleeHits(state);
+#endif
             state.phase = IcecreamTailSkill3Phase.Waiting;
             state.ticksRemaining = WaitTicks;
         }
@@ -437,7 +531,9 @@ namespace NivarianIcecreamTail
             if (caster == null || map == null || !state.impactCell.InBounds(map)) return;
 
             using (EnterInternalDamage(state.target))
+#if !RIMWORLD_17
             using (EnterDeathAllowed(state.target))
+#endif
             {
                 List<Pawn> enemies = GenRadial.RadialDistinctThingsAround(state.impactCell, map, ExplosionRadius, true)
                     .OfType<Pawn>()
@@ -471,6 +567,9 @@ namespace NivarianIcecreamTail
             DamageDef damageDef = verb.GetDamageDef() ?? DamageDefOf.Blunt;
             DamageInfo info = new DamageInfo(damageDef, damage, armorPenetration, -1f, caster, hitPart,
                 weapon == null ? null : weapon.def);
+#if RIMWORLD_17
+            using (EnterDeathAllowed(target))
+#endif
             target.TakeDamage(info);
         }
 
@@ -578,7 +677,7 @@ namespace NivarianIcecreamTail
 
         public static bool IsProtected(Pawn pawn)
         {
-            return pawn != null && Protected.ContainsKey(pawn);
+            return Protected.Count != 0 && pawn != null && Protected.ContainsKey(pawn);
         }
 
         public static bool ShouldAbsorbDamage(Pawn pawn)
@@ -619,6 +718,9 @@ namespace NivarianIcecreamTail
         {
             IcecreamTailSkill3State state;
             if (caster == null || !Active.TryGetValue(caster, out state)) return;
+#if RIMWORLD_17
+            if (state.resolvingDamage) return;
+#endif
             if (state.phase == IcecreamTailSkill3Phase.Animating)
             {
                 Skill3AnimationBridge.Cancel(state.caster, state.target);
@@ -626,8 +728,13 @@ namespace NivarianIcecreamTail
             Active.Remove(state.caster);
             Protected.Remove(state.caster);
             Protected.Remove(state.target);
+#if RIMWORLD_17
+            EndNativeLock(state.caster, state.casterLockJob);
+            EndNativeLock(state.target, state.targetLockJob);
+#else
             EndLockJob(state.caster);
             EndLockJob(state.target);
+#endif
         }
 
         private static void DropHostileJobsTargeting(Pawn protectedPawn)
@@ -649,7 +756,16 @@ namespace NivarianIcecreamTail
             if (pawn == null || pawn.jobs == null) return;
             JobDef def = DefDatabase<JobDef>.GetNamedSilentFail(LockJobDefName);
             if (def == null) return;
-            pawn.jobs.StartJob(JobMaker.MakeJob(def, other), JobCondition.InterruptForced);
+            Job lockJob = JobMaker.MakeJob(def, other);
+#if RIMWORLD_17
+            IcecreamTailSkill3State state;
+            if (Protected.TryGetValue(pawn, out state))
+            {
+                if (pawn == state.caster) state.casterLockJob = lockJob;
+                else state.targetLockJob = lockJob;
+            }
+#endif
+            pawn.jobs.StartJob(lockJob, JobCondition.InterruptForced);
         }
 
         private static void EnsureLockJob(Pawn pawn, Pawn other)
@@ -728,10 +844,19 @@ namespace NivarianIcecreamTail
     [HarmonyPatch(typeof(Pawn), "Kill")]
     internal static class Patch_Pawn_Kill_IcecreamTailSkill3
     {
+#if RIMWORLD_17
+        private static bool Prefix(Pawn __instance, DamageInfo? dinfo, Hediff exactCulprit)
+        {
+            if (!IcecreamTailSkill3Runtime.ShouldPreventDeath(__instance)) return true;
+            IcecreamTailSkill3Runtime.RememberDeferredDeath(__instance, dinfo, exactCulprit);
+            return false;
+        }
+#else
         private static bool Prefix(Pawn __instance)
         {
             return !IcecreamTailSkill3Runtime.ShouldPreventDeath(__instance);
         }
+#endif
     }
 
     [HarmonyPatch(typeof(Pawn_HealthTracker), "MakeDowned")]
