@@ -94,7 +94,8 @@ namespace NivarianIcecreamTail
         internal static void DrawHands(Pawn pawn)
         {
             PawnAnimationActor actor;
-            if (!TryGet(pawn, out actor) || actor.Body.visible < 0.5f) return;
+            // 只为人形绘制额外双手，非人形仍保留身体与头部动画。
+            if (!TryGet(pawn, out actor) || !pawn.RaceProps.Humanlike || actor.Body.visible < 0.5f) return;
             for (int i = 0; i < actor.HandPoses.Length; i++)
             {
                 PawnAnimationPose pose = actor.HandPoses[i];
