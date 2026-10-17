@@ -11,14 +11,22 @@
     <li>
       <packageId>brrainz.harmony</packageId>
       <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>erdelf.HumanoidAlienRaces</packageId>
+      <displayName>Humanoid Alien Races 2.0</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/839005762</steamWorkshopUrl>
     </li>
     <li>
       <packageId>keeptpa.NivarianRace</packageId>
       <displayName>Nivarian Race</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/3624805128</steamWorkshopUrl>
     </li>
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
+    <li>erdelf.HumanoidAlienRaces</li>
     <li>keeptpa.NivarianRace</li>
     <li>co.uk.epicguru.meleeanimation</li>
     <li>Feilong.NivarianFoodExpansion</li>
