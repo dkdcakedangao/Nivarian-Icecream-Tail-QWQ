@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>NivarianIcecreamTail.Animation</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DefineConstants>$(DefineConstants);RIMWORLD_17</DefineConstants>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <MainAssemblyPath Condition="'$(MainAssemblyPath)' == ''">../bin/$(Configuration)/net10.0/NivarianIcecreamTail.dll</MainAssemblyPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="PawnAnimationData.cs;NativeAnimationRig.cs;PawnAnimationSession.cs;PawnAnimationRendering.cs;PawnAnimationGraphics.cs;MeleeAnimationInterlock.cs;PawnAnimationBackend.cs" />
+    <Reference Include="NivarianIcecreamTail" HintPath="$(MainAssemblyPath)" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(RimWorldDir)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="UnityStubs" HintPath="$(RimWorldDir)/UnityStubs.dll" Private="false" />
+    <Reference Include="Waylith" HintPath="$(RimWorldDir)/Waylith.dll" Private="false" />
+    <Reference Include="Waylith.UnityCompat" HintPath="$(RimWorldDir)/Waylith.UnityCompat.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(HarmonyAssemblyPath)" Private="false" />
+    <Reference Include="AlienRace" HintPath="$(HarAssemblyPath)" Private="false" />
+    <Reference Include="LumiParticle" HintPath="$(NivarianDir)/1.7/LumiParticle/Assemblies/LumiParticle.rimunity" Private="false" />
+    <Reference Include="RimUnity.Core" HintPath="$(RimUnityReferenceDir)/RimUnity.Core.dll" Private="false" />
+    <Reference Include="RimUnity" HintPath="$(RimUnityReferenceDir)/RimUnity.dll" Private="false" />
+  </ItemGroup>
+  <Target Name="PublishAdapter" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="../../../1.7/Animation" />
+  </Target>
+</Project>

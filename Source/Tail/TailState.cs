@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using LudeonTK;
+#if !RIMWORLD_17
 using Nivarian.Helper;
+#endif
 using RimWorld;
 using UnityEngine;
 using Verse;

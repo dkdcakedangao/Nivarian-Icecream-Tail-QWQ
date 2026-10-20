@@ -21,6 +21,7 @@ namespace NivarianIcecreamTail
         static NativeCharacterAnimationBootstrap()
         {
             Skill3AnimationBridge.Register(new NativeSkill3AnimationProvider());
+            LongEventHandler.ExecuteWhenFinished(NativeAnimationHost.Initialize);
         }
     }
 
@@ -101,7 +102,7 @@ namespace NivarianIcecreamTail
             IcecreamTailSkill3State state;
             if (!Active.TryGetValue(caster, out state) || state.target != target) return false;
             PawnAnimationDef def = DefDatabase<PawnAnimationDef>.GetNamedSilentFail("IcecreamTailAnimationSkill3");
-            state.animation = PawnAnimationSession.Start(def, caster, target, 0f, 0,
+            state.animation = NativeAnimationHost.Start(def, caster, target, 0f, 0,
                 target.Position.x < caster.Position.x, caster.Position.ToVector3ShiftedWithAltitude(caster.DrawPos.y));
             return state.animation != null;
         }
@@ -111,17 +112,29 @@ namespace NivarianIcecreamTail
             IcecreamTailSkill3State state;
             if (!Active.TryGetValue(caster, out state) || state.target != target || state.animation == null)
                 return Skill3AnimationStatus.Interrupted;
-            if (state.animation.Finished) return Skill3AnimationStatus.Completed;
-            return state.animation.Alive ? Skill3AnimationStatus.Running : Skill3AnimationStatus.Interrupted;
+            try
+            {
+                if (state.animation.Finished) return Skill3AnimationStatus.Completed;
+                if (state.animation.Alive) return Skill3AnimationStatus.Running;
+                throw new InvalidOperationException("Animation playback handle became invalid");
+            }
+            catch (Exception error) { NativeAnimationHost.Disable(error); return Skill3AnimationStatus.Interrupted; }
         }
 
         internal static void ReleaseNativeAnimation(Pawn caster)
         {
             IcecreamTailSkill3State state;
-            if (caster != null && Active.TryGetValue(caster, out state) && state.animation != null)
+            if (caster != null && Active.TryGetValue(caster, out state)) ReleaseNativeSession(state);
+        }
+
+        private static void ReleaseNativeSession(IcecreamTailSkill3State state)
+        {
+            if (state.animation != null)
             {
-                state.animation.Dispose();
+                var animation = state.animation;
                 state.animation = null;
+                try { animation.Dispose(); }
+                catch (Exception error) { NativeAnimationHost.Disable(error); }
             }
         }
 
@@ -138,8 +151,32 @@ namespace NivarianIcecreamTail
 
         internal static void ClearNativeRuntime()
         {
-            foreach (var state in Active.Values) if (state.animation != null) state.animation.Dispose();
-            Active.Clear(); Protected.Clear(); InternalDamageAllowed.Clear(); DeathAllowed.Clear();
+            // Dispose may invoke framework callbacks. Detach before calling it, and
+            // remove ownership first so old callbacks cannot cancel newer jobs.
+            Exception failure = null;
+            try
+            {
+                foreach (Pawn caster in new List<Pawn>(Active.Keys))
+                {
+                    try { Cancel(caster); }
+                    catch (Exception error) { if (failure == null) failure = error; }
+                }
+            }
+            finally { Active.Clear(); Protected.Clear(); InternalDamageAllowed.Clear(); DeathAllowed.Clear(); }
+            if (failure != null)
+                Log.Warning("[Nivarian Icecream Tail] Character runtime cleanup encountered an error; remaining sessions were processed: " + failure);
+        }
+
+        internal static void CancelNativeAnimations()
+        {
+            Exception failure = null;
+            foreach (Pawn caster in new List<Pawn>(Active.Keys))
+            {
+                IcecreamTailSkill3State active;
+                try { if (Active.TryGetValue(caster, out active) && active.animation != null) Cancel(caster); }
+                catch (Exception error) { if (failure == null) failure = error; }
+            }
+            if (failure != null) throw new InvalidOperationException("Character skill cleanup failed", failure);
         }
 
         internal static void ExposeData(ref List<IcecreamTailSkill3SavedState> saved)
@@ -154,7 +191,7 @@ namespace NivarianIcecreamTail
                         caster = state.caster, target = state.target, startCell = state.startCell, landingCell = state.landingCell,
                         impactCell = state.impactCell, phase = (int)state.phase, moveElapsedTicks = state.moveElapsedTicks,
                         moveTotalTicks = state.moveTotalTicks, ticksRemaining = state.ticksRemaining, pathCells = state.pathCells,
-                        animationDef = animation == null ? null : animation.Clip.Def.defName,
+                        animationDef = animation == null ? null : animation.Def.defName,
                         animationTime = animation == null ? 0f : animation.Elapsed, soundCursor = animation == null ? 0 : animation.SoundCursor,
                         mirror = animation != null && animation.Mirror, animationRoot = animation == null ? default(UnityEngine.Vector3) : animation.RootPosition,
                         damageResolved = state.damageResolved, deferredDeath = state.deferredDeath
@@ -194,7 +231,7 @@ namespace NivarianIcecreamTail
                     if (state.phase == IcecreamTailSkill3Phase.Animating)
                     {
                         var def = DefDatabase<PawnAnimationDef>.GetNamedSilentFail(item.animationDef ?? "");
-                        state.animation = PawnAnimationSession.Start(def, state.caster, state.target, item.animationTime,
+                        state.animation = NativeAnimationHost.Start(def, state.caster, state.target, item.animationTime,
                             item.soundCursor, item.mirror, item.animationRoot);
                         if (state.animation == null) { Cancel(state.caster); continue; }
                     }

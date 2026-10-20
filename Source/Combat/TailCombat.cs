@@ -15,6 +15,9 @@ namespace NivarianIcecreamTail
     {
         static TailCombatPatches()
         {
+#if RIMWORLD_17
+            NivarianHostBridge.Initialize();
+#endif
             new Harmony("dkdcakedangao.NivarianIcecreamTailQWQ").PatchAll(Assembly.GetExecutingAssembly());
         }
     }

@@ -88,7 +88,7 @@ namespace NivarianIcecreamTail
         }
     }
 
-    internal sealed class PawnAnimationSession : IDisposable
+    internal sealed class PawnAnimationSession : IPawnAnimationSession
     {
         private const string PrefabName = "IcecreamTailActorRig";
         private LumiVisualHandle<LumiAnimatorItem> handle;
@@ -104,16 +104,20 @@ namespace NivarianIcecreamTail
         internal bool Alive { get { return handle != null && handle.IsAlive; } }
         private bool disposed;
 
+        PawnAnimationDef IPawnAnimationSession.Def { get { return Clip.Def; } }
+        float IPawnAnimationSession.Elapsed { get { return Elapsed; } }
+        int IPawnAnimationSession.SoundCursor { get { return SoundCursor; } }
+        bool IPawnAnimationSession.Mirror { get { return Mirror; } }
+        Vector3 IPawnAnimationSession.RootPosition { get { return RootPosition; } }
+        bool IPawnAnimationSession.Finished { get { return Finished; } }
+        bool IPawnAnimationSession.Alive { get { return Alive; } }
+        void IPawnAnimationSession.Advance() { Advance(); }
+
         internal static PawnAnimationSession Start(PawnAnimationDef def, Pawn caster, Pawn target, float elapsed, int cursor, bool mirror, Vector3 root)
         {
             CachedPawnAnimation clip = CachedPawnAnimation.Get(def);
-            if (clip == null) return null;
-            try { return new PawnAnimationSession(clip, caster, target, elapsed, cursor, mirror, root); }
-            catch (Exception error)
-            {
-                Log.Error("[Nivarian Icecream Tail] Character playback could not start: " + error);
-                return null;
-            }
+            if (clip == null) throw new InvalidDataException("Missing or previously invalid animation definition");
+            return new PawnAnimationSession(clip, caster, target, elapsed, cursor, mirror, root);
         }
 
         private PawnAnimationSession(CachedPawnAnimation clip, Pawn caster, Pawn target, float elapsed, int cursor, bool mirror, Vector3 root)
@@ -180,20 +184,25 @@ namespace NivarianIcecreamTail
         {
             if (disposed) return;
             disposed = true;
-            PawnAnimationRendering.Unbind(this);
+            Exception failure = null;
+            try { PawnAnimationRendering.Unbind(this); }
+            catch (Exception error) { failure = error; }
             try { if (rig != null) rig.Dispose(); }
-            catch (Exception error) { Log.Warning("[Nivarian Icecream Tail] Character rig release: " + error.Message); }
+            catch (Exception error) { if (failure == null) failure = error; }
             finally
             {
                 rig = null;
                 try { if (handle != null) handle.Dispose(); }
-                catch (Exception error) { Log.Warning("[Nivarian Icecream Tail] Character handle release: " + error.Message); }
+                catch (Exception error) { if (failure == null) failure = error; }
                 finally
                 {
                     handle = null;
-                    if (Actors != null) foreach (var actor in Actors) if (actor != null) actor.Restore();
+                    if (Actors != null) foreach (var actor in Actors)
+                        try { if (actor != null) actor.Restore(); }
+                        catch (Exception error) { if (failure == null) failure = error; }
                 }
             }
+            if (failure != null) throw new InvalidOperationException("Character playback cleanup failed", failure);
         }
     }
 }

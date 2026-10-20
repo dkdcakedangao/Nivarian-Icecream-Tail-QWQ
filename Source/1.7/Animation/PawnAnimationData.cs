@@ -7,34 +7,12 @@ using System.Text.Json.Serialization;
 using Verse;
 using RU = RimUnity;
 
-// 动画 Def、JSON 数据结构、属性翻译、校验及曲线／控制器缓存
+// JSON 数据结构、属性翻译、校验及曲线／控制器缓存；XML Def 留在主模块。
 // 石山，待优化
 // gpt老师已经帮我优化过一次了，之前没法调用动画的时候，gpt老师改过一次翻译
 // 接下来如果要优化，应该是尝试做一下翻译缓存？省的每次读取都翻译一次？
 namespace NivarianIcecreamTail
 {
-    public sealed class PawnAnimationRole
-    {
-        public string body;
-        public string head;
-        public string handsRoot;
-    }
-
-    public sealed class PawnAnimationDef : Def
-    {
-        public string jsonPath;
-        public List<PawnAnimationRole> roles = new List<PawnAnimationRole>();
-        public List<string> ignoredRoots = new List<string>();
-        public override IEnumerable<string> ConfigErrors()
-        {
-            foreach (string error in base.ConfigErrors()) yield return error;
-            if (string.IsNullOrEmpty(jsonPath)) yield return "Missing jsonPath";
-            if (roles.Count != 2) yield return "The current character binding requires two roles";
-            foreach (PawnAnimationRole role in roles)
-                if (string.IsNullOrEmpty(role.body) || string.IsNullOrEmpty(role.head)) yield return "Each role requires body and head paths";
-        }
-    }
-
     // 公共字段喵：RimUnity 绑定一次，然后进缓存
     public sealed class PawnAnimationChannels : RU.Component
     {
@@ -119,8 +97,7 @@ namespace NivarianIcecreamTail
             catch (Exception error)
             {
                 Failed.Add(def);
-                Log.Error("[Nivarian Icecream Tail] Character animation '" + def.defName + "' could not load: " + error.Message);
-                return null;
+                throw new InvalidDataException("Character animation '" + def.defName + "': " + error.Message, error);
             }
         }
 

@@ -14,26 +14,18 @@
     <HarAssemblyPath Condition="'$(HarAssemblyPath)' == ''">E:/steam/steamapps/workshop/content/294100/839005762/1.7/Assemblies/AlienRace.dll</HarAssemblyPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../**/*.cs" Exclude="../Tests/**;../obj/**;../bin/**;../1.7/obj/**;../1.7/bin/**;../MeleeAnimationCompatibility/**;../Abilities/MintBreathPreview.cs" />
+    <Compile Include="../**/*.cs" Exclude="../Tests/**;../obj/**;../bin/**;../1.7/**/obj/**;../1.7/**/bin/**;../MeleeAnimationCompatibility/**;../Abilities/MintBreathPreview.cs;../1.7/Animation/PawnAnimationData.cs;../1.7/Animation/NativeAnimationRig.cs;../1.7/Animation/PawnAnimationSession.cs;../1.7/Animation/PawnAnimationRendering.cs;../1.7/Animation/PawnAnimationGraphics.cs;../1.7/Animation/MeleeAnimationInterlock.cs;../1.7/Animation/PawnAnimationBackend.cs" />
     <Reference Include="Assembly-CSharp" HintPath="$(RimWorldDir)/Assembly-CSharp.dll" Private="false" />
     <Reference Include="UnityStubs" HintPath="$(RimWorldDir)/UnityStubs.dll" Private="false" />
     <Reference Include="Waylith" HintPath="$(RimWorldDir)/Waylith.dll" Private="false" />
     <Reference Include="Waylith.UnityCompat" HintPath="$(RimWorldDir)/Waylith.UnityCompat.dll" Private="false" />
-    <Reference Include="Nivarian_Race" HintPath="$(NivarianDir)/1.7/Core/Assemblies/Nivarian_Race.rimunity" Private="false" />
-    <Reference Include="RimUnity.Core" HintPath="$(RimUnityReferenceDir)/RimUnity.Core.dll" Private="false" />
-    <Reference Include="RimUnity" HintPath="$(RimUnityReferenceDir)/RimUnity.dll" Private="false" />
-    <Reference Include="LumiParticle" HintPath="$(NivarianDir)/1.7/LumiParticle/Assemblies/LumiParticle.rimunity" Private="false" />
     <Reference Include="0Harmony" HintPath="$(HarmonyAssemblyPath)" Private="false" />
     <Reference Include="AlienRace" HintPath="$(HarAssemblyPath)" Private="false" />
   </ItemGroup>
-  <Target Name="ValidateRimUnityReferences" BeforeTargets="ResolveAssemblyReferences">
-    <Error Condition="!Exists('$(RimUnityReferenceDir)/RimUnity.Core.dll') Or !Exists('$(RimUnityReferenceDir)/RimUnity.dll')" Text="Set RimUnityReferenceDir to the matching RimUnity compile-only References directory." />
-    <Error Condition="!Exists('$(NivarianDir)/1.7/RU/Assemblies/RimUnity.Embedded.dll')" Text="Missing Nivarian RimUnity.Embedded.dll registration container." />
-  </Target>
-  <Target Name="PublishDeferredAssembly" AfterTargets="Build">
-    <Error Condition="Exists('$(ReleaseDirectory)/NivarianIcecreamTail.dll')" Text="Remove the obsolete 1.7/Assemblies/NivarianIcecreamTail.dll before publishing; it loads before RimUnity is ready." />
-    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(ReleaseDirectory)/NivarianIcecreamTail.rimunity" />
-    <Copy SourceFiles="$(NivarianDir)/1.7/RU/Assemblies/RimUnity.Embedded.dll" DestinationFiles="$(ReleaseDirectory)/RimUnity.Embedded.dll" />
+  <Target Name="PublishSingleRuntimeAssembly" AfterTargets="Build">
+    <MSBuild Projects="Animation/NivarianIcecreamTail.Animation.csproj" Targets="Restore;Build" Properties="Configuration=$(Configuration);MainAssemblyPath=$(TargetPath);RimWorldDir=$(RimWorldDir);NivarianDir=$(NivarianDir);RimUnityReferenceDir=$(RimUnityReferenceDir);HarmonyAssemblyPath=$(HarmonyAssemblyPath);HarAssemblyPath=$(HarAssemblyPath)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseDirectory)" />
+    <Delete Files="$(ReleaseDirectory)/NivarianIcecreamTail.rimunity;$(ReleaseDirectory)/NivarianIcecreamTail.rimunity.json;$(ReleaseDirectory)/RimUnity.Embedded.dll" />
   </Target>
   <Target Name="CopyVersionDefinitions" AfterTargets="Build">
     <ItemGroup>

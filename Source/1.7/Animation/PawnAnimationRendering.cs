@@ -28,16 +28,19 @@ namespace NivarianIcecreamTail
         internal static void Unbind(PawnAnimationSession session)
         {
             if (session.Actors == null) return;
+            Exception failure = null;
             foreach (var actor in session.Actors)
             {
                 if (actor == null) continue;
                 PawnAnimationActor current;
                 if (Bound.TryGetValue(actor.Pawn, out current) && ReferenceEquals(actor, current))
                 {
-                    MeleeIdleDrawSuppression.Unbind(actor);
                     Bound.Remove(actor.Pawn);
+                    try { MeleeIdleDrawSuppression.Unbind(actor); }
+                    catch (Exception error) { if (failure == null) failure = error; }
                 }
             }
+            if (failure != null) throw new InvalidOperationException("Character binding cleanup failed", failure);
         }
 
         internal static bool TryGet(Pawn pawn, out PawnAnimationActor actor)

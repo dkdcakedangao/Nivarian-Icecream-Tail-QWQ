@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using HarmonyLib;
+#if !RIMWORLD_17
 using Nivarian.Helper;
+#endif
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -87,9 +89,17 @@ namespace NivarianIcecreamTail
         }
     }
 
+#if RIMWORLD_17
+    [HarmonyPatch]
+#else
     [HarmonyPatch(typeof(NivarianVisualHelper), "GetMouthPos")]
+#endif
     public static class Patch_NivarianVisualHelper_GetMouthPos_MintBreath
     {
+#if RIMWORLD_17
+        private static bool Prepare() { NivarianHostBridge.Initialize(); return NivarianHostBridge.MouthPosition != null; }
+        private static System.Reflection.MethodBase TargetMethod() { return NivarianHostBridge.MouthPosition; }
+#endif
         public static void Postfix(Pawn __0, ref Vector3 __result)
         {
             if (!IcecreamTailUtility.IsNivarian(__0))

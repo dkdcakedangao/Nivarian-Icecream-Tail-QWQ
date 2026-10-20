@@ -39,7 +39,7 @@ namespace NivarianIcecreamTail
         public int ticksRemaining;
         public List<IntVec3> pathCells = new List<IntVec3>();
 #if RIMWORLD_17
-        internal PawnAnimationSession animation;
+        internal IPawnAnimationSession animation;
         internal bool damageResolved;
         internal bool resolvingDamage;
         internal Skill3DeferredDeath deferredDeath;
@@ -402,7 +402,8 @@ namespace NivarianIcecreamTail
                 return;
             }
 #if RIMWORLD_17
-            if (state.animation != null) state.animation.Advance();
+            try { if (state.animation != null) state.animation.Advance(); }
+            catch (Exception error) { NativeAnimationHost.Disable(error); return; }
 #endif
             Skill3AnimationStatus status = Skill3AnimationBridge.GetStatus(state.caster, state.target);
             if (status == Skill3AnimationStatus.Running) return;
@@ -721,16 +722,22 @@ namespace NivarianIcecreamTail
 #if RIMWORLD_17
             if (state.resolvingDamage) return;
 #endif
+#if !RIMWORLD_17
             if (state.phase == IcecreamTailSkill3Phase.Animating)
             {
                 Skill3AnimationBridge.Cancel(state.caster, state.target);
             }
+#endif
             Active.Remove(state.caster);
             Protected.Remove(state.caster);
             Protected.Remove(state.target);
 #if RIMWORLD_17
-            EndNativeLock(state.caster, state.casterLockJob);
-            EndNativeLock(state.target, state.targetLockJob);
+            try { ReleaseNativeSession(state); }
+            finally
+            {
+                try { EndNativeLock(state.caster, state.casterLockJob); }
+                finally { EndNativeLock(state.target, state.targetLockJob); }
+            }
 #else
             EndLockJob(state.caster);
             EndLockJob(state.target);
