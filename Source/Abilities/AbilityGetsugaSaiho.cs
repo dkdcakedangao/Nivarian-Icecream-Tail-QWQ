@@ -50,7 +50,7 @@ namespace NivarianIcecreamTail
             {
                 if (showMessages)
                 {
-                    Messages.Message("目标身旁没有可用的落点。", MessageTypeDefOf.RejectInput, false);
+                    Messages.Message("IcecreamTail_NoLanding".Translate().ToString(), MessageTypeDefOf.RejectInput, false);
                 }
                 return false;
             }

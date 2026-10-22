@@ -49,7 +49,7 @@ namespace NivarianIcecreamTail
                 if (def != null && def.defName == BeerBuffDefName)
                 {
                     int level = Mathf.Clamp(Mathf.RoundToInt(Severity), 1, 4);
-                    return "吃了啤酒味冰淇淋（" + new[] { "一酒", "二酒", "三酒", "四酒" }[level - 1] + "）";
+                    return ("IcecreamTail_BeerLevel" + level).Translate();
                 }
 
                 return base.LabelBase;
@@ -84,7 +84,7 @@ namespace NivarianIcecreamTail
                 // 现在实现了 嘛？
                 // 把批注当log写不是好习惯
                 // 但是我喜欢！
-                string durationTip = "剩余时间：" + duration.RemainingTicks.ToStringTicksToPeriod();
+                string durationTip = "IcecreamTail_TimeRemaining".Translate(duration.RemainingTicks.ToStringTicksToPeriod());
                 return baseTip.NullOrEmpty() ? durationTip : baseTip + "\n" + durationTip;
             }
         }

@@ -4,7 +4,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailMilkSeasoning</defName>
     <label>牛奶味冰淇淋调味料</label>
-    <description>用于制作牛奶味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“原味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n最经典的牛奶风味，没有多余的花样~吃过这样的尾巴，脚步、准头和力气都会好上一点，也更能忍受炎热。原味总有原味的好。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_milk</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -37,7 +37,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailStrawberrySeasoning</defName>
     <label>草莓味冰淇淋调味料</label>
-    <description>用于制作草莓味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“草莓味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n草莓的甜香很适合冰淇淋。吃过之后，脚步轻快，瞄准也更快、更稳，只是近身打架时少了些力道~如果需要远远地射击，就试试这个口味吧。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_strawberry</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -70,7 +70,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailVanillaSeasoning</defName>
     <label>香草味冰淇淋调味料</label>
-    <description>用于制作香草味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“香草味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n温和的香草与奶香，却有意外充足的后劲。吃过之后，赶路、干活都利索不少，搭东西也更稳当~如果今天有很多事情要做，不妨试试这个口味。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_vanilla</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -103,7 +103,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailMintSeasoning</defName>
     <label>薄荷味冰淇淋调味料</label>
-    <description>用于制作薄荷味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“薄荷味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n薄荷的清凉来得直接，吃过之后不那么怕热，跑动和近战出手也更利落。大概只是薄荷放多了吧~吃过之后，嘴里呼出的气会非常非常冷，甚至能当作武器使用。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_mint</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -136,7 +136,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailMatchaSeasoning</defName>
     <label>抹茶味冰淇淋调味料</label>
-    <description>用于制作抹茶味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“抹茶味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n带一点苦味的茶香，回味倒是不错。吃过之后稍微耐热一些，脚步和思绪也会慢下来。适合休息时享用~这个口味，是某位大人最喜欢的味道，或许能得到它的青睐喵。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_matcha</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -169,7 +169,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailChocolateSeasoning</defName>
     <label>巧克力味冰淇淋调味料</label>
-    <description>用于制作巧克力味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“巧克力味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n浓厚的巧克力风味，能让头脑清醒、脚步轻快，说话也更有说服力。代价是睡眠没那么解乏~另外，包装上特意写着：不建议与大狗分享。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_chocolate</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -202,7 +202,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailBeerSeasoning</defName>
     <label>啤酒味冰淇淋调味料</label>
-    <description>用于制作啤酒味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“啤酒味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n将麦芽香混进冰淇淋，算是同时满足了两种爱好。吃多了难免影响准头和手脚，不过拳头倒是越来越重。涅瓦莲们总是越喝越强，若是到了某种程度，也许能想起些“主母教授的特别招式”~当然，小心宿醉哦！</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_beer</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -235,7 +235,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailFrostberryStompedSeasoning</defName>
     <label>传统霜莓足酿酒味冰淇淋调味料</label>
-    <description>将霜莓足酿酒的风味融入冰淇淋的调味料。已经长有冰淇淋尾巴的涅瓦莲使用后，会将成熟或恢复中的尾巴切换为“传统霜莓足酿酒味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n保留了传统足酿霜莓酒的香气与酒劲。吃过之后心情不错，手脚却会有些发软，走路也慢了下来~正宗的味道，总得付出一点代价。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_frostberry_stomped</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -268,7 +268,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailFrostberryImitationSeasoning</defName>
     <label>仿制霜莓足酿酒味冰淇淋调味料</label>
-    <description>将霜莓足酿酒的风味融入冰淇淋的调味料。已经长有冰淇淋尾巴的涅瓦莲使用后，会将成熟或恢复中的尾巴切换为“仿制霜莓足酿酒味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n尽力模仿了传统霜莓足酿酒的风味，但似乎还是少了点什么。酒劲轻，手脚受的影响也小，只是那点好心情同样散得很快~至少闻起来挺像。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_frostberry_stomped</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -301,7 +301,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailFrostberryNiraSeasoning</defName>
     <label>涅拉亲制霜莓足酿酒味冰淇淋调味料</label>
-    <description>将霜莓足酿酒的风味融入冰淇淋的调味料。已经长有冰淇淋尾巴的涅瓦莲使用后，会将成熟或恢复中的尾巴切换为“涅拉亲制霜莓足酿酒味”。</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n用涅拉亲制的霜莓足酿酒调出的风味。与普通酒味不同，吃过之后反而头脑清楚、双手灵巧，连脚步都轻快了些~心情也会变得非常好。“妈妈的味道~~”</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_frostberry_nira</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -334,7 +334,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailNutmegSeasoning</defName>
     <label>肉豆蔻味冰淇淋调味料</label>
-    <description>用于制作肉豆蔻味冰淇淋的调味料，已经长有冰淇淋尾巴的涅瓦莲吃了后，会将尾巴切换为“肉豆蔻味”。石头磨出来的……真的算肉豆蔻喵？</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n包装上写着“肉豆蔻”，制作材料却是石头。主母说过，这样的尾巴吃起来也能有股酒味。吃过之后，脑袋会短暂发沉，走路也慢上一点。不过有涅瓦莲说，里面总是夹着记载往事的便签~听说是一位有九个脑袋的史官，一字不改地将往事记下，藏进石头里的。</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_nutmeg</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -367,7 +367,7 @@
   <ThingDef ParentName="DrugPillBase">
     <defName>IcecreamTailRainbowCandySeasoning</defName>
     <label>彩虹糖味冰淇淋调味料</label>
-    <description>把各种调味料调成一袋彩虹！已经长有冰淇淋尾巴的涅瓦莲使用后，会将尾巴切换为“彩虹糖味”。每次食用尾巴时随机获得一种其他口味的效果，还有彩虹糖的额外好心情喵~</description>
+    <description>已有冰淇淋尾巴的涅瓦莲使用后，可将成熟或恢复中的尾巴切换为对应口味。\n\n将各种调味料混在一起，得到了无法预测的味道。每次吃尾巴，都会随机尝到另一种口味的效果，再附赠一份好心情。同时，尾巴恢复得也稍快一些~是所有追求冰淇淋尾巴的涅瓦莲心目中的梦幻终极冰淇淋！</description>
     <graphicData>
       <texPath>Items/seasoning/seasoning_rainbow_candy</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>

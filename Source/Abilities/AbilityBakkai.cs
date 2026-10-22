@@ -24,7 +24,7 @@ namespace NivarianIcecreamTail
 
             if (IcecreamTailBakkaiRuntime.IsActive(pawn))
             {
-                Messages.Message("超级爆！爆！回！仍在进行。", pawn, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("IcecreamTail_BakkaiActive".Translate().ToString(), pawn, MessageTypeDefOf.RejectInput, false);
                 return false;
             }
 

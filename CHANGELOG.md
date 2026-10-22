@@ -1,5 +1,12 @@
 # Change Log
 
+## 2026-10-22
+
+- 更新全部12款冰淇淋调味料描述，加入对应口味效果和彩蛋的提示。
+- 新增完整英文游戏文本：物品、配方、口味、健康状态、心情、技能、设置、交互提示与肉豆蔻石书；同时支持1.6与1.7。
+- Updated all 12 seasoning descriptions with hints about their flavor effects and easter eggs.
+- Added English localization for items, recipes, flavors, health conditions, thoughts, abilities, settings, interaction messages, and nutmeg chronicles in both 1.6 and 1.7.
+
 ## 2026-10-16
 
 - 糕糕的简易动画框架做完了！现在1.7不用再使用MA了。

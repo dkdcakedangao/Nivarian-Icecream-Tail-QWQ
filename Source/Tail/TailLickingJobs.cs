@@ -40,12 +40,12 @@ namespace NivarianIcecreamTail
             string reason;
             if (TailEatingUtility.CanLickTail(eater, target, false, 0, out reason))
             {
-                FloatMenuOption option = new FloatMenuOption("舔舔冰淇淋尾巴", delegate { TailEatingUtility.StartLicking(eater, target, true); }, MenuOptionPriority.High);
+                FloatMenuOption option = new FloatMenuOption("IcecreamTail_Lick".Translate().ToString(), delegate { TailEatingUtility.StartLicking(eater, target, true); }, MenuOptionPriority.High);
                 yield return FloatMenuUtility.DecoratePrioritizedTask(option, eater, target, null, null);
             }
             else
             {
-                yield return new FloatMenuOption("舔舔冰淇淋尾巴（" + reason + "）", null);
+                yield return new FloatMenuOption("IcecreamTail_LickDisabled".Translate(reason), null);
             }
         }
     }

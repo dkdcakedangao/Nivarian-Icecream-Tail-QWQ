@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <IcecreamTailMemoryNivarian.stages.0.label>tail ice cream</IcecreamTailMemoryNivarian.stages.0.label>
+  <IcecreamTailMemoryNivarian.stages.0.description>My tail feels so strange~</IcecreamTailMemoryNivarian.stages.0.description>
+  <IcecreamTailMemoryOther.stages.0.label>A tail?? Ice cream??</IcecreamTailMemoryOther.stages.0.label>
+  <IcecreamTailMemoryOther.stages.0.description>What a strange texture??</IcecreamTailMemoryOther.stages.0.description>
+  <IcecreamTailMemoryEater.stages.0.label>unusually fragrant ice cream</IcecreamTailMemoryEater.stages.0.label>
+  <IcecreamTailMemoryEater.stages.0.description>Ice cream! Delicious~~</IcecreamTailMemoryEater.stages.0.description>
+  <IcecreamTailMemoryOwner.stages.0.label>a strange feeling</IcecreamTailMemoryOwner.stages.0.label>
+  <IcecreamTailMemoryOwner.stages.0.description>My tail tickles~</IcecreamTailMemoryOwner.stages.0.description>
+  <IcecreamTailSocialEater.stages.0.label>ate their ice cream tail</IcecreamTailSocialEater.stages.0.label>
+  <IcecreamTailSocialEater.stages.0.description>ate their ice cream tail</IcecreamTailSocialEater.stages.0.description>
+  <IcecreamTailSocialOwner.stages.0.label>had my tail bitten</IcecreamTailSocialOwner.stages.0.label>
+  <IcecreamTailSocialOwner.stages.0.description>had my tail bitten</IcecreamTailSocialOwner.stages.0.description>
+  <IcecreamTailMemorySeasoning.stages.0.label>ate seasoning</IcecreamTailMemorySeasoning.stages.0.label>
+  <IcecreamTailMemorySeasoning.stages.0.description>I actually ate the seasoning straight from the packet...</IcecreamTailMemorySeasoning.stages.0.description>
+  <IcecreamTailMemoryStrawberryEater.stages.0.label>Strawberry! Ice cream!</IcecreamTailMemoryStrawberryEater.stages.0.label>
+  <IcecreamTailMemoryStrawberryEater.stages.0.description>So sweet! So delicious~~~</IcecreamTailMemoryStrawberryEater.stages.0.description>
+  <IcecreamTailMemoryVanillaEater.stages.0.label>Vanilla! Ice cream!</IcecreamTailMemoryVanillaEater.stages.0.label>
+  <IcecreamTailMemoryVanillaEater.stages.0.description>Cream and vanilla blend so sweetly that I feel light as air~</IcecreamTailMemoryVanillaEater.stages.0.description>
+  <IcecreamTailMemoryMintEater.stages.0.label>Mint! Ice cream!</IcecreamTailMemoryMintEater.stages.0.label>
+  <IcecreamTailMemoryMintEater.stages.0.description>That cool minty rush went straight to my head. I feel wide awake~</IcecreamTailMemoryMintEater.stages.0.description>
+  <IcecreamTailMemoryMatchaEater.stages.0.label>Matcha! Ice cream!</IcecreamTailMemoryMatchaEater.stages.0.label>
+  <IcecreamTailMemoryMatchaEater.stages.0.description>Fragrant, slightly bitter, and icy cold, with a sweet little finish, meow~</IcecreamTailMemoryMatchaEater.stages.0.description>
+  <IcecreamTailMemoryChocolateEater.stages.0.label>Chocolate! Ice cream!</IcecreamTailMemoryChocolateEater.stages.0.label>
+  <IcecreamTailMemoryChocolateEater.stages.0.description>Such rich, sweet chocolate! It&apos;s so good it cleared my head!</IcecreamTailMemoryChocolateEater.stages.0.description>
+  <IcecreamTailMemoryBeerEater.stages.0.label>had beer~ ice cream~</IcecreamTailMemoryBeerEater.stages.0.label>
+  <IcecreamTailMemoryBeerEater.stages.0.description>My head... feels fuzzy...</IcecreamTailMemoryBeerEater.stages.0.description>
+  <IcecreamTailBeerOwner.stages.0.label>My tail is beer! Ice cream!</IcecreamTailBeerOwner.stages.0.label>
+  <IcecreamTailBeerOwner.stages.0.description>Beer! Delicious! Ice cream! Delicious!</IcecreamTailBeerOwner.stages.0.description>
+  <IcecreamTailMemoryWolfeinChocolate.stages.0.label>Stop eating, buddy! That&apos;s “chocolate”!</IcecreamTailMemoryWolfeinChocolate.stages.0.label>
+  <IcecreamTailMemoryWolfeinChocolate.stages.0.description>This tastes wrong! It&apos;s a trap!!!!</IcecreamTailMemoryWolfeinChocolate.stages.0.description>
+  <IcecreamTailMemoryFrostberryStompedEater.stages.0.label>Foot-stomped frostberry wine~ Smells lovely, meow~</IcecreamTailMemoryFrostberryStompedEater.stages.0.label>
+  <IcecreamTailMemoryFrostberryStompedEater.stages.0.description>The traditional way is the best~</IcecreamTailMemoryFrostberryStompedEater.stages.0.description>
+  <IcecreamTailMemoryFrostberryImitationEater.stages.0.label>not-quite-authentic frostberry wine, meow</IcecreamTailMemoryFrostberryImitationEater.stages.0.label>
+  <IcecreamTailMemoryFrostberryImitationEater.stages.0.description>Not authentic enough... and not strong enough either, meow...</IcecreamTailMemoryFrostberryImitationEater.stages.0.description>
+  <IcecreamTailMemoryFrostberryNiraEater.stages.0.label>Mama Nira&apos;s frostberry wine, meow~</IcecreamTailMemoryFrostberryNiraEater.stages.0.label>
+  <IcecreamTailMemoryFrostberryNiraEater.stages.0.description>Just like Mama makes~~~~</IcecreamTailMemoryFrostberryNiraEater.stages.0.description>
+  <IcecreamTailMemorySterilizerEnemy.stages.0.label>minor damage, major insult</IcecreamTailMemorySterilizerEnemy.stages.0.label>
+  <IcecreamTailMemorySterilizerEnemy.stages.0.description>The divine power of Lord Matcha Hair Dryer.</IcecreamTailMemorySterilizerEnemy.stages.0.description>
+  <IcecreamTailMemorySterilizerFriendly.stages.0.label>friendly fire, but at least it was Lord Sterilizer</IcecreamTailMemorySterilizerFriendly.stages.0.label>
+  <IcecreamTailMemorySterilizerFriendly.stages.0.description>The divine power of Lord Matcha Hair Dryer.</IcecreamTailMemorySterilizerFriendly.stages.0.description>
+  <IcecreamTailMemoryNutmegEater.stages.0.label>the stone chronicles say...</IcecreamTailMemoryNutmegEater.stages.0.label>
+  <IcecreamTailMemoryNutmegEater.stages.0.description>I ate a nutmeg ice cream tail... and seem to have seen something I wasn&apos;t meant to see, meow... What even is nutmeg, anyway???</IcecreamTailMemoryNutmegEater.stages.0.description>
+  <IcecreamTailMemoryRainbowCandyEater.stages.0.label>Rainbow candy??</IcecreamTailMemoryRainbowCandyEater.stages.0.label>
+  <IcecreamTailMemoryRainbowCandyEater.stages.0.description>Meet the rainbow, eat the rainbow. (Wait, that&apos;s not right.)</IcecreamTailMemoryRainbowCandyEater.stages.0.description>
+</LanguageData>

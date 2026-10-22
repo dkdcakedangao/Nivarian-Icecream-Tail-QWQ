@@ -30,6 +30,7 @@ namespace NivarianIcecreamTail
     {
         public float recoverySpeedFactor = 1f;
         public Color labelColor = IcecreamTailColors.LabelBlue;
+        [MustTranslate]
         public string tailDescription;
         public HediffDef eaterBuff;
         // Zero uses the existing ordinary/beer duration rules.
@@ -134,13 +135,13 @@ namespace NivarianIcecreamTail
         public static string TailLabel(Hediff hediff, string originalLabel)
         {
             IcecreamTailFlavorDef flavor = GetFlavor(hediff);
-            return flavor == null || flavor == Original ? originalLabel : flavor.label + "冰淇淋尾巴";
+            return flavor == null || flavor == Original ? originalLabel : "IcecreamTail_FlavoredTail".Translate(flavor.label).ToString();
         }
 
         public static string ReadyTailDescription(Hediff hediff)
         {
             IcecreamTailFlavorDef flavor = GetFlavor(hediff);
-            return flavor == null || flavor.tailDescription.NullOrEmpty() ? "冰冰的尾巴，看起来非常好吃喵~" : flavor.tailDescription;
+            return flavor == null || flavor.tailDescription.NullOrEmpty() ? "IcecreamTail_TailDescription".Translate().ToString() : flavor.tailDescription;
         }
 
         public static Color LabelColor(Hediff hediff)

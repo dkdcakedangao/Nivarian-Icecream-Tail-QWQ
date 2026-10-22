@@ -19,67 +19,67 @@ namespace NivarianIcecreamTail
             reason = null;
             if (!IcecreamTailMod.Enabled)
             {
-                reason = "功能已关闭";
+                reason = "IcecreamTail_Disabled".Translate().ToString();
                 return false;
             }
 
             if (eater == null || target == null)
             {
-                reason = "目标无效";
+                reason = "IcecreamTail_InvalidTarget".Translate().ToString();
                 return false;
             }
 
             if (eater == target)
             {
-                reason = "不能舔自己的尾巴";
+                reason = "IcecreamTail_OwnTail".Translate().ToString();
                 return false;
             }
 
             if (!eater.RaceProps.Humanlike)
             {
-                reason = "只有人形角色会舔尾巴";
+                reason = "IcecreamTail_HumanlikeOnly".Translate().ToString();
                 return false;
             }
 
             if (eater.Dead || eater.Downed || eater.InMentalState)
             {
-                reason = "当前无法行动";
+                reason = "IcecreamTail_CannotAct".Translate().ToString();
                 return false;
             }
 
             if (!IsReadyTailPawn(target))
             {
-                reason = "没有可舔的冰淇淋尾巴";
+                reason = "IcecreamTail_NoTail".Translate().ToString();
                 return false;
             }
 
             if (!eater.Spawned || !target.Spawned || eater.Map != target.Map)
             {
-                reason = "不在同一张地图";
+                reason = "IcecreamTail_DifferentMap".Translate().ToString();
                 return false;
             }
 
             if (eater.HostileTo(target) || target.HostileTo(eater))
             {
-                reason = "关系不太友好";
+                reason = "IcecreamTail_Unfriendly".Translate().ToString();
                 return false;
             }
 
             if (requireHungry && (eater.needs == null || eater.needs.food == null || eater.needs.food.CurCategory < HungerCategory.Hungry))
             {
-                reason = "还不饿";
+                reason = "IcecreamTail_NotHungry".Translate().ToString();
                 return false;
             }
 
             if (radius > 0 && eater.Position.DistanceToSquared(target.Position) > radius * radius)
             {
-                reason = "距离太远";
+                reason = "IcecreamTail_TooFar".Translate().ToString();
                 return false;
             }
 
             if (!eater.CanReserveAndReach(target, PathEndMode.Touch, Danger.None, 1, -1, null, false))
             {
-                reason = "无法到达或尾巴正被占用";
+                reason = "IcecreamTail_Unreachable".Translate().ToString();
                 return false;
             }
 
@@ -209,7 +209,7 @@ namespace NivarianIcecreamTail
             job = null;
             if (!IsAutomaticEater(eater))
             {
-                reason = "当前不适合自动进食";
+                reason = "IcecreamTail_NoAutoEat".Translate().ToString();
                 return false;
             }
 
@@ -234,14 +234,14 @@ namespace NivarianIcecreamTail
 
             if (nearestTarget == null)
             {
-                reason = "没有可达且未被占用的成熟冰淇淋尾巴";
+                reason = "IcecreamTail_NoAutoTail".Translate().ToString();
                 return false;
             }
 
             JobDef lickJobDef = DefDatabase<JobDef>.GetNamedSilentFail(LickJobDefName);
             if (lickJobDef == null)
             {
-                reason = "缺少舔尾巴 Job";
+                reason = "IcecreamTail_MissingJob".Translate().ToString();
                 Log.Error("Nivarian Icecream Tail: missing LickIcecreamTail JobDef.");
                 return false;
             }

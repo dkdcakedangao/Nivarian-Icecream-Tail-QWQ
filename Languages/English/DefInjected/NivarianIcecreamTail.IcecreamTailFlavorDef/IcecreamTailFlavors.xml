@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <IcecreamTailFlavorOriginal.label>original</IcecreamTailFlavorOriginal.label>
+  <IcecreamTailFlavorOriginal.tailDescription>An icy tail that looks delicious, meow~</IcecreamTailFlavorOriginal.tailDescription>
+  <IcecreamTailFlavorStrawberry.label>strawberry</IcecreamTailFlavorStrawberry.label>
+  <IcecreamTailFlavorStrawberry.tailDescription>A sweet tail that looks delicious, meow~</IcecreamTailFlavorStrawberry.tailDescription>
+  <IcecreamTailFlavorVanilla.label>vanilla</IcecreamTailFlavorVanilla.label>
+  <IcecreamTailFlavorVanilla.tailDescription>A soft, fragrant tail that feels as fluffy as a cloud, meow~</IcecreamTailFlavorVanilla.tailDescription>
+  <IcecreamTailFlavorMint.label>mint</IcecreamTailFlavorMint.label>
+  <IcecreamTailFlavorMint.tailDescription>A refreshingly cool mint tail. Even its scent clears the head, meow~</IcecreamTailFlavorMint.tailDescription>
+  <IcecreamTailFlavorMatcha.label>matcha</IcecreamTailFlavorMatcha.label>
+  <IcecreamTailFlavorMatcha.tailDescription>A fragrant, slightly bitter matcha tail, with cool creaminess and a sweet finish, meow~</IcecreamTailFlavorMatcha.tailDescription>
+  <IcecreamTailFlavorChocolate.label>chocolate</IcecreamTailFlavorChocolate.label>
+  <IcecreamTailFlavorChocolate.tailDescription>A richly sweet tail with a strangely intimate aroma, meow~</IcecreamTailFlavorChocolate.tailDescription>
+  <IcecreamTailFlavorBeer.label>beer</IcecreamTailFlavorBeer.label>
+  <IcecreamTailFlavorBeer.tailDescription>A malty tail with a hint of tipsy sweetness beneath its icy chill, meow~</IcecreamTailFlavorBeer.tailDescription>
+  <IcecreamTailFlavorFrostberryStomped.label>traditional foot-stomped frostberry wine</IcecreamTailFlavorFrostberryStomped.label>
+  <IcecreamTailFlavorFrostberryStomped.tailDescription>Sweet frostberries mingle with traditional foot-stomped wine. This soft, icy tail smells lovely, meow~</IcecreamTailFlavorFrostberryStomped.tailDescription>
+  <IcecreamTailFlavorFrostberryImitation.label>imitation foot-stomped frostberry wine</IcecreamTailFlavorFrostberryImitation.label>
+  <IcecreamTailFlavorFrostberryImitation.tailDescription>A tail with a faint frostberry wine aroma. The taste is close, but never quite authentic, meow...</IcecreamTailFlavorFrostberryImitation.tailDescription>
+  <IcecreamTailFlavorFrostberryNira.label>Nira&apos;s homemade foot-stomped frostberry wine</IcecreamTailFlavorFrostberryNira.label>
+  <IcecreamTailFlavorFrostberryNira.tailDescription>Mama Nira&apos;s homemade frostberry wine blends into this gently sweet ice cream tail. It tastes like Mama&apos;s love, meow~</IcecreamTailFlavorFrostberryNira.tailDescription>
+  <IcecreamTailFlavorNutmeg.label>nutmeg</IcecreamTailFlavorNutmeg.label>
+  <IcecreamTailFlavorNutmeg.tailDescription>A light brown nutmeg ice cream tail with an indescribably peculiar flavor. There seems to be a little note hidden inside, meow...</IcecreamTailFlavorNutmeg.tailDescription>
+  <IcecreamTailFlavorRainbowCandy.label>rainbow candy</IcecreamTailFlavorRainbowCandy.label>
+  <IcecreamTailFlavorRainbowCandy.tailDescription>Every flavor folded into one rainbow, with a new surprise in every bite, meow~</IcecreamTailFlavorRainbowCandy.tailDescription>
+</LanguageData>

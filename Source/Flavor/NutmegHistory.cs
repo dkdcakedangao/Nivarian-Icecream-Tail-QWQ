@@ -8,6 +8,7 @@ namespace NivarianIcecreamTail
 {
     public sealed class IcecreamTailHistoryDef : Def
     {
+        [MustTranslate]
         public List<string> lines = new List<string>();
 
         public bool HasValidLines
@@ -59,9 +60,9 @@ namespace NivarianIcecreamTail
 
             List<string> text = new List<string>
             {
-                "冰淇淋里藏着一张小便签：",
-                "边缘世界" + (5500 + date / 60) + "年，"
-                    + ((Quadrum)(date % 60 / 15)).Label() + "，" + (date % 15 + 1) + "日"
+                "IcecreamTail_HistoryNote".Translate().ToString(),
+                "IcecreamTail_HistoryDate".Translate(5500 + date / 60,
+                    ((Quadrum)(date % 60 / 15)).Label(), date % 15 + 1).ToString()
             };
             string previousHistory;
             lastHistories.TryGetValue(pawnId, out previousHistory);

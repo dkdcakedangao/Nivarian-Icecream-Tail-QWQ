@@ -125,7 +125,7 @@ namespace NivarianIcecreamTail
         private const float SectionWidth = 160f;
         private const float SectionGap = 12f;
         private const float HeaderHeight = 36f;
-        private static readonly string[] SectionLabels = { "基础", "食用奖励", "恢复", "战斗", "调试", "彩蛋" };
+        private static readonly string[] SectionLabels = { "IcecreamTail_SectionBasic", "IcecreamTail_SectionRewards", "IcecreamTail_SectionRecovery", "IcecreamTail_SectionCombat", "IcecreamTail_SectionDebug", "IcecreamTail_SectionEasterEggs" };
         private int settingsPage;
         private Vector2 scrollPosition;
 
@@ -151,9 +151,7 @@ namespace NivarianIcecreamTail
         // kp的代码抄起来就是舒服喵~
         public override string SettingsCategory()
         {
-            return LanguageDatabase.activeLanguage != null && LanguageDatabase.activeLanguage.folderName.StartsWith("ChineseSimplified")
-                ? "冰龙尾巴就是！冰淇淋！"
-                : "Nivarian Icecream Tail QWQ";
+            return "IcecreamTail_SettingsCategory".Translate();
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
@@ -163,7 +161,7 @@ namespace NivarianIcecreamTail
             Rect contentViewRect = new Rect(inRect.x + SectionWidth + SectionGap, inRect.y + HeaderHeight, inRect.width - SectionWidth - SectionGap, inRect.height - HeaderHeight);
 
             Text.Font = GameFont.Medium;
-            Widgets.Label(titleRect, SectionLabels[settingsPage]);
+            Widgets.Label(titleRect, SectionLabels[settingsPage].Translate());
             Text.Font = GameFont.Small;
 
             DrawSectionList(sectionRect);
@@ -184,17 +182,17 @@ namespace NivarianIcecreamTail
             // 待优化
             if (settingsPage == 0)
             {
-                listing.CheckboxLabeled("启用冰淇淋尾巴", ref Settings.Enabled, "关闭后立即移除全部冰淇淋尾巴状态。 ");
-                listing.CheckboxLabeled("小人会自动舔冰淇淋尾巴", ref Settings.EnableAutoLick, "仅当原版已找到普通食物、饱食度严格低于替代阈值且尾巴可用时，才会将本次进食替换为舔尾巴。 ");
-                listing.CheckboxLabeled("友方也会自己来舔尾巴", ref Settings.SearchAllFriendly, "关闭后只会从己方小人中自动寻找食用者。 ");
-                listing.Label("尾巴替代普通食物的饱食度阈值：" + Settings.AutoLickFoodThreshold.ToStringPercent());
+                listing.CheckboxLabeled("IcecreamTail_Enabled".Translate().ToString(), ref Settings.Enabled, "IcecreamTail_EnabledTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_AutoLick".Translate().ToString(), ref Settings.EnableAutoLick, "IcecreamTail_AutoLickTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_Friendly".Translate().ToString(), ref Settings.SearchAllFriendly, "IcecreamTail_FriendlyTip".Translate().ToString());
+                listing.Label("IcecreamTail_FoodThreshold".Translate(Settings.AutoLickFoodThreshold.ToStringPercent()));
                 Settings.AutoLickFoodThreshold = listing.Slider(Settings.AutoLickFoodThreshold, 0.05f, 0.5f);
-                listing.Label(Settings.SearchRadius > 150 ? "自动搜索范围：整张地图" : "自动搜索范围：" + Settings.SearchRadius + " 格");
+                listing.Label(Settings.SearchRadius > 150 ? "IcecreamTail_SearchMap".Translate() : "IcecreamTail_SearchRadius".Translate(Settings.SearchRadius));
                 Settings.SearchRadius = (int)listing.Slider(Settings.SearchRadius, 30f, 151f);
-                listing.Label("舔食时间倍率：" + Settings.LickTimeMultiplier.ToString("0.0") + "×（" + (10f * Settings.LickTimeMultiplier).ToString("0.0") + " 秒）");
+                listing.Label("IcecreamTail_LickDuration".Translate(Settings.LickTimeMultiplier.ToString("0.0"), (10f * Settings.LickTimeMultiplier).ToString("0.0")));
                 Settings.LickTimeMultiplier = listing.Slider(Settings.LickTimeMultiplier, 0.1f, 10f);
                 listing.Gap(8f);
-                if (Widgets.ButtonText(listing.GetRect(32f), "恢复全部默认设置"))
+                if (Widgets.ButtonText(listing.GetRect(32f), "IcecreamTail_ResetDefaults".Translate().ToString()))
                 {
                     Settings.ResetToDefaults();
                     BeerFourCombatSettings.Apply();
@@ -202,32 +200,32 @@ namespace NivarianIcecreamTail
             }
             else if (settingsPage == 1)
             {
-                listing.CheckboxLabeled("给予特殊心情", ref Settings.EnableMoodEffects, "食用者和冰龙都会获得对应心情记忆。 ");
-                listing.CheckboxLabeled("关系变得更好", ref Settings.EnableRelationshipEffects, "食用者与冰龙会获得互相的好感记忆。 ");
-                listing.CheckboxLabeled("给予增益buff", ref Settings.EnableTailBuff, "食用者获得一天的移动、射击和近战增益。 ");
-                listing.Label("增益 buff 持续时间倍率：" + Settings.TailBuffDurationMultiplier.ToString("0.0") + "×（" + (24f * Settings.TailBuffDurationMultiplier).ToString("0.0") + " 小时）");
+                listing.CheckboxLabeled("IcecreamTail_Mood".Translate().ToString(), ref Settings.EnableMoodEffects, "IcecreamTail_MoodTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_Relationship".Translate().ToString(), ref Settings.EnableRelationshipEffects, "IcecreamTail_RelationshipTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_Buff".Translate().ToString(), ref Settings.EnableTailBuff, "IcecreamTail_BuffTip".Translate().ToString());
+                listing.Label("IcecreamTail_BuffDuration".Translate(Settings.TailBuffDurationMultiplier.ToString("0.0"), (24f * Settings.TailBuffDurationMultiplier).ToString("0.0")));
                 Settings.TailBuffDurationMultiplier = listing.Slider(Settings.TailBuffDurationMultiplier, 0.1f, 10f);
-                listing.CheckboxLabeled("香草味增益时间减半", ref Settings.HalveVanillaBuffDuration, "开启后，香草味冰淇淋尾巴增益仅持续其他口味的一半；同样受上方倍率影响。 ");
-                listing.CheckboxLabeled("四酒结束后会宿醉", ref Settings.EnableBeerHangover, "开启后，四酒自然结束会产生一天宿醉；宿醉期间无法再次获得啤酒口味专属效果。 ");
+                listing.CheckboxLabeled("IcecreamTail_HalfVanilla".Translate().ToString(), ref Settings.HalveVanillaBuffDuration, "IcecreamTail_HalfVanillaTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_Hangover".Translate().ToString(), ref Settings.EnableBeerHangover, "IcecreamTail_HangoverTip".Translate().ToString());
             }
             else if (settingsPage == 2)
             {
-                listing.CheckboxLabeled("冰晶核心影响恢复", ref Settings.EnableCoreRecoveryEffect, "冰晶核心越稳定，冰淇淋尾巴恢复越快。 ");
-                listing.CheckboxLabeled("恢复时更容易饿", ref Settings.EnableRecoveryHunger, "尾巴努力凝结冰淇淋时，冰龙饥饿速度变为 110%。 ");
-                listing.Label("恢复时间倍率：" + Settings.RecoveryTimeMultiplier.ToString("0.0") + "×");
+                listing.CheckboxLabeled("IcecreamTail_CoreRecovery".Translate().ToString(), ref Settings.EnableCoreRecoveryEffect, "IcecreamTail_CoreRecoveryTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_Hunger".Translate().ToString(), ref Settings.EnableRecoveryHunger, "IcecreamTail_HungerTip".Translate().ToString());
+                listing.Label("IcecreamTail_RecoveryDuration".Translate(Settings.RecoveryTimeMultiplier.ToString("0.0")));
                 Settings.RecoveryTimeMultiplier = listing.Slider(Settings.RecoveryTimeMultiplier, 0.1f, 10f);
             }
             else if (settingsPage == 3)
             {
-                listing.CheckboxLabeled("冰淇淋尾巴战斗效果", ref Settings.EnableMatureTailCombat, "若冰龙若有完整的冰淇淋尾巴，会对敌人造成额外伤害，并减速敌人。 ");
+                listing.CheckboxLabeled("IcecreamTail_TailCombat".Translate().ToString(), ref Settings.EnableMatureTailCombat, "IcecreamTail_TailCombatTip".Translate().ToString());
 #if RIMWORLD_17
-                listing.CheckboxLabeled("开关“月牙叉炮(CA)”的动画", ref Settings.EnableSkill3MeleeAnimation, "开关“月牙叉炮(CA)”的动画，1.7已经无需MeleeAnimation作为前置，有我自己的内置动画框架。若关闭，则跳过动画，简单播放一个流程(?非常简易的流程)。若你不喜欢释放技能时，有10秒钟动画的话，或是占用过大之类的（大概是不会），可以关闭该选项");
+                listing.CheckboxLabeled("IcecreamTail_Animation".Translate().ToString(), ref Settings.EnableSkill3MeleeAnimation, "IcecreamTail_Animation17Tip".Translate().ToString());
                 if (NativeAnimationHost.UnavailableReason != null)
-                    listing.Label("内置人物动画不可用（本次启动使用简化流程）：" + NativeAnimationHost.UnavailableReason);
+                    listing.Label("IcecreamTail_AnimationUnavailable".Translate(NativeAnimationHost.UnavailableReason));
 #else
-                listing.CheckboxLabeled("开关“月牙叉炮(CA)”的动画", ref Settings.EnableSkill3MeleeAnimation, "开关“月牙叉炮(CA)”的动画，该动画需要有MeleeAnimation作为前置。若关闭，或没有MeleeAnimation模组，则跳过动画，简单播放一个流程(?非常简易的流程)。若你不喜欢释放技能时，有10秒钟动画的话，或是占用过大之类的（大概是不会），可以关闭该选项");
+                listing.CheckboxLabeled("IcecreamTail_Animation".Translate().ToString(), ref Settings.EnableSkill3MeleeAnimation, "IcecreamTail_Animation16Tip".Translate().ToString());
 #endif
-                listing.Label("四酒 buff 近战冷却倍率：" + Settings.BeerFourMeleeCooldownFactor.ToString("0.00") + "×");
+                listing.Label("IcecreamTail_BeerMeleeCooldown".Translate(Settings.BeerFourMeleeCooldownFactor.ToString("0.00")));
                 float beerFourMeleeCooldownFactor = listing.Slider(Settings.BeerFourMeleeCooldownFactor, 0.1f, 1f);
                 float roundedFactor = Mathf.Round(beerFourMeleeCooldownFactor / 0.05f) * 0.05f;
                 if (!Mathf.Approximately(Settings.BeerFourMeleeCooldownFactor, roundedFactor))
@@ -238,25 +236,25 @@ namespace NivarianIcecreamTail
             }
             else if (settingsPage == 4)
             {
-                listing.CheckboxLabeled("记录尾巴状态与恢复日志", ref Settings.LogTailStateDebug, "在 Player.log 记录尾巴成熟、恢复、断尾和恢复期饥饿状态变化。 ");
-                listing.CheckboxLabeled("记录动画兼容日志", ref Settings.LogFacialAnimationDebug, "在 Player.log 记录 Facial Animation 控制器、动画映射和播放请求结果。 ");
-                listing.CheckboxLabeled("记录自动舔食检查日志", ref Settings.LogAutoLickDebug, "在 Player.log 记录原版找食物时，是否用尾巴替代这次进食。 ");
-                listing.CheckboxLabeled("记录彩蛋日志", ref Settings.LogEasterEggDebug, "在 Player.log 记录巧克力尾巴、啤酒四酒与冻住舌头彩蛋触发情况。 ");
+                listing.CheckboxLabeled("IcecreamTail_LogTail".Translate().ToString(), ref Settings.LogTailStateDebug, "IcecreamTail_LogTailTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_LogFace".Translate().ToString(), ref Settings.LogFacialAnimationDebug, "IcecreamTail_LogFaceTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_LogAuto".Translate().ToString(), ref Settings.LogAutoLickDebug, "IcecreamTail_LogAutoTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_LogEgg".Translate().ToString(), ref Settings.LogEasterEggDebug, "IcecreamTail_LogEggTip".Translate().ToString());
                 if (Prefs.DevMode)
                 {
-                    listing.CheckboxLabeled("显示临时技能冷却 Debug 按钮", ref Settings.ShowTemporaryAbilityCooldownDebug, "在已征召的四酒涅瓦莲 Gizmo 栏显示按钮；只清空本模组临时技能冷却。 ");
+                    listing.CheckboxLabeled("IcecreamTail_DebugCooldown".Translate().ToString(), ref Settings.ShowTemporaryAbilityCooldownDebug, "IcecreamTail_DebugCooldownTip".Translate().ToString());
                 }
             }
             else
             {
-                listing.CheckboxLabeled("沃芬吃巧克力会中毒", ref Settings.EnableChocolateWolfeinEasterEgg, "沃芬舔食巧克力冰淇淋尾巴时，会获得约 10 分钟的严重食物中毒和特殊心情。 ");
-                listing.CheckboxLabeled("肉豆蔻岁月石书文字彩蛋", ref Settings.EnableNutmegHistoryEasterEgg, "涅瓦莲在吃了肉豆蔻味的冰淇淋尾巴后，会意外找到写了岁月石书的小纸条，关闭此选项，就不会在显示那些小纸条了~“这些纸条到底是谁塞进去的？”。");
-                listing.CheckboxLabeled("开关彩蛋技能额外音效", ref Settings.EnableEasterEggSkillSounds, "若关闭，则四酒、薄荷龙息等彩蛋技能不会播放本模组额外音效。 ");
-                listing.CheckboxLabeled("啤酒四酒 WIN 彩蛋", ref Settings.EnableBeerWinEasterEgg, "仅涅瓦莲从三酒升到四酒时判定；触发后显示 WIN 图片并播放音效。 ");
-                listing.Label("啤酒四酒 WIN 彩蛋概率：" + (Settings.BeerWinEasterEggChance * 100f).ToString("0") + "%");
+                listing.CheckboxLabeled("IcecreamTail_ChocolateEgg".Translate().ToString(), ref Settings.EnableChocolateWolfeinEasterEgg, "IcecreamTail_ChocolateEggTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_HistoryEgg".Translate().ToString(), ref Settings.EnableNutmegHistoryEasterEgg, "IcecreamTail_HistoryEggTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_EggSounds".Translate().ToString(), ref Settings.EnableEasterEggSkillSounds, "IcecreamTail_EggSoundsTip".Translate().ToString());
+                listing.CheckboxLabeled("IcecreamTail_WinEgg".Translate().ToString(), ref Settings.EnableBeerWinEasterEgg, "IcecreamTail_WinEggTip".Translate().ToString());
+                listing.Label("IcecreamTail_WinChance".Translate((Settings.BeerWinEasterEggChance * 100f).ToString("0")));
                 Settings.BeerWinEasterEggChance = listing.Slider(Settings.BeerWinEasterEggChance, 0f, 1f);
-                listing.CheckboxLabeled("开关冻住舌头彩蛋", ref Settings.EnableFrozenTongueEasterEgg, "若关闭，则不会触发冻住舌头的彩蛋");
-                listing.Label("舔冰淇淋尾巴时，被冻住舌头的概率：" + (Settings.FrozenTongueEasterEggChance * 100f).ToString("0.0") + "%");
+                listing.CheckboxLabeled("IcecreamTail_FrozenEgg".Translate().ToString(), ref Settings.EnableFrozenTongueEasterEgg, "IcecreamTail_FrozenEggTip".Translate().ToString());
+                listing.Label("IcecreamTail_FrozenTongueChance".Translate((Settings.FrozenTongueEasterEggChance * 100f).ToString("0.0")));
                 Settings.FrozenTongueEasterEggChance = Mathf.Clamp01(listing.Slider(Settings.FrozenTongueEasterEggChance, 0f, 1f));
             }
 
@@ -298,11 +296,11 @@ namespace NivarianIcecreamTail
                 Rect rect = sectionListing.GetRect(30f, 1f);
                 if (settingsPage == page)
                 {
-                    string label = SectionLabels[page];
+                    string label = SectionLabels[page].Translate();
                     NivarianVisualHelper.UIWithColor(Color.yellow, delegate { NivarianVisualHelper.DrawNivarianTechBtnBackground(rect, false); });
                     Widgets.ButtonText(rect, label, false, true, true, TextAnchor.MiddleCenter);
                 }
-                else if (NivarianVisualHelper.DrawNivarianTechBtn(rect, SectionLabels[page], TextAnchor.MiddleCenter, true))
+                else if (NivarianVisualHelper.DrawNivarianTechBtn(rect, SectionLabels[page].Translate(), TextAnchor.MiddleCenter, true))
                 {
                     settingsPage = page;
                     scrollPosition = Vector2.zero;

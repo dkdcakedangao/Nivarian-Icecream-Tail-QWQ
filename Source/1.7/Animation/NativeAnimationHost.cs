@@ -21,14 +21,14 @@ namespace NivarianIcecreamTail
             try
             {
                 foreach (string name in new[] { "RimUnity.Core", "RimUnity", "LumiParticle" })
-                    if (FindLoaded(name) == null) throw new InvalidOperationException("本体尚未加载 " + name);
+                    if (FindLoaded(name) == null) throw new InvalidOperationException("The base mod has not loaded " + name);
                 var content = IcecreamTailMod.ContentPack;
-                if (content == null) throw new InvalidOperationException("附属模组内容尚未就绪");
+                if (content == null) throw new InvalidOperationException("Add-on content is not ready");
                 string path = Path.Combine(content.RootDir, "1.7", "Animation", "NivarianIcecreamTail.Animation.dll");
                 Assembly adapter = Assembly.LoadFrom(path);
                 backend = (IPawnAnimationBackend)adapter.GetType("NivarianIcecreamTail.PawnAnimationBackend", true)
                     .GetMethod("Create", BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { content });
-                if (backend == null) throw new InvalidOperationException("动画适配入口未返回后端");
+                if (backend == null) throw new InvalidOperationException("The animation adapter did not return a backend");
                 state = StartupState.Available;
             }
             catch (Exception error) { Disable(error); }
@@ -57,11 +57,11 @@ namespace NivarianIcecreamTail
             IPawnAnimationBackend previous = backend;
             backend = null;
             try { IcecreamTailSkill3Runtime.CancelNativeAnimations(); }
-            catch (Exception cleanup) { UnavailableReason += "; 任务清理: " + cleanup.Message; }
+            catch (Exception cleanup) { UnavailableReason += "; job cleanup: " + cleanup.Message; }
             finally
             {
                 try { if (previous != null) previous.Dispose(); }
-                catch (Exception cleanup) { UnavailableReason += "; 清理: " + cleanup.Message; }
+                catch (Exception cleanup) { UnavailableReason += "; cleanup: " + cleanup.Message; }
                 Log.Warning("[Nivarian Icecream Tail] 内置人物动画本次启动不可用，后续使用简化流程。" + UnavailableReason);
             }
         }

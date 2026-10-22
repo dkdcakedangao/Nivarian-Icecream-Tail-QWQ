@@ -220,7 +220,7 @@ namespace NivarianIcecreamTail
             }
 
             Messages.Message(
-                "“" + eater.LabelShortCap + "”在品尝“" + target.LabelShortCap + "”的冰淇淋尾巴时，舌头被冻住了了喵！",
+                "IcecreamTail_FrozenTongueMessage".Translate(eater.LabelShortCap, target.LabelShortCap),
                 eater,
                 MessageTypeDefOf.NegativeEvent,
                 false);

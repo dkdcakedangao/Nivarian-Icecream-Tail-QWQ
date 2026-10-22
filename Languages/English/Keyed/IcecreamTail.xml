@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <IcecreamTail_SettingsCategory>Nivarian Icecream Tail QWQ</IcecreamTail_SettingsCategory>
+  <IcecreamTail_SectionBasic>General</IcecreamTail_SectionBasic>
+  <IcecreamTail_SectionRewards>Eating rewards</IcecreamTail_SectionRewards>
+  <IcecreamTail_SectionRecovery>Recovery</IcecreamTail_SectionRecovery>
+  <IcecreamTail_SectionCombat>Combat</IcecreamTail_SectionCombat>
+  <IcecreamTail_SectionDebug>Debug</IcecreamTail_SectionDebug>
+  <IcecreamTail_SectionEasterEggs>Easter eggs</IcecreamTail_SectionEasterEggs>
+  <IcecreamTail_Enabled>Enable ice cream tails</IcecreamTail_Enabled>
+  <IcecreamTail_EnabledTip>Disabling this immediately removes all ice cream tail states.</IcecreamTail_EnabledTip>
+  <IcecreamTail_AutoLick>Allow automatic tail licking</IcecreamTail_AutoLick>
+  <IcecreamTail_AutoLickTip>Replaces a normal eating job with tail licking only when vanilla has found food, the pawn&apos;s food level is strictly below the threshold, and a tail is available.</IcecreamTail_AutoLickTip>
+  <IcecreamTail_Friendly>Allow friendly visitors to lick tails</IcecreamTail_Friendly>
+  <IcecreamTail_FriendlyTip>When disabled, only your own pawns are considered for automatic tail licking.</IcecreamTail_FriendlyTip>
+  <IcecreamTail_FoodThreshold>Food threshold for replacing normal meals: {0}</IcecreamTail_FoodThreshold>
+  <IcecreamTail_SearchMap>Automatic search radius: entire map</IcecreamTail_SearchMap>
+  <IcecreamTail_SearchRadius>Automatic search radius: {0} cells</IcecreamTail_SearchRadius>
+  <IcecreamTail_LickDuration>Licking duration: {0}× ({1} seconds)</IcecreamTail_LickDuration>
+  <IcecreamTail_ResetDefaults>Restore all defaults</IcecreamTail_ResetDefaults>
+  <IcecreamTail_Mood>Enable mood effects</IcecreamTail_Mood>
+  <IcecreamTail_MoodTip>Both the eater and the ice dragon receive the appropriate mood memories.</IcecreamTail_MoodTip>
+  <IcecreamTail_Relationship>Enable relationship effects</IcecreamTail_Relationship>
+  <IcecreamTail_RelationshipTip>The eater and the ice dragon gain positive social memories of each other.</IcecreamTail_RelationshipTip>
+  <IcecreamTail_Buff>Enable flavor buffs</IcecreamTail_Buff>
+  <IcecreamTail_BuffTip>The eater receives a day-long movement, shooting, and melee buff.</IcecreamTail_BuffTip>
+  <IcecreamTail_BuffDuration>Buff duration: {0}× ({1} hours)</IcecreamTail_BuffDuration>
+  <IcecreamTail_HalfVanilla>Halve vanilla buff duration</IcecreamTail_HalfVanilla>
+  <IcecreamTail_HalfVanillaTip>Vanilla buffs last half as long as other ordinary flavors. The duration multiplier above still applies.</IcecreamTail_HalfVanillaTip>
+  <IcecreamTail_Hangover>Enable hangover after the fourth round</IcecreamTail_Hangover>
+  <IcecreamTail_HangoverTip>When the fourth-round buff expires naturally, it causes a one-day hangover. Beer-specific effects cannot be gained during the hangover.</IcecreamTail_HangoverTip>
+  <IcecreamTail_CoreRecovery>Ice crystal core affects recovery</IcecreamTail_CoreRecovery>
+  <IcecreamTail_CoreRecoveryTip>A more stable ice crystal core makes ice cream tails recover faster.</IcecreamTail_CoreRecoveryTip>
+  <IcecreamTail_Hunger>Increase hunger during recovery</IcecreamTail_Hunger>
+  <IcecreamTail_HungerTip>While the tail is forming new ice cream, the ice dragon&apos;s hunger rate becomes 110%.</IcecreamTail_HungerTip>
+  <IcecreamTail_RecoveryDuration>Recovery time multiplier: {0}×</IcecreamTail_RecoveryDuration>
+  <IcecreamTail_TailCombat>Enable ice cream tail combat effects</IcecreamTail_TailCombat>
+  <IcecreamTail_TailCombatTip>An ice dragon with a fully grown ice cream tail deals extra damage and slows enemies.</IcecreamTail_TailCombatTip>
+  <IcecreamTail_Animation>Enable Getsuga Saiho (CA) animation</IcecreamTail_Animation>
+  <IcecreamTail_Animation17Tip>Toggle the Getsuga Saiho (CA) animation. Version 1.7 uses my built-in animation framework and no longer requires Melee Animation. Disabling this uses a very simple sequence instead. Turn it off if you prefer to skip the roughly ten-second animation or have performance concerns (probably unnecessary).</IcecreamTail_Animation17Tip>
+  <IcecreamTail_Animation16Tip>Toggle the Getsuga Saiho (CA) animation, which requires Melee Animation in version 1.6. If disabled or Melee Animation is absent, a very simple sequence is used instead. Turn it off if you prefer to skip the roughly ten-second animation or have performance concerns (probably unnecessary).</IcecreamTail_Animation16Tip>
+  <IcecreamTail_AnimationUnavailable>Built-in character animation unavailable (using the simplified sequence for this session): {0}</IcecreamTail_AnimationUnavailable>
+  <IcecreamTail_BeerMeleeCooldown>Fourth-round melee cooldown multiplier: {0}×</IcecreamTail_BeerMeleeCooldown>
+  <IcecreamTail_LogTail>Log tail states and recovery</IcecreamTail_LogTail>
+  <IcecreamTail_LogTailTip>Log tail maturation, recovery, tail loss, and recovery hunger changes in Player.log.</IcecreamTail_LogTailTip>
+  <IcecreamTail_LogFace>Log animation compatibility</IcecreamTail_LogFace>
+  <IcecreamTail_LogFaceTip>Log Facial Animation controllers, animation mappings, and playback requests in Player.log.</IcecreamTail_LogFaceTip>
+  <IcecreamTail_LogAuto>Log automatic licking checks</IcecreamTail_LogAuto>
+  <IcecreamTail_LogAutoTip>Log whether vanilla food searches result in tail licking instead of normal eating.</IcecreamTail_LogAutoTip>
+  <IcecreamTail_LogEgg>Log easter eggs</IcecreamTail_LogEgg>
+  <IcecreamTail_LogEggTip>Log chocolate, fourth-round beer, and frozen-tongue easter eggs in Player.log.</IcecreamTail_LogEggTip>
+  <IcecreamTail_DebugCooldown>Show temporary ability cooldown debug button</IcecreamTail_DebugCooldown>
+  <IcecreamTail_DebugCooldownTip>Show a button on drafted fourth-round Nivarians. It resets only this mod&apos;s temporary ability cooldowns.</IcecreamTail_DebugCooldownTip>
+  <IcecreamTail_ChocolateEgg>Chocolate poisons Wolfeins</IcecreamTail_ChocolateEgg>
+  <IcecreamTail_ChocolateEggTip>Wolfeins who lick a chocolate ice cream tail receive about ten minutes of severe food poisoning and a special mood memory.</IcecreamTail_ChocolateEggTip>
+  <IcecreamTail_HistoryEgg>Nutmeg stone chronicle text easter egg</IcecreamTail_HistoryEgg>
+  <IcecreamTail_HistoryEggTip>Nivarians may find little notes from the stone chronicles after eating a nutmeg ice cream tail. Disable this to hide the floating notes~ Who keeps putting them in there?</IcecreamTail_HistoryEggTip>
+  <IcecreamTail_EggSounds>Enable extra easter egg ability sounds</IcecreamTail_EggSounds>
+  <IcecreamTail_EggSoundsTip>When disabled, fourth-round, mint breath, and other easter egg abilities do not play this mod&apos;s extra sound effects.</IcecreamTail_EggSoundsTip>
+  <IcecreamTail_WinEgg>Fourth-round beer WIN easter egg</IcecreamTail_WinEgg>
+  <IcecreamTail_WinEggTip>Rolled only when a Nivarian advances from the third to the fourth round. Displays the WIN image and plays a sound when triggered.</IcecreamTail_WinEggTip>
+  <IcecreamTail_WinChance>Fourth-round WIN easter egg chance: {0}%</IcecreamTail_WinChance>
+  <IcecreamTail_FrozenEgg>Enable frozen-tongue easter egg</IcecreamTail_FrozenEgg>
+  <IcecreamTail_FrozenEggTip>When disabled, the frozen-tongue easter egg cannot trigger.</IcecreamTail_FrozenEggTip>
+  <IcecreamTail_FrozenTongueChance>Chance of freezing the tongue while licking a tail: {0}%</IcecreamTail_FrozenTongueChance>
+  <IcecreamTail_FlavoredTail>{0} ice cream tail</IcecreamTail_FlavoredTail>
+  <IcecreamTail_Tail>ice cream tail</IcecreamTail_Tail>
+  <IcecreamTail_TailDescription>An icy tail that looks delicious, meow~</IcecreamTail_TailDescription>
+  <IcecreamTail_Recovering>{0} recovering ({1})</IcecreamTail_Recovering>
+  <IcecreamTail_RecoveryProgress>- Recovery progress: {0}</IcecreamTail_RecoveryProgress>
+  <IcecreamTail_RecoveryHunger>\n- Hunger rate: 110%</IcecreamTail_RecoveryHunger>
+  <IcecreamTail_TimeRemaining>Time remaining: {0}</IcecreamTail_TimeRemaining>
+  <IcecreamTail_BeerLevel1>Ate beer ice cream (first round)</IcecreamTail_BeerLevel1>
+  <IcecreamTail_BeerLevel2>Ate beer ice cream (second round)</IcecreamTail_BeerLevel2>
+  <IcecreamTail_BeerLevel3>Ate beer ice cream (third round)</IcecreamTail_BeerLevel3>
+  <IcecreamTail_BeerLevel4>Ate beer ice cream (fourth round)</IcecreamTail_BeerLevel4>
+  <IcecreamTail_Nutrition>0.5 nutrition</IcecreamTail_Nutrition>
+  <IcecreamTail_HistoryNote>There&apos;s a little note hidden in the ice cream:</IcecreamTail_HistoryNote>
+  <IcecreamTail_HistoryDate>Rim year {0}, {1}, day {2}</IcecreamTail_HistoryDate>
+  <IcecreamTail_Lick>Lick ice cream tail</IcecreamTail_Lick>
+  <IcecreamTail_LickDisabled>Lick ice cream tail ({0})</IcecreamTail_LickDisabled>
+  <IcecreamTail_FrozenTongueMessage>{0}&apos;s tongue froze while tasting {1}&apos;s ice cream tail, meow!</IcecreamTail_FrozenTongueMessage>
+  <IcecreamTail_CooldownsReset>Reset {0} temporary ability cooldowns.</IcecreamTail_CooldownsReset>
+  <IcecreamTail_ResetCooldowns>Reset temporary ability cooldowns</IcecreamTail_ResetCooldowns>
+  <IcecreamTail_ResetCooldownsTip>Reset only the selected pawn&apos;s ice cream tail temporary ability cooldowns.</IcecreamTail_ResetCooldownsTip>
+  <IcecreamTail_BakkaiActive>Super Burst! Burst! Spin! is still in progress.</IcecreamTail_BakkaiActive>
+  <IcecreamTail_SterilizerActive>Lord Sterilizer is still providing support.</IcecreamTail_SterilizerActive>
+  <IcecreamTail_NoLanding>No valid landing cell beside the target.</IcecreamTail_NoLanding>
+  <IcecreamTail_TargetMap>Select a hostile target on the same map.</IcecreamTail_TargetMap>
+  <IcecreamTail_TargetDowned>Getsuga Saiho cannot target dead or downed pawns.</IcecreamTail_TargetDowned>
+  <IcecreamTail_TargetHostile>Getsuga Saiho can only target hostile pawns.</IcecreamTail_TargetHostile>
+  <IcecreamTail_TargetRange>Target is outside Getsuga Saiho&apos;s range or line of sight is blocked.</IcecreamTail_TargetRange>
+  <IcecreamTail_TargetBusy>Target is already involved in another Getsuga Saiho.</IcecreamTail_TargetBusy>
+  <IcecreamTail_NeedBeer>Only Nivarians in the fourth-round beer state can use this ability.</IcecreamTail_NeedBeer>
+  <IcecreamTail_NeedDraft>Draft this Nivarian first.</IcecreamTail_NeedDraft>
+  <IcecreamTail_NeedMint>Only Nivarians with the mint ice cream tail buff can use this ability.</IcecreamTail_NeedMint>
+  <IcecreamTail_NeedMatcha>Only Nivarians with the matcha ice cream tail buff can use this ability.</IcecreamTail_NeedMatcha>
+  <IcecreamTail_Disabled>feature disabled</IcecreamTail_Disabled>
+  <IcecreamTail_InvalidTarget>invalid target</IcecreamTail_InvalidTarget>
+  <IcecreamTail_OwnTail>cannot lick your own tail</IcecreamTail_OwnTail>
+  <IcecreamTail_HumanlikeOnly>only humanlike pawns can lick tails</IcecreamTail_HumanlikeOnly>
+  <IcecreamTail_CannotAct>cannot act right now</IcecreamTail_CannotAct>
+  <IcecreamTail_NoTail>no ice cream tail available</IcecreamTail_NoTail>
+  <IcecreamTail_DifferentMap>not on the same map</IcecreamTail_DifferentMap>
+  <IcecreamTail_Unfriendly>not on friendly terms</IcecreamTail_Unfriendly>
+  <IcecreamTail_NotHungry>not hungry yet</IcecreamTail_NotHungry>
+  <IcecreamTail_TooFar>too far away</IcecreamTail_TooFar>
+  <IcecreamTail_Unreachable>unreachable or tail is reserved</IcecreamTail_Unreachable>
+  <IcecreamTail_NoAutoEat>not eligible for automatic eating right now</IcecreamTail_NoAutoEat>
+  <IcecreamTail_NoAutoTail>no reachable, unreserved mature ice cream tail</IcecreamTail_NoAutoTail>
+  <IcecreamTail_MissingJob>tail licking JobDef is missing</IcecreamTail_MissingJob>
+  <IcecreamTail_DebugToggle>Toggle ice cream tail</IcecreamTail_DebugToggle>
+  <IcecreamTail_DebugDisabled>Ice cream tails are disabled.</IcecreamTail_DebugDisabled>
+  <IcecreamTail_DebugNotNivarian>Target is not a Nivarian.</IcecreamTail_DebugNotNivarian>
+  <IcecreamTail_DebugNoTail>Target has no usable tail.</IcecreamTail_DebugNoTail>
+  <IcecreamTail_DebugAdded>Added an ice cream tail.</IcecreamTail_DebugAdded>
+  <IcecreamTail_DebugRemoved>Removed the ice cream tail.</IcecreamTail_DebugRemoved>
+</LanguageData>

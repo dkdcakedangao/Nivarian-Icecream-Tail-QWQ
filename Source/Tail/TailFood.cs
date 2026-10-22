@@ -25,7 +25,7 @@ namespace NivarianIcecreamTail
         {
             if (ingredient.GetBaseCount() == 0.5f)
             {
-                return "0.5 营养";
+                return "IcecreamTail_Nutrition".Translate().ToString();
             }
 
             ThingDef herbalMedicine = DefDatabase<ThingDef>.GetNamedSilentFail("MedicineHerbal");

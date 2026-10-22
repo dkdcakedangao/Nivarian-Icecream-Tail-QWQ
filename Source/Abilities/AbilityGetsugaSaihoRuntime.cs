@@ -239,29 +239,29 @@ namespace NivarianIcecreamTail
         {
             if (caster == null || target == null || target == caster || caster.Map == null || !target.Spawned || target.Map != caster.Map)
             {
-                reason = "必须选择同一地图中的敌对目标。";
+                reason = "IcecreamTail_TargetMap".Translate().ToString();
                 return false;
             }
             if (target.Dead || target.Downed)
             {
-                reason = "无法对死亡或倒地目标使用月牙叉炮。";
+                reason = "IcecreamTail_TargetDowned".Translate().ToString();
                 return false;
             }
             if (!target.HostileTo(caster))
             {
-                reason = "月牙叉炮只能选择敌对目标。";
+                reason = "IcecreamTail_TargetHostile".Translate().ToString();
                 return false;
             }
             if (caster.Position.DistanceTo(target.Position) > 5f || !GenSight.LineOfSight(caster.Position, target.Position, caster.Map))
             {
-                reason = "目标超出月牙叉炮射程或视线受阻。";
+                reason = "IcecreamTail_TargetRange".Translate().ToString();
                 return false;
             }
 
             // 除错
             if (Protected.ContainsKey(caster) || Protected.ContainsKey(target))
             {
-                reason = "目标正在另一轮月牙叉炮中。";
+                reason = "IcecreamTail_TargetBusy".Translate().ToString();
                 return false;
             }
             reason = null;

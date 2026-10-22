@@ -177,13 +177,13 @@ namespace NivarianIcecreamTail
         {
             if (!IsFourBeerEligible(pawn))
             {
-                reason = "只有处于四酒状态的涅瓦莲才能使用该能力。";
+                reason = "IcecreamTail_NeedBeer".Translate().ToString();
                 return false;
             }
 
             if (!pawn.Drafted)
             {
-                reason = "需要先征召该涅瓦莲。";
+                reason = "IcecreamTail_NeedDraft".Translate().ToString();
                 return false;
             }
 
@@ -195,13 +195,13 @@ namespace NivarianIcecreamTail
         {
             if (!IsMintEligible(pawn))
             {
-                reason = "只有吃过薄荷味冰淇淋尾巴的涅瓦莲才能使用该能力。";
+                reason = "IcecreamTail_NeedMint".Translate().ToString();
                 return false;
             }
 
             if (!pawn.Drafted)
             {
-                reason = "需要先征召该涅瓦莲。";
+                reason = "IcecreamTail_NeedDraft".Translate().ToString();
                 return false;
             }
 
@@ -213,13 +213,13 @@ namespace NivarianIcecreamTail
         {
             if (!IsMatchaEligible(pawn))
             {
-                reason = "只有吃过抹茶味冰淇淋尾巴的涅瓦莲才能使用该能力。";
+                reason = "IcecreamTail_NeedMatcha".Translate().ToString();
                 return false;
             }
 
             if (!pawn.Drafted)
             {
-                reason = "需要先征召该涅瓦莲。";
+                reason = "IcecreamTail_NeedDraft".Translate().ToString();
                 return false;
             }
 

@@ -22,7 +22,7 @@ namespace NivarianIcecreamTail
 
             if (IcecreamTailSterilizerRuntime.IsActive(pawn))
             {
-                Messages.Message("灭菌器大人仍在助阵。", pawn, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("IcecreamTail_SterilizerActive".Translate().ToString(), pawn, MessageTypeDefOf.RejectInput, false);
                 return false;
             }
 

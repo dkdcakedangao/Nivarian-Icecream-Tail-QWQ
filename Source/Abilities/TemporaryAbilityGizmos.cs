@@ -152,13 +152,13 @@ namespace NivarianIcecreamTail
             {
                 yield return new Command_Action
                 {
-                    defaultLabel = "清空临时技能冷却",
-                    defaultDesc = "仅清空当前小人的冰淇淋尾巴临时技能冷却。",
+                    defaultLabel = "IcecreamTail_ResetCooldowns".Translate().ToString(),
+                    defaultDesc = "IcecreamTail_ResetCooldownsTip".Translate().ToString(),
                     icon = TexCommand.ClearPrioritizedWork,
                     action = delegate
                     {
                         int count = IcecreamTailTemporaryAbilityUtility.ResetTemporaryAbilityCooldowns(__instance);
-                        Messages.Message("已清空 " + count + " 个临时技能冷却。", __instance, MessageTypeDefOf.NeutralEvent, false);
+                    Messages.Message("IcecreamTail_CooldownsReset".Translate(count), __instance, MessageTypeDefOf.NeutralEvent, false);
                     }
                 };
             }

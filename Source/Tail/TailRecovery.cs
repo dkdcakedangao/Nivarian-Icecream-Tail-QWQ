@@ -14,17 +14,17 @@ namespace NivarianIcecreamTail
     {
         public override string LabelBase
         {
-            get { return IcecreamTailFlavorUtility.TailLabel(this, "冰淇淋尾巴") + "恢复中（" + Severity.ToStringPercent() + "）"; }
+            get { return "IcecreamTail_Recovering".Translate(IcecreamTailFlavorUtility.TailLabel(this, "IcecreamTail_Tail".Translate()), Severity.ToStringPercent()); }
         }
 
         public override string TipStringExtra
         {
             get
             {
-                string tip = "- 恢复进度：" + Severity.ToStringPercent();
+                string tip = "IcecreamTail_RecoveryProgress".Translate(Severity.ToStringPercent());
                 if (IcecreamTailMod.Settings == null || IcecreamTailMod.Settings.EnableRecoveryHunger)
                 {
-                    tip += "\n- 饥饿速度：110%";
+                    tip += "IcecreamTail_RecoveryHunger".Translate().ToString();
                 }
 
                 return tip;

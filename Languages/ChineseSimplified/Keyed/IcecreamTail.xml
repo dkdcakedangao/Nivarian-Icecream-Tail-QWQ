@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <IcecreamTail_SettingsCategory>冰龙尾巴就是！冰淇淋！</IcecreamTail_SettingsCategory>
+  <IcecreamTail_SectionBasic>基础</IcecreamTail_SectionBasic>
+  <IcecreamTail_SectionRewards>食用奖励</IcecreamTail_SectionRewards>
+  <IcecreamTail_SectionRecovery>恢复</IcecreamTail_SectionRecovery>
+  <IcecreamTail_SectionCombat>战斗</IcecreamTail_SectionCombat>
+  <IcecreamTail_SectionDebug>调试</IcecreamTail_SectionDebug>
+  <IcecreamTail_SectionEasterEggs>彩蛋</IcecreamTail_SectionEasterEggs>
+  <IcecreamTail_Enabled>启用冰淇淋尾巴</IcecreamTail_Enabled>
+  <IcecreamTail_EnabledTip>关闭后立即移除全部冰淇淋尾巴状态。 </IcecreamTail_EnabledTip>
+  <IcecreamTail_AutoLick>小人会自动舔冰淇淋尾巴</IcecreamTail_AutoLick>
+  <IcecreamTail_AutoLickTip>仅当原版已找到普通食物、饱食度严格低于替代阈值且尾巴可用时，才会将本次进食替换为舔尾巴。 </IcecreamTail_AutoLickTip>
+  <IcecreamTail_Friendly>友方也会自己来舔尾巴</IcecreamTail_Friendly>
+  <IcecreamTail_FriendlyTip>关闭后只会从己方小人中自动寻找食用者。 </IcecreamTail_FriendlyTip>
+  <IcecreamTail_FoodThreshold>尾巴替代普通食物的饱食度阈值：{0}</IcecreamTail_FoodThreshold>
+  <IcecreamTail_SearchMap>自动搜索范围：整张地图</IcecreamTail_SearchMap>
+  <IcecreamTail_SearchRadius>自动搜索范围：{0} 格</IcecreamTail_SearchRadius>
+  <IcecreamTail_LickDuration>舔食时间倍率：{0}×（{1} 秒）</IcecreamTail_LickDuration>
+  <IcecreamTail_ResetDefaults>恢复全部默认设置</IcecreamTail_ResetDefaults>
+  <IcecreamTail_Mood>给予特殊心情</IcecreamTail_Mood>
+  <IcecreamTail_MoodTip>食用者和冰龙都会获得对应心情记忆。 </IcecreamTail_MoodTip>
+  <IcecreamTail_Relationship>关系变得更好</IcecreamTail_Relationship>
+  <IcecreamTail_RelationshipTip>食用者与冰龙会获得互相的好感记忆。 </IcecreamTail_RelationshipTip>
+  <IcecreamTail_Buff>给予增益buff</IcecreamTail_Buff>
+  <IcecreamTail_BuffTip>食用者获得一天的移动、射击和近战增益。 </IcecreamTail_BuffTip>
+  <IcecreamTail_BuffDuration>增益 buff 持续时间倍率：{0}×（{1} 小时）</IcecreamTail_BuffDuration>
+  <IcecreamTail_HalfVanilla>香草味增益时间减半</IcecreamTail_HalfVanilla>
+  <IcecreamTail_HalfVanillaTip>开启后，香草味冰淇淋尾巴增益仅持续其他口味的一半；同样受上方倍率影响。 </IcecreamTail_HalfVanillaTip>
+  <IcecreamTail_Hangover>四酒结束后会宿醉</IcecreamTail_Hangover>
+  <IcecreamTail_HangoverTip>开启后，四酒自然结束会产生一天宿醉；宿醉期间无法再次获得啤酒口味专属效果。 </IcecreamTail_HangoverTip>
+  <IcecreamTail_CoreRecovery>冰晶核心影响恢复</IcecreamTail_CoreRecovery>
+  <IcecreamTail_CoreRecoveryTip>冰晶核心越稳定，冰淇淋尾巴恢复越快。 </IcecreamTail_CoreRecoveryTip>
+  <IcecreamTail_Hunger>恢复时更容易饿</IcecreamTail_Hunger>
+  <IcecreamTail_HungerTip>尾巴努力凝结冰淇淋时，冰龙饥饿速度变为 110%。 </IcecreamTail_HungerTip>
+  <IcecreamTail_RecoveryDuration>恢复时间倍率：{0}×</IcecreamTail_RecoveryDuration>
+  <IcecreamTail_TailCombat>冰淇淋尾巴战斗效果</IcecreamTail_TailCombat>
+  <IcecreamTail_TailCombatTip>若冰龙若有完整的冰淇淋尾巴，会对敌人造成额外伤害，并减速敌人。 </IcecreamTail_TailCombatTip>
+  <IcecreamTail_Animation>开关“月牙叉炮(CA)”的动画</IcecreamTail_Animation>
+  <IcecreamTail_Animation17Tip>开关“月牙叉炮(CA)”的动画，1.7已经无需MeleeAnimation作为前置，有我自己的内置动画框架。若关闭，则跳过动画，简单播放一个流程(?非常简易的流程)。若你不喜欢释放技能时，有10秒钟动画的话，或是占用过大之类的（大概是不会），可以关闭该选项</IcecreamTail_Animation17Tip>
+  <IcecreamTail_Animation16Tip>开关“月牙叉炮(CA)”的动画，该动画需要有MeleeAnimation作为前置。若关闭，或没有MeleeAnimation模组，则跳过动画，简单播放一个流程(?非常简易的流程)。若你不喜欢释放技能时，有10秒钟动画的话，或是占用过大之类的（大概是不会），可以关闭该选项</IcecreamTail_Animation16Tip>
+  <IcecreamTail_AnimationUnavailable>内置人物动画不可用（本次启动使用简化流程）：{0}</IcecreamTail_AnimationUnavailable>
+  <IcecreamTail_BeerMeleeCooldown>四酒 buff 近战冷却倍率：{0}×</IcecreamTail_BeerMeleeCooldown>
+  <IcecreamTail_LogTail>记录尾巴状态与恢复日志</IcecreamTail_LogTail>
+  <IcecreamTail_LogTailTip>在 Player.log 记录尾巴成熟、恢复、断尾和恢复期饥饿状态变化。 </IcecreamTail_LogTailTip>
+  <IcecreamTail_LogFace>记录动画兼容日志</IcecreamTail_LogFace>
+  <IcecreamTail_LogFaceTip>在 Player.log 记录 Facial Animation 控制器、动画映射和播放请求结果。 </IcecreamTail_LogFaceTip>
+  <IcecreamTail_LogAuto>记录自动舔食检查日志</IcecreamTail_LogAuto>
+  <IcecreamTail_LogAutoTip>在 Player.log 记录原版找食物时，是否用尾巴替代这次进食。 </IcecreamTail_LogAutoTip>
+  <IcecreamTail_LogEgg>记录彩蛋日志</IcecreamTail_LogEgg>
+  <IcecreamTail_LogEggTip>在 Player.log 记录巧克力尾巴、啤酒四酒与冻住舌头彩蛋触发情况。 </IcecreamTail_LogEggTip>
+  <IcecreamTail_DebugCooldown>显示临时技能冷却 Debug 按钮</IcecreamTail_DebugCooldown>
+  <IcecreamTail_DebugCooldownTip>在已征召的四酒涅瓦莲 Gizmo 栏显示按钮；只清空本模组临时技能冷却。 </IcecreamTail_DebugCooldownTip>
+  <IcecreamTail_ChocolateEgg>沃芬吃巧克力会中毒</IcecreamTail_ChocolateEgg>
+  <IcecreamTail_ChocolateEggTip>沃芬舔食巧克力冰淇淋尾巴时，会获得约 10 分钟的严重食物中毒和特殊心情。 </IcecreamTail_ChocolateEggTip>
+  <IcecreamTail_HistoryEgg>肉豆蔻岁月石书文字彩蛋</IcecreamTail_HistoryEgg>
+  <IcecreamTail_HistoryEggTip>涅瓦莲在吃了肉豆蔻味的冰淇淋尾巴后，会意外找到写了岁月石书的小纸条，关闭此选项，就不会在显示那些小纸条了~“这些纸条到底是谁塞进去的？”。</IcecreamTail_HistoryEggTip>
+  <IcecreamTail_EggSounds>开关彩蛋技能额外音效</IcecreamTail_EggSounds>
+  <IcecreamTail_EggSoundsTip>若关闭，则四酒、薄荷龙息等彩蛋技能不会播放本模组额外音效。 </IcecreamTail_EggSoundsTip>
+  <IcecreamTail_WinEgg>啤酒四酒 WIN 彩蛋</IcecreamTail_WinEgg>
+  <IcecreamTail_WinEggTip>仅涅瓦莲从三酒升到四酒时判定；触发后显示 WIN 图片并播放音效。 </IcecreamTail_WinEggTip>
+  <IcecreamTail_WinChance>啤酒四酒 WIN 彩蛋概率：{0}%</IcecreamTail_WinChance>
+  <IcecreamTail_FrozenEgg>开关冻住舌头彩蛋</IcecreamTail_FrozenEgg>
+  <IcecreamTail_FrozenEggTip>若关闭，则不会触发冻住舌头的彩蛋</IcecreamTail_FrozenEggTip>
+  <IcecreamTail_FrozenTongueChance>舔冰淇淋尾巴时，被冻住舌头的概率：{0}%</IcecreamTail_FrozenTongueChance>
+  <IcecreamTail_FlavoredTail>{0}冰淇淋尾巴</IcecreamTail_FlavoredTail>
+  <IcecreamTail_Tail>冰淇淋尾巴</IcecreamTail_Tail>
+  <IcecreamTail_TailDescription>冰冰的尾巴，看起来非常好吃喵~</IcecreamTail_TailDescription>
+  <IcecreamTail_Recovering>{0}恢复中（{1}）</IcecreamTail_Recovering>
+  <IcecreamTail_RecoveryProgress>- 恢复进度：{0}</IcecreamTail_RecoveryProgress>
+  <IcecreamTail_RecoveryHunger>\n- 饥饿速度：110%</IcecreamTail_RecoveryHunger>
+  <IcecreamTail_TimeRemaining>剩余时间：{0}</IcecreamTail_TimeRemaining>
+  <IcecreamTail_BeerLevel1>吃了啤酒味冰淇淋（一酒）</IcecreamTail_BeerLevel1>
+  <IcecreamTail_BeerLevel2>吃了啤酒味冰淇淋（二酒）</IcecreamTail_BeerLevel2>
+  <IcecreamTail_BeerLevel3>吃了啤酒味冰淇淋（三酒）</IcecreamTail_BeerLevel3>
+  <IcecreamTail_BeerLevel4>吃了啤酒味冰淇淋（四酒）</IcecreamTail_BeerLevel4>
+  <IcecreamTail_Nutrition>0.5 营养</IcecreamTail_Nutrition>
+  <IcecreamTail_HistoryNote>冰淇淋里藏着一张小便签：</IcecreamTail_HistoryNote>
+  <IcecreamTail_HistoryDate>边缘世界{0}年，{1}，{2}日</IcecreamTail_HistoryDate>
+  <IcecreamTail_Lick>舔舔冰淇淋尾巴</IcecreamTail_Lick>
+  <IcecreamTail_LickDisabled>舔舔冰淇淋尾巴（{0}）</IcecreamTail_LickDisabled>
+  <IcecreamTail_FrozenTongueMessage>“{0}”在品尝“{1}”的冰淇淋尾巴时，舌头被冻住了了喵！</IcecreamTail_FrozenTongueMessage>
+  <IcecreamTail_CooldownsReset>已清空 {0} 个临时技能冷却。</IcecreamTail_CooldownsReset>
+  <IcecreamTail_ResetCooldowns>清空临时技能冷却</IcecreamTail_ResetCooldowns>
+  <IcecreamTail_ResetCooldownsTip>仅清空当前小人的冰淇淋尾巴临时技能冷却。</IcecreamTail_ResetCooldownsTip>
+  <IcecreamTail_BakkaiActive>超级爆！爆！回！仍在进行。</IcecreamTail_BakkaiActive>
+  <IcecreamTail_SterilizerActive>灭菌器大人仍在助阵。</IcecreamTail_SterilizerActive>
+  <IcecreamTail_NoLanding>目标身旁没有可用的落点。</IcecreamTail_NoLanding>
+  <IcecreamTail_TargetMap>必须选择同一地图中的敌对目标。</IcecreamTail_TargetMap>
+  <IcecreamTail_TargetDowned>无法对死亡或倒地目标使用月牙叉炮。</IcecreamTail_TargetDowned>
+  <IcecreamTail_TargetHostile>月牙叉炮只能选择敌对目标。</IcecreamTail_TargetHostile>
+  <IcecreamTail_TargetRange>目标超出月牙叉炮射程或视线受阻。</IcecreamTail_TargetRange>
+  <IcecreamTail_TargetBusy>目标正在另一轮月牙叉炮中。</IcecreamTail_TargetBusy>
+  <IcecreamTail_NeedBeer>只有处于四酒状态的涅瓦莲才能使用该能力。</IcecreamTail_NeedBeer>
+  <IcecreamTail_NeedDraft>需要先征召该涅瓦莲。</IcecreamTail_NeedDraft>
+  <IcecreamTail_NeedMint>只有吃过薄荷味冰淇淋尾巴的涅瓦莲才能使用该能力。</IcecreamTail_NeedMint>
+  <IcecreamTail_NeedMatcha>只有吃过抹茶味冰淇淋尾巴的涅瓦莲才能使用该能力。</IcecreamTail_NeedMatcha>
+  <IcecreamTail_Disabled>功能已关闭</IcecreamTail_Disabled>
+  <IcecreamTail_InvalidTarget>目标无效</IcecreamTail_InvalidTarget>
+  <IcecreamTail_OwnTail>不能舔自己的尾巴</IcecreamTail_OwnTail>
+  <IcecreamTail_HumanlikeOnly>只有人形角色会舔尾巴</IcecreamTail_HumanlikeOnly>
+  <IcecreamTail_CannotAct>当前无法行动</IcecreamTail_CannotAct>
+  <IcecreamTail_NoTail>没有可舔的冰淇淋尾巴</IcecreamTail_NoTail>
+  <IcecreamTail_DifferentMap>不在同一张地图</IcecreamTail_DifferentMap>
+  <IcecreamTail_Unfriendly>关系不太友好</IcecreamTail_Unfriendly>
+  <IcecreamTail_NotHungry>还不饿</IcecreamTail_NotHungry>
+  <IcecreamTail_TooFar>距离太远</IcecreamTail_TooFar>
+  <IcecreamTail_Unreachable>无法到达或尾巴正被占用</IcecreamTail_Unreachable>
+  <IcecreamTail_NoAutoEat>当前不适合自动进食</IcecreamTail_NoAutoEat>
+  <IcecreamTail_NoAutoTail>没有可达且未被占用的成熟冰淇淋尾巴</IcecreamTail_NoAutoTail>
+  <IcecreamTail_MissingJob>缺少舔尾巴 Job</IcecreamTail_MissingJob>
+  <IcecreamTail_DebugToggle>切换冰淇淋尾巴</IcecreamTail_DebugToggle>
+  <IcecreamTail_DebugDisabled>冰淇淋尾巴功能已关闭。</IcecreamTail_DebugDisabled>
+  <IcecreamTail_DebugNotNivarian>目标不是涅瓦莲。</IcecreamTail_DebugNotNivarian>
+  <IcecreamTail_DebugNoTail>目标没有可用尾巴。</IcecreamTail_DebugNoTail>
+  <IcecreamTail_DebugAdded>已添加冰淇淋尾巴。</IcecreamTail_DebugAdded>
+  <IcecreamTail_DebugRemoved>已移除冰淇淋尾巴。</IcecreamTail_DebugRemoved>
+</LanguageData>

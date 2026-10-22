@@ -98,7 +98,7 @@ namespace NivarianIcecreamTail
         [DebugActionYielder]
         public static IEnumerable<DebugActionNode> DebugActions()
         {
-            DebugActionNode action = new DebugActionNode("切换冰淇淋尾巴", DebugActionType.ToolMapForPawns, null, ToggleIcecreamTail);
+            DebugActionNode action = new DebugActionNode("IcecreamTail_DebugToggle".Translate().ToString(), DebugActionType.ToolMapForPawns, null, ToggleIcecreamTail);
             action.category = "Nivarian Icecream Tail";
             action.visibilityGetter = () => IcecreamTailMod.Enabled && Find.CurrentMap != null;
             yield return action;
@@ -108,20 +108,20 @@ namespace NivarianIcecreamTail
         {
             if (!IcecreamTailMod.Enabled)
             {
-                Messages.Message("冰淇淋尾巴功能已关闭。", MessageTypeDefOf.RejectInput, false);
+                Messages.Message("IcecreamTail_DebugDisabled".Translate().ToString(), MessageTypeDefOf.RejectInput, false);
                 return;
             }
 
             BodyPartRecord tailPart;
             if (!IcecreamTailUtility.IsNivarian(pawn))
             {
-                Messages.Message("目标不是涅瓦莲。", pawn, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("IcecreamTail_DebugNotNivarian".Translate().ToString(), pawn, MessageTypeDefOf.RejectInput, false);
                 return;
             }
 
             if (IcecreamTailUtility.GetTailKind(pawn, out tailPart) == TailKind.None)
             {
-                Messages.Message("目标没有可用尾巴。", pawn, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("IcecreamTail_DebugNoTail".Translate().ToString(), pawn, MessageTypeDefOf.RejectInput, false);
                 return;
             }
 
@@ -129,12 +129,12 @@ namespace NivarianIcecreamTail
             {
                 TailEatingUtility.RemoveRecovery(pawn);
                 IcecreamTailUtility.TryAddPlaceholder(pawn);
-                Messages.Message("已添加冰淇淋尾巴。", pawn, MessageTypeDefOf.PositiveEvent, false);
+                Messages.Message("IcecreamTail_DebugAdded".Translate().ToString(), pawn, MessageTypeDefOf.PositiveEvent, false);
             }
             else
             {
                 IcecreamTailUtility.RemovePlaceholder(pawn);
-                Messages.Message("已移除冰淇淋尾巴。", pawn, MessageTypeDefOf.NeutralEvent, false);
+                Messages.Message("IcecreamTail_DebugRemoved".Translate().ToString(), pawn, MessageTypeDefOf.NeutralEvent, false);
             }
         }
     }

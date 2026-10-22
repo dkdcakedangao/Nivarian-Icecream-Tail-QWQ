@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <IcecreamTailPlaceholder.label>ice cream tail</IcecreamTailPlaceholder.label>
+  <IcecreamTailPlaceholder.description>An icy tail that looks delicious, meow~</IcecreamTailPlaceholder.description>
+  <IcecreamTailRecovery.label>recovering ice cream tail</IcecreamTailRecovery.label>
+  <IcecreamTailRecovery.description>The tail is hard at work forming fresh ice cream~</IcecreamTailRecovery.description>
+  <IcecreamTailRecoveryHunger.label>ice cream tail growing</IcecreamTailRecoveryHunger.label>
+  <IcecreamTailRecoveryHunger.description>Growing delicious ice cream takes energy. Better have a little more to eat, meow~</IcecreamTailRecoveryHunger.description>
+  <IcecreamTailEaterBuff.label>ate original ice cream tail</IcecreamTailEaterBuff.label>
+  <IcecreamTailEaterBuff.description>A sweet, refreshing strength wells up inside.</IcecreamTailEaterBuff.description>
+  <IcecreamTailSterilizerToxicIrritation.label>mild Sterilizer gas poisoning</IcecreamTailSterilizerToxicIrritation.label>
+  <IcecreamTailSterilizerToxicIrritation.description>Lord Matcha Hair Dryer&apos;s fumes have seeped into the body, causing mild discomfort.</IcecreamTailSterilizerToxicIrritation.description>
+  <IcecreamTailSterilizerFoodPoisoning.label>mild Sterilizer gas food poisoning</IcecreamTailSterilizerFoodPoisoning.label>
+  <IcecreamTailSterilizerFoodPoisoning.description>Lord Matcha Hair Dryer&apos;s fumes have caused an upset stomach.</IcecreamTailSterilizerFoodPoisoning.description>
+  <IcecreamTailSlow.label>frozen by ice cream!</IcecreamTailSlow.label>
+  <IcecreamTailSlow.description>Chilled by an ice cream tail, reducing movement speed.</IcecreamTailSlow.description>
+  <IcecreamTailStrawberryEaterBuff.label>ate strawberry ice cream tail</IcecreamTailStrawberryEaterBuff.label>
+  <IcecreamTailStrawberryEaterBuff.description>The strawberry aroma lightens the body and sharpens the eyes, though softened muscles are less suited to melee.</IcecreamTailStrawberryEaterBuff.description>
+  <IcecreamTailVanillaEaterBuff.label>ate vanilla ice cream tail</IcecreamTailVanillaEaterBuff.label>
+  <IcecreamTailVanillaEaterBuff.description>Creamy vanilla makes running feel like stepping on clouds!</IcecreamTailVanillaEaterBuff.description>
+  <IcecreamTailMintEaterBuff.label>ate mint ice cream tail</IcecreamTailMintEaterBuff.label>
+  <IcecreamTailMintEaterBuff.description>Mint&apos;s chill rushes from the tongue through the body, quickening the feet and easing the heat.</IcecreamTailMintEaterBuff.description>
+  <IcecreamTailMatchaEaterBuff.label>ate matcha ice cream tail</IcecreamTailMatchaEaterBuff.label>
+  <IcecreamTailMatchaEaterBuff.description>Matcha&apos;s fragrance and slight bitterness relax the body. Heat is easier to bear, though feet and thoughts slow a little.</IcecreamTailMatchaEaterBuff.description>
+  <IcecreamTailChocolateEaterBuff.label>ate chocolate ice cream tail</IcecreamTailChocolateEaterBuff.label>
+  <IcecreamTailChocolateEaterBuff.description>Rich chocolate feels sweet and comforting, clearing the head and lending confidence to every word.</IcecreamTailChocolateEaterBuff.description>
+  <IcecreamTailBeerEaterBuff.label>ate beer ice cream (first round)</IcecreamTailBeerEaterBuff.label>
+  <IcecreamTailBeerEaterBuff.description>I like beer! I like ice cream! Double the happiness, meow!</IcecreamTailBeerEaterBuff.description>
+  <IcecreamTailMagicBody.label>Demon Form</IcecreamTailMagicBody.label>
+  <IcecreamTailMagicBody.description>Burst!</IcecreamTailMagicBody.description>
+  <IcecreamTailBeerHangover.label>beer ice cream hangover</IcecreamTailBeerHangover.label>
+  <IcecreamTailBeerHangover.description>The double happiness of beer and ice cream is over. Only a fuzzy head remains.</IcecreamTailBeerHangover.description>
+  <IcecreamTailFrostberryStompedEaterBuff.label>ate traditional foot-stomped frostberry wine ice cream tail</IcecreamTailFrostberryStompedEaterBuff.label>
+  <IcecreamTailFrostberryStompedEaterBuff.description>Sweet frostberries and the gentle buzz of traditional foot-stomped wine leave the hands and feet a little wobbly, meow~</IcecreamTailFrostberryStompedEaterBuff.description>
+  <IcecreamTailFrostberryImitationEaterBuff.label>ate imitation foot-stomped frostberry wine ice cream tail</IcecreamTailFrostberryImitationEaterBuff.label>
+  <IcecreamTailFrostberryImitationEaterBuff.description>A hint of frostberry wine and a slight wobble in the limbs, but something about the authentic flavor is missing, meow...</IcecreamTailFrostberryImitationEaterBuff.description>
+  <IcecreamTailFrostberryNiraEaterBuff.label>ate Nira&apos;s homemade foot-stomped frostberry wine ice cream tail</IcecreamTailFrostberryNiraEaterBuff.label>
+  <IcecreamTailFrostberryNiraEaterBuff.description>Mama Nira&apos;s homemade frostberry wine blends into the ice cream, clearing the head, steadying the hands, and lightening the feet, meow~</IcecreamTailFrostberryNiraEaterBuff.description>
+  <IcecreamTailNutmegEaterBuff.label>ate nutmeg ice cream tail</IcecreamTailNutmegEaterBuff.label>
+  <IcecreamTailNutmegEaterBuff.description>Boss says you can make wine from nutmeg, meow?! ...!?</IcecreamTailNutmegEaterBuff.description>
+</LanguageData>

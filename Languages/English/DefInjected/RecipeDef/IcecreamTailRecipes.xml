@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <MakeIcecreamTailFood.label>Make tail ice cream</MakeIcecreamTailFood.label>
+  <MakeIcecreamTailFood.description>Make tail ice cream with “love.”</MakeIcecreamTailFood.description>
+  <MakeIcecreamTailFood.jobString>Making tail ice cream.</MakeIcecreamTailFood.jobString>
+  <MakeIcecreamTailRestoreIce.label>Make Ice!</MakeIcecreamTailRestoreIce.label>
+  <MakeIcecreamTailRestoreIce.description>Condense shed Nivarian scales into slow-melting ice.</MakeIcecreamTailRestoreIce.description>
+  <MakeIcecreamTailRestoreIce.jobString>Making Ice!</MakeIcecreamTailRestoreIce.jobString>
+</LanguageData>
